@@ -11,7 +11,8 @@ import {
   Home,
   X,
   Linkedin,
-  Instagram
+  Instagram,
+  LifeBuoy
 } from 'lucide-react';
 import { UserRole } from '../types';
 import Logo from './Logo';
@@ -28,7 +29,7 @@ interface SidebarProps {
   setRole: (role: UserRole) => void;
   isOpen: boolean;
   onClose: () => void;
-  setView: (view: 'landing' | 'app') => void;
+  setView: (view: 'landing' | 'app' | 'vision' | 'support') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setView }) => {
@@ -73,6 +74,17 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
             >
               <Home size={16} className="text-slate-400 group-hover:text-emerald-600" />
               <span className="font-bold text-xs">Return Home</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setView('support');
+                onClose();
+              }}
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
+            >
+              <LifeBuoy size={16} className="text-slate-400 group-hover:text-emerald-600" />
+              <span className="font-bold text-xs">Contact Support</span>
             </button>
 
             <div className="pt-6">

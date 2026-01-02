@@ -32,6 +32,7 @@ import Logo from './components/Logo';
 import ContactSection from './components/ContactSection';
 import ChatWidget from './components/ChatWidget';
 import VisionPage from './components/VisionPage';
+import SupportPage from './components/SupportPage';
 import { getMarketOverview } from './geminiService';
 
 // Custom X (Twitter) Logo for a more premium, accurate brand representation
@@ -42,7 +43,7 @@ const XLogo = ({ size = 18 }: { size?: number }) => (
 );
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'landing' | 'app' | 'vision'>('landing');
+  const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed for mobile/tablet
   const [marketInsight, setMarketInsight] = useState("");
@@ -83,6 +84,10 @@ const App: React.FC = () => {
     return <VisionPage onBack={() => setView('landing')} />;
   }
 
+  if (view === 'support') {
+    return <SupportPage onBack={() => setView('landing')} />;
+  }
+
   if (view === 'landing') {
     return (
       <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-900">
@@ -99,7 +104,7 @@ const App: React.FC = () => {
               <button onClick={() => setView('vision')} className="hover:text-emerald-600 transition-colors uppercase">Our Vision</button>
               <a href="#stats" className="hover:text-emerald-600 transition-colors">Ecosystem Stats</a>
               <a href="#network" className="hover:text-emerald-600 transition-colors">Global Network</a>
-              <a href="#contact" className="hover:text-emerald-600 transition-colors">Contact Support</a>
+              <button onClick={() => setView('support')} className="hover:text-emerald-600 transition-colors uppercase">Contact Support</button>
             </div>
 
             <button 
@@ -256,7 +261,7 @@ const App: React.FC = () => {
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">API Documentation</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Carbon Protocol</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Global Impact</li>
-                <li className="hover:text-emerald-600 cursor-pointer transition-colors" onClick={() => document.getElementById('contact')?.scrollIntoView()}>Contact Support</li>
+                <li className="hover:text-emerald-600 cursor-pointer transition-colors" onClick={() => setView('support')}>Contact Support</li>
               </ul>
             </div>
           </div>
