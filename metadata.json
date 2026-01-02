@@ -1,0 +1,7 @@
+{
+  "name": "SeaweedTrade Control Platform",
+  "description": "A comprehensive end-to-end seaweed business management platform connecting farmers, buyers, and logistics with AI-powered analytics and real-time control flow.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
