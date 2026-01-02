@@ -12,7 +12,12 @@ import {
   Calendar,
   Layers,
   Sparkles,
-  X
+  X,
+  LayoutGrid,
+  List as ListIcon,
+  CheckCircle2,
+  AlertCircle,
+  PackageCheck
 } from 'lucide-react';
 import { HarvestBatch } from '../types';
 import { analyzeHarvest } from '../geminiService';
@@ -37,16 +42,20 @@ const FarmerPortal: React.FC<FarmerPortalProps> = ({ batches, onNewBatch }) => {
 
   // History State
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<'ALL' | 'PENDING' | 'APPROVED' | 'SOLD'>('ALL');
+  const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'date' | 'weight' | 'grade'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Sorting and Filtering Logic
   const processedBatches = useMemo(() => {
-    let result = batches.filter(b => 
-      b.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      b.id.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    let result = batches.filter(b => {
+      const matchesSearch = b.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            b.id.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = statusFilter === 'ALL' || b.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
 
     result.sort((a, b) => {
       let comparison = 0;
@@ -61,7 +70,7 @@ const FarmerPortal: React.FC<FarmerPortalProps> = ({ batches, onNewBatch }) => {
     });
 
     return result;
-  }, [batches, searchTerm, sortBy, sortOrder]);
+  }, [batches, searchTerm, statusFilter, sortBy, sortOrder]);
 
   const totalPages = Math.ceil(processedBatches.length / ITEMS_PER_PAGE);
   const paginatedBatches = processedBatches.slice(
@@ -132,19 +141,37 @@ const FarmerPortal: React.FC<FarmerPortalProps> = ({ batches, onNewBatch }) => {
         </div>
       </div>
 
-      {/* History Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 flex-1">
-          <div className="relative flex-1 max-w-full md:max-w-md group">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-500 transition-colors" size={16} />
-            <input 
-              type="text" 
-              placeholder="Search batches..."
-              className="w-full pl-12 pr-6 py-3 sm:py-3.5 rounded-xl sm:rounded-[18px] bg-white border border-slate-100 shadow-sm outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all font-bold text-[13px]"
-              value={searchTerm}
-              onChange={e => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-            />
+      {/* History Control Center */}
+      <div className="space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 flex-1">
+            <div className="relative flex-1 max-w-full md:max-w-md group">
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-500 transition-colors" size={16} />
+              <input 
+                type="text" 
+                placeholder="Search batches..."
+                className="w-full pl-12 pr-6 py-3 sm:py-3.5 rounded-xl sm:rounded-[18px] bg-white border border-slate-100 shadow-sm outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all font-bold text-[13px]"
+                value={searchTerm}
+                onChange={e => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+              />
+            </div>
+            
+            <div className="flex items-center gap-2 bg-white p-1 rounded-xl sm:rounded-[18px] border border-slate-100 shadow-sm">
+              <button 
+                onClick={() => setViewType('grid')}
+                className={`p-2 rounded-lg transition-all ${viewType === 'grid' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                <LayoutGrid size={16} />
+              </button>
+              <button 
+                onClick={() => setViewType('list')}
+                className={`p-2 rounded-lg transition-all ${viewType === 'list' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                <ListIcon size={16} />
+              </button>
+            </div>
           </div>
+
           <div className="flex items-center gap-2 bg-white p-1.5 rounded-xl sm:rounded-[18px] border border-slate-100 shadow-sm">
             <select 
               className="bg-transparent pl-3 pr-7 py-1 text-[9px] sm:text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer flex-1"
@@ -163,61 +190,127 @@ const FarmerPortal: React.FC<FarmerPortalProps> = ({ batches, onNewBatch }) => {
             </button>
           </div>
         </div>
-        <div className="hidden lg:block text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">
-          {processedBatches.length} Entries
+
+        {/* Status Chips */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {(['ALL', 'PENDING', 'APPROVED', 'SOLD'] as const).map((s) => (
+            <button
+              key={s}
+              onClick={() => { setStatusFilter(s); setCurrentPage(1); }}
+              className={`whitespace-nowrap px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border transition-all
+                ${statusFilter === s 
+                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-100' 
+                  : 'bg-white text-slate-400 border-slate-100 hover:border-slate-300'}`}
+            >
+              {s}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* History Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {paginatedBatches.map((batch) => (
-          <div key={batch.id} className="bg-white p-6 sm:p-7 rounded-[28px] sm:rounded-[36px] shadow-sm border border-slate-100 group hover:shadow-xl transition-all duration-500">
-            <div className="flex items-start justify-between mb-5 sm:mb-6">
-              <div className="p-2.5 sm:p-3 bg-emerald-50 rounded-xl group-hover:scale-105 transition-transform">
-                <Leaf className="text-emerald-600 w-4 h-4 sm:w-5 sm:h-5" />
+      {/* History Display */}
+      {viewType === 'grid' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 animate-in fade-in duration-500">
+          {paginatedBatches.map((batch) => (
+            <div key={batch.id} className="bg-white p-6 sm:p-7 rounded-[28px] sm:rounded-[36px] shadow-sm border border-slate-100 group hover:shadow-xl transition-all duration-500">
+              <div className="flex items-start justify-between mb-5 sm:mb-6">
+                <div className="p-2.5 sm:p-3 bg-emerald-50 rounded-xl group-hover:scale-105 transition-transform">
+                  <Leaf className="text-emerald-600 w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+                <div className="flex flex-col items-end gap-1.5 text-right">
+                  <span className={`text-[7px] sm:text-[8px] font-black px-2.5 sm:px-3 py-1 rounded-full uppercase tracking-widest border
+                    ${batch.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 
+                      batch.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                      'bg-blue-50 text-blue-700 border-blue-100'}`}>
+                    {batch.status}
+                  </span>
+                  <span className="text-[8px] font-mono text-slate-400">#{batch.id.slice(0, 8)}</span>
+                </div>
               </div>
-              <div className="flex flex-col items-end gap-1.5 text-right">
-                <span className={`text-[7px] sm:text-[8px] font-black px-2.5 sm:px-3 py-1 rounded-full uppercase tracking-widest border
-                  ${batch.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 
-                    batch.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border-amber-100' :
-                    'bg-blue-50 text-blue-700 border-blue-100'}`}>
-                  {batch.status}
-                </span>
-                <span className="text-[8px] font-mono text-slate-400">#{batch.id.slice(0, 8)}</span>
+              
+              <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-5 leading-tight">{batch.species}</h3>
+              
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-5 sm:mb-6">
+                <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100">
+                  <p className="text-[7px] text-slate-400 uppercase font-black tracking-[0.2em] mb-1">Weight</p>
+                  <p className="font-black text-slate-900 text-base sm:text-lg">{batch.weight} <span className="text-[9px] font-medium text-slate-400">kg</span></p>
+                </div>
+                <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100">
+                  <p className="text-[7px] text-slate-400 uppercase font-black tracking-[0.2em] mb-1">AI Grade</p>
+                  <p className="font-black text-emerald-600 text-base sm:text-xl">{batch.qualityGrade || '---'}</p>
+                </div>
               </div>
-            </div>
-            
-            <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-4 sm:mb-5 leading-tight">{batch.species}</h3>
-            
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-5 sm:mb-6">
-              <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100">
-                <p className="text-[7px] text-slate-400 uppercase font-black tracking-[0.2em] mb-1">Weight</p>
-                <p className="font-black text-slate-900 text-base sm:text-lg">{batch.weight} <span className="text-[9px] font-medium text-slate-400">kg</span></p>
-              </div>
-              <div className="bg-slate-50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-100">
-                <p className="text-[7px] text-slate-400 uppercase font-black tracking-[0.2em] mb-1">AI Grade</p>
-                <p className="font-black text-emerald-600 text-base sm:text-xl">{batch.qualityGrade || '---'}</p>
-              </div>
-            </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-4 sm:pt-5 border-t border-slate-50 gap-4">
-              <div className="flex items-center gap-2 text-[8px] font-black text-slate-400 uppercase tracking-widest">
-                <Calendar size={10} /> {batch.harvestDate}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between pt-4 sm:pt-5 border-t border-slate-50 gap-4">
+                <div className="flex items-center gap-2 text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                  <Calendar size={10} /> {batch.harvestDate}
+                </div>
+                <button className="flex items-center justify-center gap-1.5 text-slate-900 font-black text-[9px] uppercase tracking-widest hover:text-emerald-600 transition-colors">
+                  Full Audit <ChevronRight size={12} />
+                </button>
               </div>
-              <button className="flex items-center justify-center gap-1.5 text-slate-900 font-black text-[9px] uppercase tracking-widest hover:text-emerald-600 transition-colors">
-                Details <ChevronRight size={12} />
-              </button>
             </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white rounded-[32px] border border-slate-100 overflow-hidden shadow-sm animate-in slide-in-from-bottom-4 duration-500">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead className="bg-slate-50 border-b border-slate-100 text-[9px] font-black uppercase tracking-widest text-slate-400">
+                <tr>
+                  <th className="px-8 py-5">Species</th>
+                  <th className="px-8 py-5">Status</th>
+                  <th className="px-8 py-5">Mass</th>
+                  <th className="px-8 py-5">Grade</th>
+                  <th className="px-8 py-5">Date</th>
+                  <th className="px-8 py-5 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {paginatedBatches.map((batch) => (
+                  <tr key={batch.id} className="hover:bg-slate-50/50 transition-colors group">
+                    <td className="px-8 py-5">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                          <Leaf size={14} />
+                        </div>
+                        <div>
+                          <p className="text-sm font-black text-slate-900">{batch.species}</p>
+                          <p className="text-[8px] font-mono text-slate-400 uppercase tracking-widest">#{batch.id.slice(0, 8)}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-8 py-5">
+                      <span className={`text-[8px] font-black px-2.5 py-1 rounded-lg uppercase tracking-widest border
+                        ${batch.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 
+                          batch.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border-amber-100' :
+                          'bg-blue-50 text-blue-700 border-blue-100'}`}>
+                        {batch.status}
+                      </span>
+                    </td>
+                    <td className="px-8 py-5 text-sm font-black text-slate-900">{batch.weight} kg</td>
+                    <td className="px-8 py-5 text-sm font-black text-emerald-600">{batch.qualityGrade || '---'}</td>
+                    <td className="px-8 py-5 text-xs font-medium text-slate-400 uppercase tracking-widest">{batch.harvestDate}</td>
+                    <td className="px-8 py-5 text-right">
+                      <button className="p-2 text-slate-400 hover:text-emerald-600 transition-colors group-hover:translate-x-1 transition-transform">
+                        <ChevronRight size={18} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        ))}
+        </div>
+      )}
 
-        {processedBatches.length === 0 && (
-          <div className="col-span-full py-16 sm:py-24 text-center bg-white rounded-[32px] sm:rounded-[48px] border-2 border-dashed border-slate-100">
-             <Clock size={40} className="mx-auto text-slate-100 mb-3" />
-             <h3 className="text-lg font-black text-slate-300">No Records Found</h3>
-          </div>
-        )}
-      </div>
+      {processedBatches.length === 0 && (
+        <div className="col-span-full py-16 sm:py-24 text-center bg-white rounded-[32px] sm:rounded-[48px] border-2 border-dashed border-slate-100">
+           <Clock size={40} className="mx-auto text-slate-100 mb-3" />
+           <h3 className="text-lg font-black text-slate-300">No Inventory Found</h3>
+           <p className="text-[9px] font-black text-slate-200 uppercase tracking-[0.2em] mt-2">Adjust filter protocols</p>
+        </div>
+      )}
 
       {/* Pagination */}
       {totalPages > 1 && (

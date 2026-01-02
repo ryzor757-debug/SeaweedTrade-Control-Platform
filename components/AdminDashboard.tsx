@@ -7,19 +7,40 @@ import {
   DollarSign, 
   FileText,
   AlertCircle,
-  Sparkles
+  Sparkles,
+  CalendarDays
 } from 'lucide-react';
 import { HarvestBatch, Order } from '../types';
 import { getMarketOverview } from '../geminiService';
 
-const data = [
-  { name: 'Jan', value: 4000, trade: 2400 },
-  { name: 'Feb', value: 3000, trade: 1398 },
-  { name: 'Mar', value: 2000, trade: 9800 },
-  { name: 'Apr', value: 2780, trade: 3908 },
-  { name: 'May', value: 1890, trade: 4800 },
-  { name: 'Jun', value: 2390, trade: 3800 },
-];
+const datasets = {
+  Weekly: [
+    { name: 'Mon', value: 2100, trade: 1200 },
+    { name: 'Tue', value: 2500, trade: 1800 },
+    { name: 'Wed', value: 2200, trade: 1400 },
+    { name: 'Thu', value: 2800, trade: 2600 },
+    { name: 'Fri', value: 3200, trade: 3100 },
+    { name: 'Sat', value: 1800, trade: 900 },
+    { name: 'Sun', value: 2000, trade: 1100 },
+  ],
+  Monthly: [
+    { name: 'Jan', value: 4000, trade: 2400 },
+    { name: 'Feb', value: 3000, trade: 1398 },
+    { name: 'Mar', value: 2000, trade: 9800 },
+    { name: 'Apr', value: 2780, trade: 3908 },
+    { name: 'May', value: 1890, trade: 4800 },
+    { name: 'Jun', value: 2390, trade: 3800 },
+  ],
+  Yearly: [
+    { name: '2020', value: 12000, trade: 45000 },
+    { name: '2021', value: 15000, trade: 52000 },
+    { name: '2022', value: 18000, trade: 74000 },
+    { name: '2023', value: 22000, trade: 89000 },
+    { name: '2024', value: 26000, trade: 105000 },
+  ]
+};
+
+type Timeframe = 'Weekly' | 'Monthly' | 'Yearly';
 
 interface AdminDashboardProps {
   batches: HarvestBatch[];
@@ -29,6 +50,7 @@ interface AdminDashboardProps {
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBatches }) => {
   const [aiInsight, setAiInsight] = useState("Analyzing market trends...");
+  const [timeframe, setTimeframe] = useState<Timeframe>('Monthly');
 
   useEffect(() => {
     getMarketOverview().then(setAiInsight);
@@ -44,30 +66,69 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
         {/* Analytics Main */}
         <div className="lg:col-span-2 bg-white p-6 md:p-8 rounded-[32px] sm:rounded-[40px] shadow-sm border border-slate-100">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <TrendingUp className="text-emerald-500" />
-              Trade Volume Dynamics
-            </h2>
-            <div className="px-3 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase tracking-widest rounded-full border border-emerald-100">
-              +14.2% Monthly Growth
+            <div className="space-y-1">
+              <h2 className="text-xl font-bold flex items-center gap-2 text-slate-900">
+                <TrendingUp className="text-emerald-500" />
+                Trade Volume Dynamics
+              </h2>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Real-time throughput analysis</p>
+            </div>
+            
+            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-2xl border border-slate-100">
+              {(['Weekly', 'Monthly', 'Yearly'] as Timeframe[]).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTimeframe(t)}
+                  className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all duration-300 ${
+                    timeframe === t 
+                    ? 'bg-white text-emerald-600 shadow-sm border border-slate-100' 
+                    : 'text-slate-400 hover:text-slate-600'
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
             </div>
           </div>
+
           <div className="h-[250px] sm:h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={data}>
+              <AreaChart data={datasets[timeframe]}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.1}/>
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#94a3b8'}} />
-                <YAxis hide />
-                <Tooltip 
-                  contentStyle={{borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontSize: '12px'}}
+                <XAxis 
+                  dataKey="name" 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{fontSize: 9, fill: '#94a3b8', fontWeight: 700}} 
+                  dy={10}
                 />
-                <Area type="monotone" dataKey="trade" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
+                <YAxis hide domain={['auto', 'auto']} />
+                <Tooltip 
+                  contentStyle={{
+                    borderRadius: '20px', 
+                    border: 'none', 
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', 
+                    fontSize: '11px',
+                    fontWeight: '800',
+                    padding: '12px 16px'
+                  }}
+                  cursor={{ stroke: '#10b981', strokeWidth: 1 }}
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="trade" 
+                  stroke="#10b981" 
+                  strokeWidth={4} 
+                  fillOpacity={1} 
+                  fill="url(#colorValue)" 
+                  animationDuration={1000}
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>

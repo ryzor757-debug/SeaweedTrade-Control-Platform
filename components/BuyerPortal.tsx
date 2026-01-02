@@ -115,7 +115,7 @@ const BuyerPortal: React.FC<BuyerPortalProps> = ({ availableBatches, onBuy }) =>
               <div className="mt-auto space-y-4">
                 <button 
                   onClick={() => handlePurchase(batch.id)}
-                  className="w-full flex items-center justify-center gap-2 py-5 bg-slate-900 hover:bg-emerald-600 text-white font-black rounded-[24px] transition-all active:scale-95 shadow-xl shadow-slate-200 group/btn"
+                  className="w-full flex items-center justify-center gap-2 py-5 bg-slate-900 hover:bg-emerald-600 text-white font-black rounded-[24px] transition-all duration-300 active:scale-95 hover:scale-[1.03] shadow-xl hover:shadow-2xl hover:shadow-emerald-200/50 shadow-slate-200 group/btn"
                 >
                   <ShoppingCart size={20} className="group-hover/btn:translate-x-1 transition-transform" />
                   Acquire Batch
