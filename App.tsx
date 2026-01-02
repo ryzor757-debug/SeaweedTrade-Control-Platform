@@ -29,6 +29,9 @@ import LogisticsPortal from './components/LogisticsPortal';
 import AdminDashboard from './components/AdminDashboard';
 import Sidebar from './components/Sidebar';
 import Logo from './components/Logo';
+import ContactSection from './components/ContactSection';
+import ChatWidget from './components/ChatWidget';
+import VisionPage from './components/VisionPage';
 import { getMarketOverview } from './geminiService';
 
 // Custom X (Twitter) Logo for a more premium, accurate brand representation
@@ -39,7 +42,7 @@ const XLogo = ({ size = 18 }: { size?: number }) => (
 );
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'landing' | 'app'>('landing');
+  const [view, setView] = useState<'landing' | 'app' | 'vision'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed for mobile/tablet
   const [marketInsight, setMarketInsight] = useState("");
@@ -76,9 +79,15 @@ const App: React.FC = () => {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
+  if (view === 'vision') {
+    return <VisionPage onBack={() => setView('landing')} />;
+  }
+
   if (view === 'landing') {
     return (
       <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-900">
+        <ChatWidget />
+        
         {/* Universal Navigation Bar */}
         <nav className="fixed top-0 w-full z-50 glass px-4 md:px-6 lg:px-12 py-3 lg:py-2 border-b border-slate-100">
           <div className="max-w-[1600px] mx-auto flex items-center justify-between">
@@ -87,9 +96,10 @@ const App: React.FC = () => {
             </div>
             
             <div className="hidden lg:flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
-              <a href="#vision" className="hover:text-emerald-600 transition-colors">Our Vision</a>
+              <button onClick={() => setView('vision')} className="hover:text-emerald-600 transition-colors uppercase">Our Vision</button>
               <a href="#stats" className="hover:text-emerald-600 transition-colors">Ecosystem Stats</a>
               <a href="#network" className="hover:text-emerald-600 transition-colors">Global Network</a>
+              <a href="#contact" className="hover:text-emerald-600 transition-colors">Contact Support</a>
             </div>
 
             <button 
@@ -124,8 +134,11 @@ const App: React.FC = () => {
                   >
                     Start Harvesting Data
                   </button>
-                  <button className="px-6 md:px-8 py-3.5 md:py-4.5 bg-white border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-[20px] font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3 group">
-                    View Network <Globe size={18} className="group-hover:rotate-12 transition-transform" />
+                  <button 
+                    onClick={() => setView('vision')}
+                    className="px-6 md:px-8 py-3.5 md:py-4.5 bg-white border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-[20px] font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3 group"
+                  >
+                    Our Vision <Globe size={18} className="group-hover:rotate-12 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -168,12 +181,18 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* Vision Section */}
+        {/* Simplified Vision Intro Section on Home */}
         <section id="vision" className="py-16 md:py-20 px-4 md:px-6 lg:px-12">
           <div className="max-w-[1600px] mx-auto">
             <div className="text-center max-w-xl mx-auto mb-12 md:mb-16">
-              <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-4 md:mb-5">The Triple Bottom Line</h2>
-              <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed">We don't just facilitate trade; we regenerate ecosystems, empower coastal families, and secure global supply chains.</p>
+              <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-4 md:mb-5">Our Core Pillars</h2>
+              <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed">Facilitating trade with transparency, scalability, and integrity.</p>
+              <button 
+                onClick={() => setView('vision')}
+                className="mt-6 px-6 py-2 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-emerald-100 transition-all"
+              >
+                Deep Dive into Our Vision
+              </button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
@@ -193,6 +212,9 @@ const App: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* Contact Section Integration */}
+        <ContactSection />
 
         <footer className="bg-white py-16 md:py-20 px-4 md:px-6 lg:px-12 border-t border-slate-100">
           <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
@@ -222,9 +244,9 @@ const App: React.FC = () => {
             <div>
               <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-900 mb-5 md:mb-6">Ecosystem</h4>
               <ul className="space-y-2 md:space-y-3 text-slate-500 font-bold text-[11px] md:text-xs">
+                <li className="hover:text-emerald-600 cursor-pointer transition-colors" onClick={() => setView('vision')}>Our Vision</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Farmer Portals</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Buyer Markets</li>
-                <li className="hover:text-emerald-600 cursor-pointer transition-colors">Logistics Mesh</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Admin Console</li>
               </ul>
             </div>
@@ -234,7 +256,7 @@ const App: React.FC = () => {
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">API Documentation</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Carbon Protocol</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Global Impact</li>
-                <li className="hover:text-emerald-600 cursor-pointer transition-colors">Legal Framework</li>
+                <li className="hover:text-emerald-600 cursor-pointer transition-colors" onClick={() => document.getElementById('contact')?.scrollIntoView()}>Contact Support</li>
               </ul>
             </div>
           </div>
