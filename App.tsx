@@ -17,7 +17,10 @@ import {
   Anchor,
   Droplets,
   Heart,
-  Home
+  Home,
+  Facebook,
+  Linkedin,
+  Instagram
 } from 'lucide-react';
 import { UserRole, HarvestBatch, Order } from './types';
 import FarmerPortal from './components/FarmerPortal';
@@ -27,6 +30,13 @@ import AdminDashboard from './components/AdminDashboard';
 import Sidebar from './components/Sidebar';
 import Logo from './components/Logo';
 import { getMarketOverview } from './geminiService';
+
+// Custom X (Twitter) Logo for a more premium, accurate brand representation
+const XLogo = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153ZM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644Z" />
+  </svg>
+);
 
 const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'app'>('landing');
@@ -70,17 +80,17 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-900">
         {/* Universal Navigation Bar */}
-        <nav className="fixed top-0 w-full z-50 glass px-4 md:px-6 lg:px-12 py-4 lg:py-6 border-b border-slate-100">
+        <nav className="fixed top-0 w-full z-50 glass px-4 md:px-6 lg:px-12 py-3 lg:py-5 border-b border-slate-100">
           <div className="max-w-[1600px] mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2 md:gap-3 group cursor-pointer" onClick={() => setView('landing')}>
-              <Logo className="w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110" />
+              <Logo className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
               <div className="flex flex-col -space-y-1">
-                <span className="text-lg md:text-xl lg:text-2xl font-black tracking-tighter text-slate-900 uppercase">SeaweedTrade</span>
-                <span className="text-[8px] md:text-[10px] font-bold text-emerald-600 tracking-widest uppercase">Global Ledger</span>
+                <span className="text-base md:text-lg lg:text-xl font-black tracking-tighter text-slate-900 uppercase">SeaweedTrade</span>
+                <span className="text-[7px] md:text-[9px] font-bold text-emerald-600 tracking-widest uppercase">Global Ledger</span>
               </div>
             </div>
             
-            <div className="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+            <div className="hidden lg:flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
               <a href="#vision" className="hover:text-emerald-600 transition-colors">Our Vision</a>
               <a href="#stats" className="hover:text-emerald-600 transition-colors">Ecosystem Stats</a>
               <a href="#network" className="hover:text-emerald-600 transition-colors">Global Network</a>
@@ -88,7 +98,7 @@ const App: React.FC = () => {
 
             <button 
               onClick={() => setView('app')}
-              className="bg-slate-900 text-white px-5 md:px-8 py-2.5 md:py-4 rounded-xl md:rounded-[20px] font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-600 hover:shadow-2xl hover:shadow-emerald-200 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
+              className="bg-slate-900 text-white px-5 md:px-7 py-2 md:py-3.5 rounded-xl md:rounded-[18px] font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-600 hover:shadow-2xl hover:shadow-emerald-200 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
             >
               Access <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} />
             </button>
@@ -96,43 +106,43 @@ const App: React.FC = () => {
         </nav>
 
         {/* Hero Section */}
-        <section className="relative pt-32 md:pt-48 pb-20 md:pb-32 px-4 md:px-6 lg:px-12 overflow-hidden">
+        <section className="relative pt-32 md:pt-44 pb-16 md:pb-28 px-4 md:px-6 lg:px-12 overflow-hidden">
           <div className="absolute top-0 right-0 w-64 md:w-[800px] h-64 md:h-[800px] bg-emerald-100/30 blur-[60px] md:blur-[150px] rounded-full -translate-y-1/2 translate-x-1/4 -z-10"></div>
           
           <div className="max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-              <div className="lg:col-span-7 space-y-8 md:space-y-12 animate-in slide-in-from-left duration-1000">
-                <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-6 py-1.5 md:py-2 rounded-full bg-emerald-50 text-emerald-700 text-[8px] md:text-[10px] font-black border border-emerald-100 uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-sm">
-                  <Anchor size={12} className="md:w-3.5 md:h-3.5" /> Decentralized Marine Commerce
+              <div className="lg:col-span-7 space-y-6 md:space-y-10 animate-in slide-in-from-left duration-1000">
+                <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-[8px] md:text-[9px] font-black border border-emerald-100 uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-sm">
+                  <Anchor size={12} className="md:w-3 md:h-3" /> Decentralized Marine Commerce
                 </div>
-                <h1 className="text-4xl sm:text-6xl lg:text-8xl xl:text-[110px] font-black text-slate-900 leading-[1.1] lg:leading-[0.9] tracking-tighter">
-                  Harmonizing <span className="text-emerald-600">Oceans</span> & Global Trade.
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 leading-[1.1] tracking-tighter">
+                  Harmonizing <span className="text-emerald-600">Oceans</span> <br className="hidden md:block"/> & Global Trade.
                 </h1>
-                <p className="text-lg md:text-xl lg:text-2xl text-slate-500 font-medium leading-relaxed max-w-2xl">
+                <p className="text-base md:text-lg lg:text-xl text-slate-500 font-medium leading-relaxed max-w-2xl">
                   SeaweedTrade is the world's first AI-governed ecosystem for the blue economy. We connect regenerative harvesters to global industry with absolute transparency.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 md:gap-6 pt-4">
+                <div className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-4">
                   <button 
                     onClick={() => setView('app')}
-                    className="group relative px-8 md:px-12 py-5 md:py-7 bg-emerald-600 text-white rounded-2xl md:rounded-[32px] font-black uppercase text-[10px] md:text-[11px] tracking-widest shadow-[0_20px_40px_-15px_rgba(16,185,129,0.3)] hover:bg-emerald-700 transition-all text-center"
+                    className="group relative px-8 md:px-10 py-4 md:py-6 bg-emerald-600 text-white rounded-xl md:rounded-[24px] font-black uppercase text-[10px] md:text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition-all text-center"
                   >
                     Start Harvesting Data
                   </button>
-                  <button className="px-8 md:px-12 py-5 md:py-7 bg-white border-2 border-slate-100 text-slate-900 rounded-2xl md:rounded-[32px] font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3 group">
+                  <button className="px-8 md:px-10 py-4 md:py-6 bg-white border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-[24px] font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3 group">
                     View Network <Globe size={18} className="group-hover:rotate-12 transition-transform" />
                   </button>
                 </div>
               </div>
               <div className="lg:col-span-5 relative animate-in zoom-in duration-1000 mt-12 lg:mt-0">
-                <div className="relative z-10 p-2 md:p-4 bg-white rounded-[40px] md:rounded-[80px] shadow-2xl transition-transform duration-700">
+                <div className="relative z-10 p-2 md:p-3 bg-white rounded-[40px] md:rounded-[60px] shadow-2xl transition-transform duration-700">
                    <img 
                     src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1200" 
                     alt="Marine Kelp Forest" 
-                    className="rounded-[30px] md:rounded-[64px] object-cover h-[350px] md:h-[550px] w-full"
+                    className="rounded-[30px] md:rounded-[52px] object-cover h-[300px] md:h-[450px] w-full"
                   />
-                  <div className="absolute -bottom-6 md:-bottom-10 -left-6 md:-left-10 bg-slate-900 text-white p-6 md:p-10 rounded-3xl md:rounded-[48px] shadow-2xl border-4 md:border-[8px] border-white max-w-[180px] md:max-w-[280px]">
-                    <p className="text-2xl md:text-4xl font-black text-emerald-400 mb-1">98.4%</p>
-                    <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Carbon Efficiency</p>
+                  <div className="absolute -bottom-4 md:-bottom-8 -left-4 md:-left-8 bg-slate-900 text-white p-5 md:p-8 rounded-2xl md:rounded-[36px] shadow-2xl border-4 md:border-[6px] border-white max-w-[150px] md:max-w-[220px]">
+                    <p className="text-xl md:text-3xl font-black text-emerald-400 mb-0.5">98.4%</p>
+                    <p className="text-[7px] md:text-[9px] font-black uppercase tracking-widest text-slate-400">Carbon Efficiency</p>
                   </div>
                 </div>
               </div>
@@ -141,7 +151,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Stats Section */}
-        <section id="stats" className="py-16 md:py-24 bg-slate-50 border-y border-slate-100 px-4 md:px-6">
+        <section id="stats" className="py-12 md:py-20 bg-slate-50 border-y border-slate-100 px-4 md:px-6">
           <div className="max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
@@ -150,12 +160,12 @@ const App: React.FC = () => {
                 { label: 'Carbon Credits', val: '8.4M t', icon: Droplets, color: 'text-teal-600' },
                 { label: 'Communities', val: '412', icon: Heart, color: 'text-rose-600' },
               ].map((stat, i) => (
-                <div key={i} className="bg-white p-8 md:p-10 rounded-3xl md:rounded-[48px] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                  <div className={`${stat.color} mb-6 p-4 bg-slate-50 rounded-2xl md:rounded-3xl inline-block`}>
-                    <stat.icon size={28} />
+                <div key={i} className="bg-white p-6 md:p-8 rounded-2xl md:rounded-[36px] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                  <div className={`${stat.color} mb-4 p-3 bg-slate-50 rounded-xl md:rounded-2xl inline-block`}>
+                    <stat.icon size={24} />
                   </div>
-                  <p className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter mb-2">{stat.val}</p>
-                  <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-slate-400">{stat.label}</p>
+                  <p className="text-2xl md:text-4xl font-black text-slate-900 tracking-tighter mb-1.5">{stat.val}</p>
+                  <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -163,52 +173,62 @@ const App: React.FC = () => {
         </section>
 
         {/* Vision Section */}
-        <section id="vision" className="py-20 md:py-32 px-4 md:px-6 lg:px-12">
+        <section id="vision" className="py-16 md:py-24 px-4 md:px-6 lg:px-12">
           <div className="max-w-[1600px] mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-              <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-6 md:mb-8">The Triple Bottom Line</h2>
-              <p className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed">We don't just facilitate trade; we regenerate ecosystems, empower coastal families, and secure global supply chains.</p>
+            <div className="text-center max-w-2xl mx-auto mb-12 md:mb-20">
+              <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-4 md:mb-6">The Triple Bottom Line</h2>
+              <p className="text-base md:text-lg text-slate-500 font-medium leading-relaxed">We don't just facilitate trade; we regenerate ecosystems, empower coastal families, and secure global supply chains.</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
               {[
                 { title: 'Environment', desc: 'Active ocean reforestation through sustainable seaweed farming practices verified by satellite telemetry.', icon: Droplets, color: 'bg-blue-50 text-blue-600' },
                 { title: 'Social Impact', desc: 'Direct liquidity for coastal harvesters, removing predatory middlemen and ensuring fair wage protocols.', icon: Heart, color: 'bg-rose-50 text-rose-600' },
                 { title: 'Economic Integrity', desc: 'Fractionalized trade ownership and AI-driven quality validation for pharmaceutical and food grade markets.', icon: ShieldCheck, color: 'bg-emerald-50 text-emerald-600' },
               ].map((item, i) => (
-                <div key={i} className="relative p-8 md:p-12 bg-white rounded-[40px] md:rounded-[64px] border border-slate-100 hover:border-emerald-200 transition-all group">
-                  <div className={`h-16 w-16 md:h-20 md:w-20 ${item.color} rounded-2xl md:rounded-[28px] flex items-center justify-center mb-8 md:mb-10 transition-transform`}>
-                    <item.icon size={32} className="md:w-10 md:h-10" />
+                <div key={i} className="relative p-7 md:p-10 bg-white rounded-[32px] md:rounded-[48px] border border-slate-100 hover:border-emerald-200 transition-all group">
+                  <div className={`h-14 w-14 md:h-16 md:w-16 ${item.color} rounded-xl md:rounded-[22px] flex items-center justify-center mb-6 md:mb-8 transition-transform`}>
+                    <item.icon size={28} className="md:w-8 md:h-8" />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-4 md:mb-6">{item.title}</h3>
-                  <p className="text-slate-500 leading-relaxed font-medium text-sm md:text-base">{item.desc}</p>
+                  <h3 className="text-lg md:text-xl font-black text-slate-900 mb-3 md:mb-4">{item.title}</h3>
+                  <p className="text-slate-500 leading-relaxed font-medium text-xs md:text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <footer className="bg-white py-20 md:py-32 px-4 md:px-6 lg:px-12 border-t border-slate-100">
-          <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-20">
-            <div className="sm:col-span-2 space-y-6 md:space-y-8">
+        <footer className="bg-white py-16 md:py-24 px-4 md:px-6 lg:px-12 border-t border-slate-100">
+          <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
+            <div className="sm:col-span-2 space-y-8">
               <div className="flex items-center gap-3">
-                <Logo className="w-10 h-10 md:w-12 md:h-12" />
-                <span className="text-xl font-black tracking-tighter text-slate-900 uppercase">SeaweedTrade</span>
+                <Logo className="w-8 h-8 md:w-10 md:h-10" />
+                <span className="text-lg font-black tracking-tighter text-slate-900 uppercase">SeaweedTrade</span>
               </div>
-              <p className="text-slate-400 font-medium max-w-sm text-sm">
+              <p className="text-slate-400 font-medium max-w-sm text-xs md:text-sm leading-relaxed">
                 Redefining global marine trade through decentralized ledger technology and neural quality validation.
               </p>
-              <div className="flex gap-4">
-                {[Globe, Activity, ShieldCheck].map((I, i) => (
-                  <div key={i} className="h-10 w-10 md:h-12 md:w-12 rounded-xl md:rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-emerald-600 transition-colors cursor-pointer border border-slate-100 shadow-sm">
-                    <I size={18} />
-                  </div>
+              <div className="flex items-center gap-3">
+                {[
+                  { Icon: Linkedin, color: 'hover:bg-[#0077b5]', label: 'LinkedIn' },
+                  { Icon: XLogo, color: 'hover:bg-[#000000]', label: 'X' },
+                  { Icon: Instagram, color: 'hover:bg-[#E1306C]', label: 'Instagram' },
+                  { Icon: Facebook, color: 'hover:bg-[#1877F2]', label: 'Facebook' },
+                ].map((social, i) => (
+                  <a 
+                    key={i} 
+                    href="#" 
+                    aria-label={social.label}
+                    className={`h-10 w-10 rounded-[14px] bg-slate-50 flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 ${social.color}`}
+                  >
+                    <social.Icon size={18} />
+                  </a>
                 ))}
               </div>
             </div>
             <div>
-              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900 mb-6 md:mb-8">Ecosystem</h4>
-              <ul className="space-y-3 md:space-y-4 text-slate-500 font-bold text-xs md:text-sm">
+              <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-900 mb-5 md:mb-6">Ecosystem</h4>
+              <ul className="space-y-2 md:space-y-3 text-slate-500 font-bold text-[11px] md:text-xs">
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Farmer Portals</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Buyer Markets</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Logistics Mesh</li>
@@ -216,8 +236,8 @@ const App: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900 mb-6 md:mb-8">Resources</h4>
-              <ul className="space-y-3 md:space-y-4 text-slate-500 font-bold text-xs md:text-sm">
+              <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-900 mb-5 md:mb-6">Resources</h4>
+              <ul className="space-y-2 md:space-y-3 text-slate-500 font-bold text-[11px] md:text-xs">
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">API Documentation</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Carbon Protocol</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Global Impact</li>
@@ -225,9 +245,9 @@ const App: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="max-w-[1600px] mx-auto mt-20 md:mt-32 pt-10 md:pt-12 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 text-center">© 2024 SEAWEEDTRADE PROTOCOL. ALL RIGHTS RESERVED.</p>
-            <div className="flex gap-6 md:gap-10 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">
+          <div className="max-w-[1600px] mx-auto mt-16 md:mt-24 pt-8 md:pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400 text-center">© 2024 SEAWEEDTRADE PROTOCOL. ALL RIGHTS RESERVED.</p>
+            <div className="flex gap-6 md:gap-10 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400">
               <span className="hover:text-slate-900 cursor-pointer transition-colors">Privacy Policy</span>
               <span className="hover:text-slate-900 cursor-pointer transition-colors">Terms of Service</span>
             </div>
@@ -249,42 +269,42 @@ const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className={`flex-1 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'ml-0'} p-4 sm:p-6 md:p-8 lg:p-12 pb-32 w-full overflow-x-hidden`}>
-        <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-16 gap-6 md:gap-8">
+        <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-12 gap-6 md:gap-8">
           <div className="flex items-center gap-4 md:gap-6">
             <button 
                onClick={toggleSidebar}
                className="lg:hidden p-3 bg-white shadow-sm border border-slate-100 rounded-xl text-slate-600 hover:text-emerald-600"
             >
-              <Menu size={20} />
+              <Menu size={18} />
             </button>
             <button 
                onClick={() => setView('landing')}
-               className="p-4 md:p-5 bg-white shadow-sm hover:shadow-lg border border-slate-100 rounded-2xl md:rounded-[24px] text-slate-400 hover:text-emerald-600 transition-all group"
+               className="p-3.5 md:p-4 bg-white shadow-sm hover:shadow-lg border border-slate-100 rounded-xl md:rounded-[20px] text-slate-400 hover:text-emerald-600 transition-all group"
                title="Back to Home Page"
             >
-              <Home size={18} className="md:w-5 md:h-5 group-hover:scale-110 transition-transform" />
+              <Home size={16} className="md:w-4.5 md:h-4.5 group-hover:scale-110 transition-transform" />
             </button>
             <div className="flex items-center gap-3">
-              <Logo className="w-8 h-8 md:w-10 md:h-10 hidden sm:block" />
+              <Logo className="w-7 h-7 md:w-9 md:h-9 hidden sm:block" />
               <div>
-                <h1 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-2 md:gap-3">
+                <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2 md:gap-3">
                   <span className="text-emerald-600">Marine</span> Ledger
                 </h1>
-                <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] md:tracking-[0.4em] mt-1 md:mt-2">
-                  Node ID: US-WEST-MAR-01 &bull; {role}
+                <p className="text-[7px] md:text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] md:tracking-[0.4em] mt-0.5 md:mt-1">
+                  Node ID: US-WEST-MAR-01 & bull; {role}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-4 md:gap-8">
-            <div className="hidden lg:flex items-center gap-4 px-6 py-3 bg-white rounded-[24px] border border-slate-100 shadow-sm">
-              <Search size={18} className="text-slate-300" />
-              <input type="text" placeholder="Search Ledger..." className="bg-transparent text-xs font-bold outline-none w-32 xl:w-48" />
+            <div className="hidden lg:flex items-center gap-4 px-5 py-2.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
+              <Search size={16} className="text-slate-300" />
+              <input type="text" placeholder="Search Ledger..." className="bg-transparent text-[11px] font-bold outline-none w-28 xl:w-40" />
             </div>
             <div className="flex items-center gap-3 md:gap-4">
-              <div className="h-12 w-12 md:h-16 md:w-16 rounded-[18px] md:rounded-[28px] bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-xl shadow-emerald-200 cursor-pointer hover:scale-105 transition-transform">
-                <UserCircle size={28} className="md:w-8 md:h-8" />
+              <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl md:rounded-[18px] bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-xl shadow-emerald-200 cursor-pointer hover:scale-105 transition-transform">
+                <UserCircle size={24} className="md:w-6 md:h-6" />
               </div>
             </div>
           </div>
@@ -331,16 +351,16 @@ const App: React.FC = () => {
         </div>
 
         {/* Responsive Command Bar */}
-        <div className="fixed bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-auto">
-           <div className="glass px-4 sm:px-8 py-4 sm:py-5 rounded-[28px] sm:rounded-[40px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] border border-white/40 flex items-center justify-between sm:justify-start gap-4 sm:gap-10">
+        <div className="fixed bottom-5 md:bottom-8 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-auto">
+           <div className="glass px-4 sm:px-6 py-3.5 sm:py-4 rounded-2xl sm:rounded-[32px] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] border border-white/40 flex items-center justify-between sm:justify-start gap-4 sm:gap-8">
               <button 
                 onClick={() => setView('landing')}
                 className="flex flex-col items-center gap-1 transition-all duration-300 text-slate-400 hover:text-emerald-600"
               >
-                <Home size={18} className="sm:w-5 sm:h-5" />
-                <span className="text-[8px] font-black uppercase tracking-widest hidden sm:inline">Home</span>
+                <Home size={16} className="sm:w-4.5 sm:h-4.5" />
+                <span className="text-[7px] font-black uppercase tracking-widest hidden sm:inline">Home</span>
               </button>
-              <div className="hidden sm:block w-px h-8 bg-slate-200/50"></div>
+              <div className="hidden sm:block w-px h-6 bg-slate-200/50"></div>
               {[
                 { r: UserRole.ADMIN, i: LayoutDashboard, l: 'Admin' },
                 { r: UserRole.FARMER, i: Waves, l: 'Farmer' },
@@ -350,10 +370,10 @@ const App: React.FC = () => {
                 <button 
                   key={btn.r}
                   onClick={() => setRole(btn.r)}
-                  className={`flex flex-col items-center gap-1 transition-all duration-300 ${role === btn.r ? 'text-emerald-600 scale-110 sm:scale-110' : 'text-slate-400 hover:text-slate-600'}`}
+                  className={`flex flex-col items-center gap-1 transition-all duration-300 ${role === btn.r ? 'text-emerald-600 scale-105 sm:scale-105' : 'text-slate-400 hover:text-slate-600'}`}
                 >
-                  <btn.i size={18} className="sm:w-5 sm:h-5" strokeWidth={role === btn.r ? 3 : 2} />
-                  <span className="text-[8px] font-black uppercase tracking-widest hidden sm:inline">{btn.l}</span>
+                  <btn.i size={16} className="sm:w-4.5 sm:h-4.5" strokeWidth={role === btn.r ? 3 : 2} />
+                  <span className="text-[7px] font-black uppercase tracking-widest hidden sm:inline">{btn.l}</span>
                 </button>
               ))}
            </div>

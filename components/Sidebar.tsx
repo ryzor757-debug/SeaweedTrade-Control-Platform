@@ -9,10 +9,19 @@ import {
   ShieldCheck,
   Zap,
   Home,
-  X
+  X,
+  Linkedin,
+  Instagram
 } from 'lucide-react';
 import { UserRole } from '../types';
 import Logo from './Logo';
+
+// Custom X (Twitter) Logo for brand accuracy
+const XLogo = ({ size = 14 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153ZM17.61 20.644h2.039L6.486 3.24H4.298L17.61 20.644Z" />
+  </svg>
+);
 
 interface SidebarProps {
   role: UserRole;
@@ -42,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
         className={`fixed top-0 left-0 h-full bg-[#022c22] text-slate-300 w-64 transform transition-transform duration-500 ease-in-out z-50 flex flex-col border-r border-white/5 shadow-2xl
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
-        <div className="p-8">
+        <div className="p-8 pb-4 flex-1 overflow-y-auto">
           <div className="flex items-center justify-between mb-12">
             <div className="flex items-center gap-3 text-white cursor-pointer group" onClick={() => { setView('landing'); onClose(); }}>
               <Logo className="w-8 h-8 md:w-10 md:h-10" />
@@ -96,21 +105,27 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
           </nav>
         </div>
 
-        <div className="mt-auto p-8 space-y-6">
-          <div className="bg-white/5 p-5 rounded-3xl border border-white/10 relative overflow-hidden group">
-            <div className="absolute -right-4 -top-4 text-emerald-500/10 group-hover:scale-150 transition-transform duration-700">
-              <Zap size={64} />
-            </div>
-            <div className="flex items-center gap-2 text-emerald-400 mb-2">
+        <div className="p-8 pt-0 space-y-6">
+          <div className="bg-white/5 p-4 rounded-2xl border border-white/10 relative overflow-hidden group">
+            <div className="flex items-center gap-2 text-emerald-400 mb-3">
               <ShieldCheck size={14} />
-              <span className="text-[9px] font-black uppercase tracking-wider">Secure Node</span>
+              <span className="text-[8px] font-black uppercase tracking-wider">Protocol Security</span>
             </div>
-            <p className="text-[9px] leading-relaxed text-slate-400 font-medium">
-              Data encrypted via marine mesh protocol.
-            </p>
+            <div className="flex gap-2">
+              {/* Fix: Wrap icon components in objects to fix JSX type inference issues in the map function */}
+              {[
+                { Icon: Linkedin },
+                { Icon: XLogo },
+                { Icon: Instagram }
+              ].map((social, i) => (
+                <a key={i} href="#" className="h-8 w-8 rounded-lg bg-white/5 hover:bg-emerald-600/20 flex items-center justify-center text-slate-500 hover:text-emerald-400 border border-white/5 transition-all">
+                  <social.Icon size={14} />
+                </a>
+              ))}
+            </div>
           </div>
           
-          <div className="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-white transition-all cursor-pointer rounded-2xl hover:bg-white/5">
+          <div className="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-white transition-all cursor-pointer rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/5">
             <LogOut size={18} />
             <span className="font-bold text-sm">Sign Out</span>
           </div>
