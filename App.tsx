@@ -33,6 +33,7 @@ import ContactSection from './components/ContactSection';
 import ChatWidget from './components/ChatWidget';
 import VisionPage from './components/VisionPage';
 import SupportPage from './components/SupportPage';
+import AboutPage from './components/AboutPage';
 import { getMarketOverview } from './geminiService';
 
 // Custom X (Twitter) Logo for a more premium, accurate brand representation
@@ -43,7 +44,7 @@ const XLogo = ({ size = 18 }: { size?: number }) => (
 );
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support'>('landing');
+  const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support' | 'about'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed for mobile/tablet
   const [marketInsight, setMarketInsight] = useState("");
@@ -88,6 +89,16 @@ const App: React.FC = () => {
     return <SupportPage onBack={() => setView('landing')} />;
   }
 
+  if (view === 'about') {
+    return (
+      <AboutPage 
+        onBack={() => setView('landing')} 
+        onJoin={() => setView('app')} 
+        onViewVision={() => setView('vision')}
+      />
+    );
+  }
+
   if (view === 'landing') {
     return (
       <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-900">
@@ -101,9 +112,9 @@ const App: React.FC = () => {
             </div>
             
             <div className="hidden lg:flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
+              <button onClick={() => setView('about')} className="hover:text-emerald-600 transition-colors uppercase">About Us</button>
               <button onClick={() => setView('vision')} className="hover:text-emerald-600 transition-colors uppercase">Our Vision</button>
               <a href="#stats" className="hover:text-emerald-600 transition-colors">Ecosystem Stats</a>
-              <a href="#network" className="hover:text-emerald-600 transition-colors">Global Network</a>
               <button onClick={() => setView('support')} className="hover:text-emerald-600 transition-colors uppercase">Contact Support</button>
             </div>
 
@@ -193,10 +204,10 @@ const App: React.FC = () => {
               <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-4 md:mb-5">Our Core Pillars</h2>
               <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed">Facilitating trade with transparency, scalability, and integrity.</p>
               <button 
-                onClick={() => setView('vision')}
+                onClick={() => setView('about')}
                 className="mt-6 px-6 py-2 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-emerald-100 transition-all"
               >
-                Deep Dive into Our Vision
+                Learn More About Us
               </button>
             </div>
             
@@ -249,10 +260,10 @@ const App: React.FC = () => {
             <div>
               <h4 className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-900 mb-5 md:mb-6">Ecosystem</h4>
               <ul className="space-y-2 md:space-y-3 text-slate-500 font-bold text-[11px] md:text-xs">
+                <li className="hover:text-emerald-600 cursor-pointer transition-colors" onClick={() => setView('about')}>About Us</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors" onClick={() => setView('vision')}>Our Vision</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Farmer Portals</li>
                 <li className="hover:text-emerald-600 cursor-pointer transition-colors">Buyer Markets</li>
-                <li className="hover:text-emerald-600 cursor-pointer transition-colors">Admin Console</li>
               </ul>
             </div>
             <div>
