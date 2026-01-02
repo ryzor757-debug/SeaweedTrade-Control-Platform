@@ -15,7 +15,7 @@ import {
   BarChart3,
   Scale
 } from 'lucide-react';
-import Logo from './Logo.tsx';
+import Logo from './Logo';
 
 interface WhySeaweedPageProps {
   onBack: () => void;

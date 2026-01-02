@@ -10,7 +10,7 @@ import {
   Anchor,
   ChevronRight
 } from 'lucide-react';
-import Logo from './Logo.tsx';
+import Logo from './Logo';
 
 interface VisionPageProps {
   onBack: () => void;
@@ -140,8 +140,7 @@ const VisionPage: React.FC<VisionPageProps> = ({ onBack }) => {
             >
               <div className="absolute top-0 right-0 p-6 md:p-8 text-6xl md:text-8xl font-black text-white/5 group-hover:text-white/10">{item.step}</div>
               <div className="mb-6 md:mb-10 p-4 md:p-5 bg-white/5 rounded-xl md:rounded-2xl inline-block">
-                {/* Fixed: Merged multiple className attributes into one */}
-                <item.icon className="text-emerald-400 group-hover:text-white md:w-8 md:h-8" size={24} />
+                <item.icon className="text-emerald-400 group-hover:text-white" size={24} />
               </div>
               <h4 className="text-xl md:text-3xl font-black mb-4 md:mb-6 tracking-tight">{item.title}</h4>
               <p className="text-sm md:text-lg text-slate-400 group-hover:text-emerald-50 leading-relaxed font-medium">
