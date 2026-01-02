@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { 
   PlusCircle, 
@@ -20,12 +19,11 @@ import {
   AlertCircle,
   PackageCheck
 } from 'lucide-react';
-import { HarvestBatch } from '../types.ts';
-import { analyzeHarvest } from '../geminiService.ts';
+import { HarvestBatch } from '../types';
+import { analyzeHarvest } from '../geminiService';
 
 const ITEMS_PER_PAGE = 6;
 
-// Added FarmerPortalProps interface to fix "Cannot find name 'FarmerPortalProps'" error on line 27
 interface FarmerPortalProps {
   batches: HarvestBatch[];
   onNewBatch: (batch: Partial<HarvestBatch>) => void;

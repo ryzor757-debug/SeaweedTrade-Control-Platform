@@ -10,8 +10,8 @@ import {
   Sparkles,
   CalendarDays
 } from 'lucide-react';
-import { HarvestBatch, Order } from '../types.ts';
-import { getMarketOverview } from '../geminiService.ts';
+import { HarvestBatch, Order } from '../types';
+import { getMarketOverview } from '../geminiService';
 
 const datasets = {
   Weekly: [
