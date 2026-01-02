@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Using relative base path './' is the most reliable setting for GitHub Pages 
-  // as it ensures assets load correctly regardless of the repository subfolder.
+  // Using relative base path './' is the most robust setting for GitHub Pages 
+  // as it ensures assets load correctly regardless of the repository subfolder name.
   base: './',
   define: {
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
