@@ -64,22 +64,22 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Analytics Main */}
-        <div className="lg:col-span-2 bg-white p-6 md:p-8 rounded-[32px] sm:rounded-[40px] shadow-sm border border-slate-100">
+        <div className="lg:col-span-2 bg-white p-5 sm:p-8 rounded-[32px] sm:rounded-[40px] shadow-sm border border-slate-100 overflow-hidden">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div className="space-y-1">
-              <h2 className="text-xl font-bold flex items-center gap-2 text-slate-900">
-                <TrendingUp className="text-emerald-500" />
+              <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 text-slate-900">
+                <TrendingUp className="text-emerald-500" size={18} />
                 Trade Volume Dynamics
               </h2>
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Real-time throughput analysis</p>
+              <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Real-time throughput analysis</p>
             </div>
             
-            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-2xl border border-slate-100">
+            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-xl sm:rounded-2xl border border-slate-100 self-stretch sm:self-auto overflow-x-auto scrollbar-hide">
               {(['Weekly', 'Monthly', 'Yearly'] as Timeframe[]).map((t) => (
                 <button
                   key={t}
                   onClick={() => setTimeframe(t)}
-                  className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all duration-300 ${
+                  className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-[8px] sm:text-[9px] font-black uppercase tracking-widest transition-all duration-300 whitespace-nowrap ${
                     timeframe === t 
                     ? 'bg-white text-emerald-600 shadow-sm border border-slate-100' 
                     : 'text-slate-400 hover:text-slate-600'
@@ -91,7 +91,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
             </div>
           </div>
 
-          <div className="h-[250px] sm:h-[300px] w-full">
+          <div className="h-[200px] sm:h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={datasets[timeframe]}>
                 <defs>
@@ -105,18 +105,18 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
                   dataKey="name" 
                   axisLine={false} 
                   tickLine={false} 
-                  tick={{fontSize: 9, fill: '#94a3b8', fontWeight: 700}} 
+                  tick={{fontSize: 8, fill: '#94a3b8', fontWeight: 700}} 
                   dy={10}
                 />
                 <YAxis hide domain={['auto', 'auto']} />
                 <Tooltip 
                   contentStyle={{
-                    borderRadius: '20px', 
+                    borderRadius: '16px', 
                     border: 'none', 
-                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', 
-                    fontSize: '11px',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', 
+                    fontSize: '10px',
                     fontWeight: '800',
-                    padding: '12px 16px'
+                    padding: '10px 14px'
                   }}
                   cursor={{ stroke: '#10b981', strokeWidth: 1 }}
                 />
@@ -124,7 +124,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
                   type="monotone" 
                   dataKey="trade" 
                   stroke="#10b981" 
-                  strokeWidth={4} 
+                  strokeWidth={3} 
                   fillOpacity={1} 
                   fill="url(#colorValue)" 
                   animationDuration={1000}
@@ -135,29 +135,29 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
         </div>
 
         {/* AI Insight Sidebar */}
-        <div className="bg-emerald-900 text-emerald-50 p-6 md:p-8 rounded-[32px] sm:rounded-[40px] shadow-xl relative overflow-hidden flex flex-col min-h-[350px]">
+        <div className="bg-[#043927] text-emerald-50 p-6 sm:p-8 rounded-[32px] sm:rounded-[40px] shadow-xl relative overflow-hidden flex flex-col min-h-[300px]">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <Sparkles size={120} />
+            <Sparkles size={100} />
           </div>
           <div className="flex items-center gap-2 mb-6">
-            <Sparkles className="text-emerald-400" size={20} />
-            <h3 className="font-bold text-lg">Market Intel</h3>
+            <Sparkles className="text-emerald-400" size={18} />
+            <h3 className="font-bold text-base sm:text-lg">Market Intel</h3>
           </div>
-          <div className="flex-1 overflow-y-auto text-xs sm:text-sm leading-relaxed space-y-4 pr-2 custom-scrollbar">
-            <p className="bg-white/10 p-5 rounded-2xl italic border border-white/5 font-medium leading-relaxed">
-              "{aiInsight.slice(0, 350)}..."
+          <div className="flex-1 overflow-y-auto text-xs sm:text-sm leading-relaxed space-y-4 pr-1 scrollbar-hide">
+            <p className="bg-white/10 p-4 sm:p-5 rounded-2xl italic border border-white/5 font-medium leading-relaxed">
+              "{aiInsight.slice(0, 300)}..."
             </p>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest opacity-60">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-widest opacity-60">
                 <span>Confidence Factor</span>
                 <span className="text-emerald-400">98.2%</span>
               </div>
-              <div className="w-full bg-white/10 h-1.5 rounded-full">
+              <div className="w-full bg-white/10 h-1 rounded-full">
                 <div className="bg-emerald-400 h-full w-[98%] rounded-full shadow-[0_0_8px_rgba(52,211,153,0.5)]"></div>
               </div>
             </div>
           </div>
-          <button className="mt-8 w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-black uppercase text-[10px] tracking-widest rounded-2xl transition-all shadow-lg active:scale-95">
+          <button className="mt-6 w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-white font-black uppercase text-[9px] tracking-widest rounded-xl sm:rounded-2xl transition-all shadow-lg active:scale-95">
             Full Analysis
           </button>
         </div>
@@ -165,39 +165,39 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
 
       {/* Pending Controls Table */}
       <div className="bg-white rounded-[32px] sm:rounded-[40px] shadow-sm border border-slate-100 overflow-hidden">
-        <div className="p-6 sm:p-8 border-b border-slate-50 flex items-center justify-between">
-          <h2 className="text-lg font-bold flex items-center gap-2">
-            <Clock className="text-orange-500" />
+        <div className="p-5 sm:p-8 border-b border-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h2 className="text-base sm:text-lg font-bold flex items-center gap-2">
+            <Clock className="text-orange-500" size={18} />
             Queued Approvals
           </h2>
-          <button className="text-[10px] font-black uppercase tracking-widest text-emerald-600 hover:bg-emerald-50 px-4 py-2 rounded-xl transition-colors">Audit All</button>
+          <button className="text-[9px] font-black uppercase tracking-widest text-emerald-600 hover:bg-emerald-50 px-4 py-2 rounded-xl transition-colors border border-transparent hover:border-emerald-100">Audit All</button>
         </div>
         
         {/* Table Safe Wrapper */}
-        <div className="w-full overflow-x-auto">
-          <table className="w-full text-left min-w-[800px]">
-            <thead className="bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest">
+        <div className="w-full overflow-x-auto scrollbar-hide">
+          <table className="w-full text-left min-w-[700px]">
+            <thead className="bg-slate-50 text-slate-500 text-[9px] font-black uppercase tracking-widest">
               <tr>
-                <th className="px-8 py-5">Node / ID</th>
-                <th className="px-8 py-5">Origin</th>
-                <th className="px-8 py-5">Species</th>
-                <th className="px-8 py-5">Mass</th>
-                <th className="px-8 py-5">Timestamp</th>
-                <th className="px-8 py-5">Control</th>
+                <th className="px-6 sm:px-8 py-4 sm:py-5">Node / ID</th>
+                <th className="px-6 sm:px-8 py-4 sm:py-5">Origin</th>
+                <th className="px-6 sm:px-8 py-4 sm:py-5">Species</th>
+                <th className="px-6 sm:px-8 py-4 sm:py-5">Mass</th>
+                <th className="px-6 sm:px-8 py-4 sm:py-5">Timestamp</th>
+                <th className="px-6 sm:px-8 py-4 sm:py-5">Control</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
               {batches.filter(b => b.status === 'PENDING').map((batch) => (
                 <tr key={batch.id} className="hover:bg-slate-50 transition-colors group">
-                  <td className="px-8 py-5 font-mono text-xs font-bold text-slate-400 group-hover:text-slate-900">#{batch.id.slice(0, 8)}</td>
-                  <td className="px-8 py-5 text-sm font-bold text-slate-600">{batch.farmerId}</td>
-                  <td className="px-8 py-5 text-sm font-medium text-slate-700">{batch.species}</td>
-                  <td className="px-8 py-5 text-sm font-black text-slate-900">{batch.weight} kg</td>
-                  <td className="px-8 py-5 text-xs font-medium text-slate-400 uppercase tracking-tighter">{batch.harvestDate}</td>
-                  <td className="px-8 py-5">
+                  <td className="px-6 sm:px-8 py-4 sm:py-5 font-mono text-[10px] font-bold text-slate-400 group-hover:text-slate-900">#{batch.id.slice(0, 8)}</td>
+                  <td className="px-6 sm:px-8 py-4 sm:py-5 text-xs sm:text-sm font-bold text-slate-600">{batch.farmerId}</td>
+                  <td className="px-6 sm:px-8 py-4 sm:py-5 text-xs sm:text-sm font-medium text-slate-700">{batch.species}</td>
+                  <td className="px-6 sm:px-8 py-4 sm:py-5 text-xs sm:text-sm font-black text-slate-900">{batch.weight} kg</td>
+                  <td className="px-6 sm:px-8 py-4 sm:py-5 text-[10px] font-medium text-slate-400 uppercase tracking-tighter">{batch.harvestDate}</td>
+                  <td className="px-6 sm:px-8 py-4 sm:py-5">
                     <button 
                       onClick={() => approveBatch(batch.id)}
-                      className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-md active:scale-95"
+                      className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-md active:scale-95 whitespace-nowrap"
                     >
                       <CheckCircle2 size={12} /> Validate
                     </button>
@@ -206,12 +206,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ batches, orders, setBat
               ))}
               {batches.filter(b => b.status === 'PENDING').length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-8 py-16 text-center text-slate-400">
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="h-16 w-16 bg-slate-50 rounded-full flex items-center justify-center">
-                        <CheckCircle2 size={32} className="text-slate-200" />
+                  <td colSpan={6} className="px-8 py-12 sm:py-16 text-center text-slate-400">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="h-12 w-12 sm:h-16 sm:w-16 bg-slate-50 rounded-full flex items-center justify-center">
+                        <CheckCircle2 size={24} className="text-slate-200" />
                       </div>
-                      <p className="font-bold text-sm tracking-tight uppercase tracking-widest text-slate-300">Queue Purged & Validated</p>
+                      <p className="font-bold text-xs uppercase tracking-[0.2em] text-slate-300">Queue Purged & Validated</p>
                     </div>
                   </td>
                 </tr>

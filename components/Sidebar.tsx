@@ -13,7 +13,12 @@ import {
   Linkedin,
   Instagram,
   LifeBuoy,
-  Info
+  Info,
+  TrendingUp,
+  BookOpen,
+  Lock,
+  Leaf,
+  LineChart
 } from 'lucide-react';
 import { UserRole } from '../types';
 import Logo from './Logo';
@@ -30,7 +35,7 @@ interface SidebarProps {
   setRole: (role: UserRole) => void;
   isOpen: boolean;
   onClose: () => void;
-  setView: (view: 'landing' | 'app' | 'vision' | 'support' | 'about') => void;
+  setView: (view: 'landing' | 'app' | 'vision' | 'support' | 'about' | 'why-seaweed' | 'quality' | 'escrow' | 'carbon' | 'intel') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setView }) => {
@@ -39,6 +44,13 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
     { id: UserRole.FARMER, label: 'Farmer Portal', Icon: Waves },
     { id: UserRole.BUYER, label: 'Buyer & Org', Icon: ShoppingCart },
     { id: UserRole.LOGISTICS, label: 'Logistics', Icon: Truck },
+  ];
+
+  const intelItems = [
+    { id: 'quality', label: 'Quality Ledger', Icon: BookOpen },
+    { id: 'escrow', label: 'Financial Security', Icon: Lock },
+    { id: 'carbon', label: 'Carbon Impact', Icon: Leaf },
+    { id: 'intel', label: 'Trade Intelligence', Icon: LineChart },
   ];
 
   return (
@@ -63,40 +75,15 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
             </button>
           </div>
 
-          <nav className="space-y-2">
+          <nav className="space-y-1">
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 pl-2">Navigation</p>
             
             <button
-              onClick={() => {
-                setView('landing');
-                onClose();
-              }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
+              onClick={() => { setView('landing'); onClose(); }}
+              className="w-full flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
             >
               <Home size={16} className="text-slate-400 group-hover:text-emerald-600" />
-              <span className="font-bold text-xs">Return Home</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setView('about');
-                onClose();
-              }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
-            >
-              <Info size={16} className="text-slate-400 group-hover:text-emerald-600" />
-              <span className="font-bold text-xs">About Us</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setView('support');
-                onClose();
-              }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
-            >
-              <LifeBuoy size={16} className="text-slate-400 group-hover:text-emerald-600" />
-              <span className="font-bold text-xs">Contact Support</span>
+              <span className="font-bold text-[11px]">Return Home</span>
             </button>
 
             <div className="pt-6">
@@ -106,21 +93,40 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                     <button
                       key={item.id}
                       onClick={() => {
+                        setView('app');
                         setRole(item.id);
                         if (window.innerWidth < 1024) onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group
+                      className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-300 group
                       ${role === item.id 
-                        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' 
+                        ? 'bg-emerald-600 text-white shadow-lg' 
                         : 'hover:bg-slate-50 text-slate-500 hover:text-slate-900'}`}
                     >
                       <div className="flex items-center gap-3">
                         <span className={`${role === item.id ? 'text-white' : 'text-slate-400 group-hover:text-emerald-600'}`}>
                           <item.Icon size={16} />
                         </span>
-                        <span className="font-bold text-xs">{item.label}</span>
+                        <span className="font-bold text-[11px]">{item.label}</span>
                       </div>
-                      {role === item.id && <ChevronRight size={12} />}
+                    </button>
+                  ))}
+               </div>
+            </div>
+
+            <div className="pt-6">
+               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 pl-2">Trust & Intelligence</p>
+               <div className="space-y-1">
+                  {intelItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setView(item.id as any);
+                        if (window.innerWidth < 1024) onClose();
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
+                    >
+                      <item.Icon size={16} className="text-slate-400 group-hover:text-emerald-600" />
+                      <span className="font-bold text-[11px]">{item.label}</span>
                     </button>
                   ))}
                </div>
@@ -135,13 +141,9 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
               <span className="text-[8px] font-black uppercase tracking-wider">Protocol Security</span>
             </div>
             <div className="flex gap-2">
-              {[
-                { Icon: Linkedin },
-                { Icon: XLogo },
-                { Icon: Instagram }
-              ].map((social, i) => (
+              {[Linkedin, XLogo, Instagram].map((Social, i) => (
                 <a key={i} href="#" className="h-8 w-8 rounded-lg bg-white hover:bg-emerald-600 hover:text-white flex items-center justify-center text-slate-400 border border-slate-100 transition-all shadow-sm">
-                  <social.Icon size={12} />
+                  <Social size={12} />
                 </a>
               ))}
             </div>
