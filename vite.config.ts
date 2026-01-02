@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Using './' ensures that the application assets resolve correctly regardless 
-  // of the repository sub-directory name on GitHub Pages.
-  base: './',
+  // The base path must match your GitHub repository name exactly.
+  // This ensures that all assets are loaded from /SeaweedTrade-Control-Platform/ instead of the domain root.
+  base: '/SeaweedTrade-Control-Platform/',
   define: {
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
   },
