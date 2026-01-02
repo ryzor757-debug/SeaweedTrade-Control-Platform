@@ -12,7 +12,7 @@ import {
   ChevronRight,
   Anchor
 } from 'lucide-react';
-import Logo from './Logo';
+import Logo from './Logo.tsx';
 
 interface AboutPageProps {
   onBack: () => void;

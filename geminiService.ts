@@ -1,8 +1,13 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
 
+// Guideline: Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
+// Guideline: The API key must be obtained exclusively from the environment variable process.env.API_KEY.
+
 export const analyzeHarvest = async (description: string) => {
-  // Use process.env.API_KEY directly as required by the @google/genai coding guidelines
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Safe environment check removed in favor of direct process.env.API_KEY usage as per guidelines
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+  
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
@@ -21,7 +26,7 @@ export const analyzeHarvest = async (description: string) => {
         }
       }
     });
-    // Directly access the text property as per GenerateContentResponse definition
+    // Guideline: The GenerateContentResponse object features a text property (not a method).
     return JSON.parse(response.text || '{}');
   } catch (error) {
     console.error("Gemini Analysis Error:", error);
@@ -30,14 +35,14 @@ export const analyzeHarvest = async (description: string) => {
 };
 
 export const getMarketOverview = async () => {
-  // Use process.env.API_KEY directly as required by the @google/genai coding guidelines
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: "Generate a summary of global seaweed trade trends for 2024-2025 focusing on sustainability and pharmaceutical demand.",
     });
-    // Directly access the text property as per GenerateContentResponse definition
+    // Guideline: The GenerateContentResponse object features a text property (not a method).
     return response.text || "Unable to fetch live market insights.";
   } catch (error) {
     console.error("Gemini Market Overview Error:", error);

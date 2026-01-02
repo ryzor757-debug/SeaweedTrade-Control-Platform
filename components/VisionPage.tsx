@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   ArrowLeft, 
@@ -11,7 +10,7 @@ import {
   Anchor,
   ChevronRight
 } from 'lucide-react';
-import Logo from './Logo';
+import Logo from './Logo.tsx';
 
 interface VisionPageProps {
   onBack: () => void;

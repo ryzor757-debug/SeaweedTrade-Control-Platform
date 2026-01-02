@@ -15,7 +15,7 @@ import {
   BarChart3,
   Scale
 } from 'lucide-react';
-import Logo from './Logo';
+import Logo from './Logo.tsx';
 
 interface WhySeaweedPageProps {
   onBack: () => void;
@@ -80,7 +80,8 @@ const WhySeaweedPage: React.FC<WhySeaweedPageProps> = ({ onBack, onJoin }) => {
             className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] md:leading-[0.9] max-w-6xl mx-auto scroll-reveal"
             style={{ transform: `translateY(${scrollY * -0.1}px)` }}
           >
-            Investing in the <br className="hidden sm:block" /> Greatest <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-[#C5B358] to-[#8a6d3b]">Carbon Sink</span> on Earth.
+            Investing in the <br className="hidden sm:block" />
+            Greatest <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-[#C5B358] to-[#8a6d3b]">Carbon Sink</span> on Earth.
           </h1>
           <p className="text-base sm:text-xl md:text-2xl text-emerald-100/40 font-medium max-w-2xl mx-auto leading-relaxed">
             The Seaweed economy represents the "Industrial Gold" of the Blue Revolution. Scalability met with absolute planetary restoration.
@@ -159,15 +160,15 @@ const WhySeaweedPage: React.FC<WhySeaweedPageProps> = ({ onBack, onJoin }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
             {[
-              { label: 'Market Opportunity', val: '$30B+', sub: 'Projected global sector size by 2030.', icon: TrendingUp, color: 'text-emerald-400' },
-              { label: 'Climate Efficiency', val: '20%', sub: 'Higher carbon capture per acre than land forests.', icon: Leaf, color: 'text-[#C5B358]' },
-              { label: 'Input Resilience', val: 'Zero', sub: 'No fertilizers or fresh water required for scale.', icon: Scale, color: 'text-blue-400' }
+              { label: 'Market Opportunity', stat: '$30B+', sub: 'Projected global sector size by 2030.', icon: TrendingUp, color: 'text-emerald-400' },
+              { label: 'Climate Efficiency', stat: '20%', sub: 'Higher carbon capture per acre than land forests.', icon: Leaf, color: 'text-[#C5B358]' },
+              { label: 'Input Resilience', stat: 'Zero', sub: 'No fertilizers or fresh water required for scale.', icon: Scale, color: 'text-blue-400' }
             ].map((stat, i) => (
               <div key={i} className="p-8 sm:p-12 glass rounded-[32px] sm:rounded-[64px] border border-white/10 group hover:border-[#C5B358]/50 transition-all duration-700">
                 <div className={`mx-auto h-16 w-16 sm:h-20 sm:w-20 bg-white/5 rounded-2xl sm:rounded-[32px] flex items-center justify-center mb-6 sm:mb-10 ${stat.color} group-hover:scale-110 transition-transform`}>
                   <stat.icon size={28} className="sm:w-9 sm:h-9" />
                 </div>
-                <p className="text-5xl sm:text-7xl font-black tracking-tighter mb-4 sm:mb-6">{stat.val}</p>
+                <p className="text-5xl sm:text-7xl font-black tracking-tighter mb-4 sm:mb-6">{stat.stat}</p>
                 <h4 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-2 sm:mb-3">{stat.label}</h4>
                 <p className="text-sm sm:text-base font-medium text-emerald-100/40 leading-relaxed">{stat.sub}</p>
               </div>
