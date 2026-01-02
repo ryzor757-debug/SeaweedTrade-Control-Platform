@@ -28,24 +28,24 @@ import {
   Leaf,
   LineChart
 } from 'lucide-react';
-import { UserRole, HarvestBatch, Order } from './types.ts';
-import FarmerPortal from './components/FarmerPortal.tsx';
-import BuyerPortal from './components/BuyerPortal.tsx';
-import LogisticsPortal from './components/LogisticsPortal.tsx';
-import AdminDashboard from './components/AdminDashboard.tsx';
-import Sidebar from './components/Sidebar.tsx';
-import Logo from './components/Logo.tsx';
-import ContactSection from './components/ContactSection.tsx';
-import ChatWidget from './components/ChatWidget.tsx';
-import VisionPage from './components/VisionPage.tsx';
-import SupportPage from './components/SupportPage.tsx';
-import AboutPage from './components/AboutPage.tsx';
-import WhySeaweedPage from './components/WhySeaweedPage.tsx';
-import QualityLedger from './components/QualityLedger.tsx';
-import EscrowSecurity from './components/EscrowSecurity.tsx';
-import BlueCarbonImpact from './components/BlueCarbonImpact.tsx';
-import TradeIntelligence from './components/TradeIntelligence.tsx';
-import { getMarketOverview } from './geminiService.ts';
+import { UserRole, HarvestBatch, Order } from './types';
+import FarmerPortal from './components/FarmerPortal';
+import BuyerPortal from './components/BuyerPortal';
+import LogisticsPortal from './components/LogisticsPortal';
+import AdminDashboard from './components/AdminDashboard';
+import Sidebar from './components/Sidebar';
+import Logo from './components/Logo';
+import ContactSection from './components/ContactSection';
+import ChatWidget from './components/ChatWidget';
+import VisionPage from './components/VisionPage';
+import SupportPage from './components/SupportPage';
+import AboutPage from './components/AboutPage';
+import WhySeaweedPage from './components/WhySeaweedPage';
+import QualityLedger from './components/QualityLedger';
+import EscrowSecurity from './components/EscrowSecurity';
+import BlueCarbonImpact from './components/BlueCarbonImpact';
+import TradeIntelligence from './components/TradeIntelligence';
+import { getMarketOverview } from './geminiService';
 
 const XLogo = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">

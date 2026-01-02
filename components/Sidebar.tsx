@@ -20,8 +20,8 @@ import {
   Leaf,
   LineChart
 } from 'lucide-react';
-import { UserRole } from '../types.ts';
-import Logo from './Logo.tsx';
+import { UserRole } from '../types';
+import Logo from './Logo';
 
 // Custom X (Twitter) Logo for brand accuracy
 const XLogo = ({ size = 14 }: { size?: number }) => (
