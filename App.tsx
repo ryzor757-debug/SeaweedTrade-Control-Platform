@@ -80,14 +80,10 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-900">
         {/* Universal Navigation Bar */}
-        <nav className="fixed top-0 w-full z-50 glass px-4 md:px-6 lg:px-12 py-3 lg:py-5 border-b border-slate-100">
+        <nav className="fixed top-0 w-full z-50 glass px-4 md:px-6 lg:px-12 py-3 lg:py-2 border-b border-slate-100">
           <div className="max-w-[1600px] mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2 md:gap-3 group cursor-pointer" onClick={() => setView('landing')}>
-              <Logo className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110" />
-              <div className="flex flex-col -space-y-1">
-                <span className="text-base md:text-lg lg:text-xl font-black tracking-tighter text-slate-900 uppercase">SeaweedTrade</span>
-                <span className="text-[7px] md:text-[9px] font-bold text-emerald-600 tracking-widest uppercase">Global Ledger</span>
-              </div>
+            <div className="flex items-center group cursor-pointer" onClick={() => setView('landing')}>
+              <Logo size="sm" className="transition-transform duration-300 group-hover:scale-105" />
             </div>
             
             <div className="hidden lg:flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
@@ -111,24 +107,24 @@ const App: React.FC = () => {
           
           <div className="max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-              <div className="lg:col-span-7 space-y-6 md:space-y-10 animate-in slide-in-from-left duration-1000">
+              <div className="lg:col-span-7 space-y-6 md:space-y-8 animate-in slide-in-from-left duration-1000">
                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-[8px] md:text-[9px] font-black border border-emerald-100 uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-sm">
                   <Anchor size={12} className="md:w-3 md:h-3" /> Decentralized Marine Commerce
                 </div>
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 leading-[1.1] tracking-tighter">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-[1.15] tracking-tighter">
                   Harmonizing <span className="text-emerald-600">Oceans</span> <br className="hidden md:block"/> & Global Trade.
                 </h1>
-                <p className="text-base md:text-lg lg:text-xl text-slate-500 font-medium leading-relaxed max-w-2xl">
+                <p className="text-sm md:text-base lg:text-lg text-slate-500 font-medium leading-relaxed max-w-xl">
                   SeaweedTrade is the world's first AI-governed ecosystem for the blue economy. We connect regenerative harvesters to global industry with absolute transparency.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-4">
                   <button 
                     onClick={() => setView('app')}
-                    className="group relative px-8 md:px-10 py-4 md:py-6 bg-emerald-600 text-white rounded-xl md:rounded-[24px] font-black uppercase text-[10px] md:text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition-all text-center"
+                    className="group relative px-6 md:px-8 py-3.5 md:py-4.5 bg-emerald-600 text-white rounded-xl md:rounded-[20px] font-black uppercase text-[10px] md:text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition-all text-center"
                   >
                     Start Harvesting Data
                   </button>
-                  <button className="px-8 md:px-10 py-4 md:py-6 bg-white border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-[24px] font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3 group">
+                  <button className="px-6 md:px-8 py-3.5 md:py-4.5 bg-white border-2 border-slate-100 text-slate-900 rounded-xl md:rounded-[20px] font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3 group">
                     View Network <Globe size={18} className="group-hover:rotate-12 transition-transform" />
                   </button>
                 </div>
@@ -138,11 +134,11 @@ const App: React.FC = () => {
                    <img 
                     src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1200" 
                     alt="Marine Kelp Forest" 
-                    className="rounded-[30px] md:rounded-[52px] object-cover h-[300px] md:h-[450px] w-full"
+                    className="rounded-[30px] md:rounded-[52px] object-cover h-[300px] md:h-[400px] w-full"
                   />
-                  <div className="absolute -bottom-4 md:-bottom-8 -left-4 md:-left-8 bg-slate-900 text-white p-5 md:p-8 rounded-2xl md:rounded-[36px] shadow-2xl border-4 md:border-[6px] border-white max-w-[150px] md:max-w-[220px]">
-                    <p className="text-xl md:text-3xl font-black text-emerald-400 mb-0.5">98.4%</p>
-                    <p className="text-[7px] md:text-[9px] font-black uppercase tracking-widest text-slate-400">Carbon Efficiency</p>
+                  <div className="absolute -bottom-4 md:-bottom-8 -left-4 md:-left-8 bg-slate-900 text-white p-4 md:p-6 rounded-2xl md:rounded-[32px] shadow-2xl border-4 md:border-[6px] border-white max-w-[140px] md:max-w-[200px]">
+                    <p className="text-lg md:text-2xl font-black text-emerald-400 mb-0.5">98.4%</p>
+                    <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400">Carbon Efficiency</p>
                   </div>
                 </div>
               </div>
@@ -151,7 +147,7 @@ const App: React.FC = () => {
         </section>
 
         {/* Stats Section */}
-        <section id="stats" className="py-12 md:py-20 bg-slate-50 border-y border-slate-100 px-4 md:px-6">
+        <section id="stats" className="py-12 md:py-16 bg-slate-50 border-y border-slate-100 px-4 md:px-6">
           <div className="max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
@@ -160,12 +156,12 @@ const App: React.FC = () => {
                 { label: 'Carbon Credits', val: '8.4M t', icon: Droplets, color: 'text-teal-600' },
                 { label: 'Communities', val: '412', icon: Heart, color: 'text-rose-600' },
               ].map((stat, i) => (
-                <div key={i} className="bg-white p-6 md:p-8 rounded-2xl md:rounded-[36px] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                  <div className={`${stat.color} mb-4 p-3 bg-slate-50 rounded-xl md:rounded-2xl inline-block`}>
-                    <stat.icon size={24} />
+                <div key={i} className="bg-white p-6 md:p-8 rounded-2xl md:rounded-[32px] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                  <div className={`${stat.color} mb-4 p-2.5 bg-slate-50 rounded-xl md:rounded-2xl inline-block`}>
+                    <stat.icon size={20} />
                   </div>
-                  <p className="text-2xl md:text-4xl font-black text-slate-900 tracking-tighter mb-1.5">{stat.val}</p>
-                  <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.label}</p>
+                  <p className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter mb-1.5">{stat.val}</p>
+                  <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -173,11 +169,11 @@ const App: React.FC = () => {
         </section>
 
         {/* Vision Section */}
-        <section id="vision" className="py-16 md:py-24 px-4 md:px-6 lg:px-12">
+        <section id="vision" className="py-16 md:py-20 px-4 md:px-6 lg:px-12">
           <div className="max-w-[1600px] mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-12 md:mb-20">
-              <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-4 md:mb-6">The Triple Bottom Line</h2>
-              <p className="text-base md:text-lg text-slate-500 font-medium leading-relaxed">We don't just facilitate trade; we regenerate ecosystems, empower coastal families, and secure global supply chains.</p>
+            <div className="text-center max-w-xl mx-auto mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mb-4 md:mb-5">The Triple Bottom Line</h2>
+              <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed">We don't just facilitate trade; we regenerate ecosystems, empower coastal families, and secure global supply chains.</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
@@ -186,11 +182,11 @@ const App: React.FC = () => {
                 { title: 'Social Impact', desc: 'Direct liquidity for coastal harvesters, removing predatory middlemen and ensuring fair wage protocols.', icon: Heart, color: 'bg-rose-50 text-rose-600' },
                 { title: 'Economic Integrity', desc: 'Fractionalized trade ownership and AI-driven quality validation for pharmaceutical and food grade markets.', icon: ShieldCheck, color: 'bg-emerald-50 text-emerald-600' },
               ].map((item, i) => (
-                <div key={i} className="relative p-7 md:p-10 bg-white rounded-[32px] md:rounded-[48px] border border-slate-100 hover:border-emerald-200 transition-all group">
-                  <div className={`h-14 w-14 md:h-16 md:w-16 ${item.color} rounded-xl md:rounded-[22px] flex items-center justify-center mb-6 md:mb-8 transition-transform`}>
-                    <item.icon size={28} className="md:w-8 md:h-8" />
+                <div key={i} className="relative p-7 md:p-8 bg-white rounded-[32px] md:rounded-[40px] border border-slate-100 hover:border-emerald-200 transition-all group">
+                  <div className={`h-12 w-12 md:h-14 md:w-14 ${item.color} rounded-xl md:rounded-[20px] flex items-center justify-center mb-6 md:mb-7 transition-transform`}>
+                    <item.icon size={24} className="md:w-6 md:h-6" />
                   </div>
-                  <h3 className="text-lg md:text-xl font-black text-slate-900 mb-3 md:mb-4">{item.title}</h3>
+                  <h3 className="text-base md:text-lg font-black text-slate-900 mb-3 md:mb-4">{item.title}</h3>
                   <p className="text-slate-500 leading-relaxed font-medium text-xs md:text-sm">{item.desc}</p>
                 </div>
               ))}
@@ -198,13 +194,10 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <footer className="bg-white py-16 md:py-24 px-4 md:px-6 lg:px-12 border-t border-slate-100">
+        <footer className="bg-white py-16 md:py-20 px-4 md:px-6 lg:px-12 border-t border-slate-100">
           <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
-            <div className="sm:col-span-2 space-y-8">
-              <div className="flex items-center gap-3">
-                <Logo className="w-8 h-8 md:w-10 md:h-10" />
-                <span className="text-lg font-black tracking-tighter text-slate-900 uppercase">SeaweedTrade</span>
-              </div>
+            <div className="sm:col-span-2 space-y-6">
+              <Logo size="sm" className="!justify-start" />
               <p className="text-slate-400 font-medium max-w-sm text-xs md:text-sm leading-relaxed">
                 Redefining global marine trade through decentralized ledger technology and neural quality validation.
               </p>
@@ -219,9 +212,9 @@ const App: React.FC = () => {
                     key={i} 
                     href="#" 
                     aria-label={social.label}
-                    className={`h-10 w-10 rounded-[14px] bg-slate-50 flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 ${social.color}`}
+                    className={`h-9 w-9 rounded-[12px] bg-slate-50 flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 ${social.color}`}
                   >
-                    <social.Icon size={18} />
+                    <social.Icon size={16} />
                   </a>
                 ))}
               </div>
@@ -245,7 +238,7 @@ const App: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="max-w-[1600px] mx-auto mt-16 md:mt-24 pt-8 md:pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="max-w-[1600px] mx-auto mt-16 md:mt-20 pt-8 md:pt-10 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400 text-center">© 2024 SEAWEEDTRADE PROTOCOL. ALL RIGHTS RESERVED.</p>
             <div className="flex gap-6 md:gap-10 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400">
               <span className="hover:text-slate-900 cursor-pointer transition-colors">Privacy Policy</span>
@@ -268,8 +261,8 @@ const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main className={`flex-1 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'ml-0'} p-4 sm:p-6 md:p-8 lg:p-12 pb-32 w-full overflow-x-hidden`}>
-        <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-12 gap-6 md:gap-8">
+      <main className={`flex-1 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'ml-0'} p-4 sm:p-6 md:p-8 lg:p-10 pb-32 w-full overflow-x-hidden`}>
+        <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-10 gap-6 md:gap-8">
           <div className="flex items-center gap-4 md:gap-6">
             <button 
                onClick={toggleSidebar}
@@ -279,32 +272,33 @@ const App: React.FC = () => {
             </button>
             <button 
                onClick={() => setView('landing')}
-               className="p-3.5 md:p-4 bg-white shadow-sm hover:shadow-lg border border-slate-100 rounded-xl md:rounded-[20px] text-slate-400 hover:text-emerald-600 transition-all group"
+               className="p-3 md:p-3.5 bg-white shadow-sm hover:shadow-lg border border-slate-100 rounded-xl md:rounded-[18px] text-slate-400 hover:text-emerald-600 transition-all group"
                title="Back to Home Page"
             >
-              <Home size={16} className="md:w-4.5 md:h-4.5 group-hover:scale-110 transition-transform" />
+              <Home size={16} className="md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
             </button>
             <div className="flex items-center gap-3">
-              <Logo className="w-7 h-7 md:w-9 md:h-9 hidden sm:block" />
+              <Logo size="sm" className="hidden sm:flex" />
+              <div className="h-8 w-px bg-slate-100 mx-2 hidden sm:block"></div>
               <div>
-                <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2 md:gap-3">
+                <h1 className="text-lg md:text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                   <span className="text-emerald-600">Marine</span> Ledger
                 </h1>
-                <p className="text-[7px] md:text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] md:tracking-[0.4em] mt-0.5 md:mt-1">
+                <p className="text-[7px] md:text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mt-0.5">
                   Node ID: US-WEST-MAR-01 & bull; {role}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 md:gap-8">
-            <div className="hidden lg:flex items-center gap-4 px-5 py-2.5 bg-white rounded-2xl border border-slate-100 shadow-sm">
-              <Search size={16} className="text-slate-300" />
-              <input type="text" placeholder="Search Ledger..." className="bg-transparent text-[11px] font-bold outline-none w-28 xl:w-40" />
+          <div className="flex items-center gap-4 md:gap-6">
+            <div className="hidden lg:flex items-center gap-4 px-4 py-2 bg-white rounded-xl border border-slate-100 shadow-sm">
+              <Search size={14} className="text-slate-300" />
+              <input type="text" placeholder="Search Ledger..." className="bg-transparent text-[10px] font-bold outline-none w-24 xl:w-36" />
             </div>
             <div className="flex items-center gap-3 md:gap-4">
-              <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl md:rounded-[18px] bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-xl shadow-emerald-200 cursor-pointer hover:scale-105 transition-transform">
-                <UserCircle size={24} className="md:w-6 md:h-6" />
+              <div className="h-9 w-9 md:h-11 md:w-11 rounded-xl md:rounded-[16px] bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-xl shadow-emerald-200 cursor-pointer hover:scale-105 transition-transform">
+                <UserCircle size={22} className="md:w-5 md:h-5" />
               </div>
             </div>
           </div>
@@ -352,15 +346,15 @@ const App: React.FC = () => {
 
         {/* Responsive Command Bar */}
         <div className="fixed bottom-5 md:bottom-8 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-auto">
-           <div className="glass px-4 sm:px-6 py-3.5 sm:py-4 rounded-2xl sm:rounded-[32px] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] border border-white/40 flex items-center justify-between sm:justify-start gap-4 sm:gap-8">
+           <div className="glass px-4 sm:px-6 py-3 sm:py-3.5 rounded-2xl sm:rounded-[28px] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] border border-white/40 flex items-center justify-between sm:justify-start gap-4 sm:gap-6">
               <button 
                 onClick={() => setView('landing')}
                 className="flex flex-col items-center gap-1 transition-all duration-300 text-slate-400 hover:text-emerald-600"
               >
-                <Home size={16} className="sm:w-4.5 sm:h-4.5" />
+                <Home size={16} className="sm:w-4 sm:h-4" />
                 <span className="text-[7px] font-black uppercase tracking-widest hidden sm:inline">Home</span>
               </button>
-              <div className="hidden sm:block w-px h-6 bg-slate-200/50"></div>
+              <div className="hidden sm:block w-px h-5 bg-slate-200/50"></div>
               {[
                 { r: UserRole.ADMIN, i: LayoutDashboard, l: 'Admin' },
                 { r: UserRole.FARMER, i: Waves, l: 'Farmer' },
@@ -372,7 +366,7 @@ const App: React.FC = () => {
                   onClick={() => setRole(btn.r)}
                   className={`flex flex-col items-center gap-1 transition-all duration-300 ${role === btn.r ? 'text-emerald-600 scale-105 sm:scale-105' : 'text-slate-400 hover:text-slate-600'}`}
                 >
-                  <btn.i size={16} className="sm:w-4.5 sm:h-4.5" strokeWidth={role === btn.r ? 3 : 2} />
+                  <btn.i size={16} className="sm:w-4 sm:h-4" strokeWidth={role === btn.r ? 3 : 2} />
                   <span className="text-[7px] font-black uppercase tracking-widest hidden sm:inline">{btn.l}</span>
                 </button>
               ))}

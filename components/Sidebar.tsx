@@ -48,37 +48,36 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
       />
 
       <aside 
-        className={`fixed top-0 left-0 h-full bg-[#022c22] text-slate-300 w-64 transform transition-transform duration-500 ease-in-out z-50 flex flex-col border-r border-white/5 shadow-2xl
+        className={`fixed top-0 left-0 h-full bg-[#fcfdfe] text-slate-700 w-64 transform transition-transform duration-500 ease-in-out z-50 flex flex-col border-r border-slate-100 shadow-xl
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
         <div className="p-8 pb-4 flex-1 overflow-y-auto">
-          <div className="flex items-center justify-between mb-12">
-            <div className="flex items-center gap-3 text-white cursor-pointer group" onClick={() => { setView('landing'); onClose(); }}>
-              <Logo className="w-8 h-8 md:w-10 md:h-10" />
-              <span className="font-extrabold text-xl tracking-tighter uppercase">SeaweedTrade</span>
+          <div className="flex items-center justify-between mb-10">
+            <div className="cursor-pointer group px-1" onClick={() => { setView('landing'); onClose(); }}>
+              <Logo size="sm" className="transition-transform group-hover:scale-105" />
             </div>
-            <button onClick={onClose} className="lg:hidden text-slate-400 hover:text-white transition-colors">
+            <button onClick={onClose} className="lg:hidden text-slate-400 hover:text-slate-900 transition-colors">
               <X size={20} />
             </button>
           </div>
 
-          <nav className="space-y-3">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 pl-2">Navigation</p>
+          <nav className="space-y-2">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 pl-2">Navigation</p>
             
             <button
               onClick={() => {
                 setView('landing');
                 onClose();
               }}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 text-slate-400 hover:text-slate-200 hover:bg-white/5 group"
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 hover:text-slate-900 hover:bg-slate-50 group"
             >
-              <Home size={18} className="text-slate-500 group-hover:text-emerald-400" />
-              <span className="font-bold text-sm">Return Home</span>
+              <Home size={16} className="text-slate-400 group-hover:text-emerald-600" />
+              <span className="font-bold text-xs">Return Home</span>
             </button>
 
             <div className="pt-6">
-               <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4 pl-2">Operations</p>
-               <div className="space-y-1.5">
+               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 pl-2">Operations</p>
+               <div className="space-y-1">
                   {navItems.map((item) => (
                     <button
                       key={item.id}
@@ -86,18 +85,18 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                         setRole(item.id);
                         if (window.innerWidth < 1024) onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all duration-300 group
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group
                       ${role === item.id 
-                        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50' 
-                        : 'hover:bg-white/5 text-slate-400 hover:text-slate-200'}`}
+                        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' 
+                        : 'hover:bg-slate-50 text-slate-500 hover:text-slate-900'}`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className={`${role === item.id ? 'text-white' : 'text-slate-500 group-hover:text-emerald-400'}`}>
-                          <item.Icon size={18} />
+                        <span className={`${role === item.id ? 'text-white' : 'text-slate-400 group-hover:text-emerald-600'}`}>
+                          <item.Icon size={16} />
                         </span>
-                        <span className="font-bold text-sm">{item.label}</span>
+                        <span className="font-bold text-xs">{item.label}</span>
                       </div>
-                      {role === item.id && <ChevronRight size={14} />}
+                      {role === item.id && <ChevronRight size={12} />}
                     </button>
                   ))}
                </div>
@@ -106,28 +105,27 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
         </div>
 
         <div className="p-8 pt-0 space-y-6">
-          <div className="bg-white/5 p-4 rounded-2xl border border-white/10 relative overflow-hidden group">
-            <div className="flex items-center gap-2 text-emerald-400 mb-3">
-              <ShieldCheck size={14} />
+          <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 relative overflow-hidden group">
+            <div className="flex items-center gap-2 text-emerald-600 mb-3">
+              <ShieldCheck size={12} />
               <span className="text-[8px] font-black uppercase tracking-wider">Protocol Security</span>
             </div>
             <div className="flex gap-2">
-              {/* Fix: Wrap icon components in objects to fix JSX type inference issues in the map function */}
               {[
                 { Icon: Linkedin },
                 { Icon: XLogo },
                 { Icon: Instagram }
               ].map((social, i) => (
-                <a key={i} href="#" className="h-8 w-8 rounded-lg bg-white/5 hover:bg-emerald-600/20 flex items-center justify-center text-slate-500 hover:text-emerald-400 border border-white/5 transition-all">
-                  <social.Icon size={14} />
+                <a key={i} href="#" className="h-8 w-8 rounded-lg bg-white hover:bg-emerald-600 hover:text-white flex items-center justify-center text-slate-400 border border-slate-100 transition-all shadow-sm">
+                  <social.Icon size={12} />
                 </a>
               ))}
             </div>
           </div>
           
-          <div className="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-white transition-all cursor-pointer rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/5">
-            <LogOut size={18} />
-            <span className="font-bold text-sm">Sign Out</span>
+          <div className="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-rose-600 transition-all cursor-pointer rounded-xl hover:bg-rose-50 border border-transparent">
+            <LogOut size={16} />
+            <span className="font-bold text-xs">Sign Out</span>
           </div>
         </div>
       </aside>

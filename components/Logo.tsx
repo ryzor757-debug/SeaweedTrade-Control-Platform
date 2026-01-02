@@ -2,44 +2,125 @@ import React from 'react';
 
 interface LogoProps {
   className?: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-const Logo: React.FC<LogoProps> = ({ className = "w-10 h-10" }) => {
+const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
+  const configs = {
+    sm: { iconSize: 32, textWidth: 140, totalWidth: 180, height: 45, fontSize: "28px", iconGap: "gap-2" },
+    md: { iconSize: 48, textWidth: 220, totalWidth: 280, height: 70, fontSize: "42px", iconGap: "gap-4" },
+    lg: { iconSize: 64, textWidth: 340, totalWidth: 420, height: 110, fontSize: "60px", iconGap: "gap-6" }
+  };
+
+  const cfg = configs[size];
+
   return (
-    <div className={className}>
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Main Circle Border */}
-        <circle cx="50" cy="50" r="46" stroke="#489b42" strokeWidth="6" />
-        
-        {/* The Blue Hand */}
-        <path 
-          d="M20 68C20 68 28 62 35 60C42 58 55 58 65 62C75 66 76 63 76 63C76 63 72 75 62 82C52 89 38 89 28 85C18 81 20 68 20 68Z" 
-          fill="#1e4e8c" 
-        />
-        <path 
-          d="M20 68C23 75 30 80 40 82C50 84 65 82 72 75" 
-          stroke="white" 
-          strokeWidth="2" 
-          strokeLinecap="round" 
-        />
-        
-        {/* Seaweed Leaves */}
-        <path d="M38 58C36 45 32 35 34 15C34 15 42 25 44 40C46 55 42 60 42 60" fill="#91cc44" />
-        <path d="M52 58C50 48 48 38 52 28C52 28 58 35 60 48C62 61 55 60 55 60" fill="#75ba3d" />
-        <path d="M64 56C64 48 68 42 70 38C70 38 72 45 70 52C68 59 64 58 64 58" fill="#489b42" />
-        
-        {/* The Growth Arrow */}
-        <path 
-          d="M38 55C45 40 55 25 75 12" 
-          stroke="#489b42" 
-          strokeWidth="8" 
-          strokeLinecap="round" 
-        />
-        <path 
-          d="M68 12L78 8L78 22" 
-          fill="#489b42" 
-        />
-      </svg>
+    <div className={`flex items-center ${cfg.iconGap} ${className}`}>
+      {/* Premium Graphical Icon (Placed Before/Aside) */}
+      <div className="flex-shrink-0 relative" style={{ width: cfg.iconSize, height: cfg.iconSize }}>
+        <svg
+          viewBox="0 0 100 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full drop-shadow-md"
+        >
+          {/* Elegant Seaweed Blades */}
+          <path
+            d="M50 85C50 85 75 60 75 35C75 10 50 15 50 15"
+            stroke="#3d5a2a"
+            strokeWidth="8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M35 80C35 80 15 65 15 45C15 25 35 30 35 30"
+            stroke="#3d5a2a"
+            strokeWidth="6"
+            strokeLinecap="round"
+            opacity="0.7"
+          />
+          <path
+            d="M65 75C65 75 85 55 85 40"
+            stroke="#3d5a2a"
+            strokeWidth="4"
+            strokeLinecap="round"
+            opacity="0.4"
+          />
+          {/* Gold Value Accent */}
+          <circle cx="50" cy="85" r="6" fill="url(#goldGradient)" />
+          <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8a6d3b" />
+              <stop offset="50%" stopColor="#c5a059" />
+              <stop offset="100%" stopColor="#8a6d3b" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      {/* Stylized Wordmark with Swirls */}
+      <div className="flex flex-col items-center justify-center overflow-visible" style={{ width: cfg.textWidth, height: cfg.height }}>
+        <svg
+          viewBox="0 0 300 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full drop-shadow-sm overflow-visible"
+        >
+          <defs>
+            <linearGradient id="textGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#3d5a2a" />
+              <stop offset="100%" stopColor="#2a3d1c" />
+            </linearGradient>
+            
+            <filter id="innerShadow">
+              <feOffset dx="0" dy="1" />
+              <feGaussianBlur stdDeviation="0.5" result="offset-blur" />
+              <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+              <feFlood floodColor="black" floodOpacity="0.2" result="color" />
+              <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+              <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+            </filter>
+          </defs>
+
+          {/* Text "SEAWEEDTRADE" */}
+          <text
+            x="150"
+            y="65"
+            textAnchor="middle"
+            style={{
+              fill: "url(#textGradient)",
+              fontFamily: "system-ui, -apple-system, sans-serif",
+              fontWeight: 900,
+              fontSize: "42px",
+              letterSpacing: "-0.05em",
+              filter: "url(#innerShadow)"
+            }}
+          >
+            SEAWEEDTRADE
+          </text>
+
+          {/* Organic Swirls / Seaweed Tendrils */}
+          <g stroke="#7fb069" strokeWidth="1.5" strokeLinecap="round" fill="none">
+            <path 
+              d="M85 55 C 75 40, 95 25, 110 35 C 100 30, 95 45, 115 50" 
+              className="animate-pulse"
+              style={{ animationDuration: '4s' }}
+            />
+            <circle cx="110" cy="32" r="1.5" fill="#7fb069" />
+            
+            <path 
+              d="M165 80 C 155 50, 180 0, 195 25 C 205 45, 175 60, 160 30" 
+              className="animate-pulse"
+              style={{ animationDuration: '6s' }}
+            />
+            <path 
+              d="M185 75 C 195 95, 215 75, 205 60" 
+            />
+          </g>
+          
+          {/* Subtle Golden Underline for Wordmark Unity */}
+          <rect x="20" y="80" width="260" height="2" fill="url(#goldGradient)" rx="1" />
+        </svg>
+      </div>
     </div>
   );
 };
