@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   Waves, 
@@ -46,6 +47,7 @@ import QualityLedger from './components/QualityLedger';
 import EscrowSecurity from './components/EscrowSecurity';
 import BlueCarbonImpact from './components/BlueCarbonImpact';
 import TradeIntelligence from './components/TradeIntelligence';
+import EnglishTimer from './components/EnglishTimer';
 import { getMarketOverview } from './geminiService';
 
 const XLogo = ({ size = 18 }: { size?: number }) => (
@@ -112,42 +114,55 @@ const SeaweedThemeBackground: React.FC = () => (
   </div>
 );
 
+/**
+ * ScrollProgressBar
+ * Thin horizontal line to be placed at the top or bottom of a header.
+ */
+const ScrollProgressBar: React.FC<{ progress: number; position?: 'top' | 'bottom' }> = ({ progress, position = 'top' }) => (
+  <div className={`absolute ${position === 'top' ? 'top-0' : 'bottom-0'} left-0 w-full h-[2px] z-[60] pointer-events-none overflow-hidden`}>
+    <div 
+      className="h-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-all duration-150 ease-out"
+      style={{ width: `${progress}%` }}
+    />
+  </div>
+);
+
 const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support' | 'about' | 'why-seaweed' | 'quality' | 'escrow' | 'carbon' | 'intel'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  // Fix: Added missing state for batches and orders to resolve "Cannot find name" errors.
   const [batches, setBatches] = useState<HarvestBatch[]>([
-    { id: '1', farmerId: 'F1', species: 'Nori', weight: 500, harvestDate: '2024-03-10', status: 'APPROVED', price: 15.5, qualityGrade: 'A' },
-    { id: '2', farmerId: 'F2', species: 'Kelp', weight: 1200, harvestDate: '2024-03-12', status: 'PENDING' },
-    { id: '3', farmerId: 'F3', species: 'Sargassum', weight: 800, harvestDate: '2024-03-14', status: 'APPROVED', price: 10.2, qualityGrade: 'B+' },
-    { id: '4', farmerId: 'F4', species: 'Irish Moss', weight: 300, harvestDate: '2024-03-15', status: 'APPROVED', price: 22.0, qualityGrade: 'A+' },
-    { id: '5', farmerId: 'F5', species: 'Wakame', weight: 650, harvestDate: '2024-03-16', status: 'APPROVED', price: 18.4, qualityGrade: 'A' },
+    { id: 'batch-001', farmerId: 'F1', species: 'Saccharina latissima', weight: 450, harvestDate: '2024-03-01', status: 'PENDING' },
+    { id: 'batch-002', farmerId: 'F2', species: 'Palmaria palmata', weight: 200, harvestDate: '2024-02-28', status: 'APPROVED', qualityGrade: 'A', price: 15 },
+    { id: 'batch-003', farmerId: 'F1', species: 'Porphyra umbilicalis', weight: 120, harvestDate: '2024-03-05', status: 'SOLD', qualityGrade: 'AAA', price: 45 },
   ]);
 
   const [orders, setOrders] = useState<Order[]>([
-    { id: 'O1', batchId: '1', buyerId: 'B1', amount: 500, status: 'PAID', date: '2024-03-15' },
+    { id: 'order-001', batchId: 'batch-003', buyerId: 'BUYER1', amount: 120, status: 'PAID', date: '2024-03-06' },
   ]);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsSidebarOpen(true);
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      
+      setScrollY(currentScroll);
+      if (scrollHeight > 0) {
+        setScrollProgress((currentScroll / scrollHeight) * 100);
       } else {
-        setIsSidebarOpen(false);
+        setScrollProgress(0);
       }
     };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to catch initial position
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [view]); // Recalculate on view changes since page height might change
 
   // Persistent Theme Rendering
   const renderTheme = () => <SeaweedThemeBackground />;
@@ -170,7 +185,8 @@ const App: React.FC = () => {
 
         <div className="relative z-20">
           <div className="fixed top-0 w-full z-50">
-            <nav className="glass px-4 md:px-12 py-3 border-b border-[#E1E8E5]">
+            <nav className="glass px-4 md:px-12 py-3 border-b border-[#E1E8E5] relative">
+              <ScrollProgressBar progress={scrollProgress} position="bottom" />
               <div className="max-w-[1600px] mx-auto flex items-center justify-between">
                 <div className="flex items-center group cursor-pointer" onClick={() => setView('landing')}>
                   <Logo size="sm" className="scale-75 md:scale-100 origin-left transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-110" />
@@ -183,12 +199,14 @@ const App: React.FC = () => {
                   <button onClick={() => setView('support')} className="hover:text-emerald-600 transition-colors">Contact Support</button>
                 </div>
 
-                <button 
-                  onClick={() => setView('app')}
-                  className="bg-[#043927] text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
-                >
-                  Access <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} />
-                </button>
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={() => setView('app')}
+                    className="bg-[#043927] text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
+                  >
+                    Access <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} />
+                  </button>
+                </div>
               </div>
             </nav>
           </div>
@@ -224,7 +242,9 @@ const App: React.FC = () => {
                 <div className="lg:col-span-5 relative mt-8 lg:mt-0">
                   <div className="relative z-10 p-3 sm:p-4 bg-white rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5]" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
                     <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1200" alt="Marine Kelp" className="rounded-[30px] sm:rounded-[52px] object-cover h-[300px] sm:h-[400px] md:h-[500px] w-full grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" />
+                    <div className="relative">
+                       <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1200" alt="Marine Kelp" className="rounded-[30px] sm:rounded-[52px] object-cover h-[300px] sm:h-[400px] md:h-[500px] w-full grayscale-[20%] group-hover:grayscale-0 transition-all duration-700" />
+                    </div>
                     <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900 text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white max-w-[140px] sm:max-w-[200px]">
                       <p className="text-xl sm:text-2xl font-black text-emerald-400 mb-0.5">98.4%</p>
                       <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-400">Carbon Efficiency</p>
@@ -295,6 +315,16 @@ const App: React.FC = () => {
 
           <ContactSection />
 
+          {/* Global Synchronicity Timer Section (Institutional Featured Timer) */}
+          <section className="py-24 px-4 sm:px-6 md:px-12 bg-[#F9FBFB] relative overflow-hidden">
+            <div className="max-w-[1600px] mx-auto">
+              <div className="bg-white rounded-[64px] border border-[#E1E8E5] shadow-sm overflow-hidden relative">
+                <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
+                <EnglishTimer variant="featured" className="bg-gradient-to-b from-white to-slate-50" />
+              </div>
+            </div>
+          </section>
+
           <footer className="bg-[#043927] text-white py-24 px-4 sm:px-6 md:px-12 border-t border-emerald-900 relative overflow-hidden">
             <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 relative z-10">
               <div className="sm:col-span-2 space-y-8">
@@ -348,7 +378,8 @@ const App: React.FC = () => {
       <div className="relative z-20 flex w-full">
         <Sidebar role={role} setRole={setRole} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} setView={setView} />
         <main className={`flex-1 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'ml-0'} p-4 sm:p-6 md:p-10 pb-32 w-full overflow-x-hidden`}>
-          <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-10 gap-6 md:gap-8">
+          <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-10 gap-6 md:gap-8 relative">
+            <ScrollProgressBar progress={scrollProgress} position="top" />
             <div className="flex items-center gap-4 md:gap-6">
               <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="lg:hidden p-3 bg-white border border-[#E1E8E5] rounded-xl text-slate-400 hover:text-[#043927] shadow-sm">
                 <Menu size={18} />
@@ -358,7 +389,7 @@ const App: React.FC = () => {
               </button>
               <div>
                 <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">System Control</h1>
-                <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Maritime Registry &bull; Node US-MAR-01</p>
+                <p className="text-[8px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Maritime Registry & bull; Node US-MAR-01</p>
               </div>
             </div>
             <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl sm:rounded-2xl bg-[#043927] text-white flex items-center justify-center shadow-xl self-end md:self-auto">
@@ -376,10 +407,33 @@ const App: React.FC = () => {
               <>
                 {role === UserRole.ADMIN && <AdminDashboard batches={batches} orders={orders} setBatches={setBatches} />}
                 {role === UserRole.FARMER && <FarmerPortal batches={batches.filter(b => b.farmerId === 'F1')} onNewBatch={(b) => setBatches(prev => [...prev, { ...b, id: Math.random().toString(), farmerId: 'F1' } as any])} />}
-                {role === UserRole.BUYER && <BuyerPortal availableBatches={batches.filter(b => b.status === 'APPROVED')} onBuy={(id) => {}} />}
-                {role === UserRole.LOGISTICS && <LogisticsPortal orders={orders.filter(o => o.status === 'PAID')} onUpdateStatus={(id, s) => {}} />}
+                {role === UserRole.BUYER && <BuyerPortal availableBatches={batches.filter(b => b.status === 'APPROVED')} onBuy={(id) => {
+                  setBatches(prev => prev.map(b => b.id === id ? { ...b, status: 'SOLD' } : b));
+                  setOrders(prev => [...prev, {
+                    id: `order-${Math.random().toString(36).substr(2, 9)}`,
+                    batchId: id,
+                    buyerId: 'CURRENT_BUYER',
+                    amount: batches.find(b => b.id === id)?.weight || 0,
+                    status: 'PAID',
+                    date: new Date().toISOString().split('T')[0]
+                  }]);
+                }} />}
+                {role === UserRole.LOGISTICS && <LogisticsPortal orders={orders.filter(o => o.status === 'PAID')} onUpdateStatus={(id, s) => {
+                  setOrders(prev => prev.map(o => o.id === id ? { ...o, status: s } : o));
+                }} />}
               </>
             )}
+          </div>
+
+          {/* Internal Dashboard Footer Timer */}
+          <div className="mt-20 border-t border-slate-100 pt-10">
+            <div className="max-w-[1200px] mx-auto flex items-center justify-between">
+               <div className="flex flex-col">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Session Hub</p>
+                  <p className="text-xs font-bold text-slate-900">Primary Exchange Node &bull; GMT Sync</p>
+               </div>
+               <EnglishTimer variant="minimal" className="bg-white border-slate-100" />
+            </div>
           </div>
         </main>
       </div>
