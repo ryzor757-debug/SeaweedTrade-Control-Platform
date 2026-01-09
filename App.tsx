@@ -236,16 +236,16 @@ const App: React.FC = () => {
                 <div className="lg:col-span-5 relative mt-8 lg:mt-0">
                   <div className="relative z-10 p-3 sm:p-4 bg-white dark:bg-emerald-950/20 rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5] dark:border-emerald-800/20 transition-colors duration-500 min-h-[400px]" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
                     <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
-                    {/* Professional aerial view of seaweed grids (Matching user concept collage top-left) */}
+                    {/* User-provided Scuba Diver Image */}
                     <img 
-                      src="https://images.unsplash.com/photo-1621459548444-880330174436?auto=format&fit=crop&q=80&w=1200" 
-                      alt="Aerial view of professional seaweed farm grids" 
+                      src="https://i.postimg.cc/7YvjpjKN/Gemini_Generated_Image_rji1syrji1syrji1.png" 
+                      alt="Scuba diver navigating underwater seaweed forest" 
                       className="rounded-[30px] sm:rounded-[52px] object-cover h-[400px] sm:h-[500px] md:h-[600px] w-full block bg-emerald-950 group-hover:scale-105 transition-all duration-700" 
                       loading="eager"
                     />
-                    <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900 dark:bg-emerald-900 text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white dark:border-emerald-950 max-w-[140px] sm:max-w-[200px] transition-colors duration-500">
+                    <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900/90 dark:bg-emerald-900/90 backdrop-blur-md text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white/50 dark:border-emerald-950/50 max-w-[140px] sm:max-w-[200px] transition-colors duration-500">
                       <p className="text-xl sm:text-2xl font-black text-emerald-400 mb-0.5">Maritime</p>
-                      <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-emerald-100/50">Verified Culture</p>
+                      <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-100 dark:text-emerald-100/80">Verified Exploration</p>
                     </div>
                   </div>
                 </div>
