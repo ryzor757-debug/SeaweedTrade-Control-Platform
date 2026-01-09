@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Vercel handles root deployments best with base '/'
+  // Vercel apps are hosted at the domain root, so base: '/' is correct.
   base: '/',
   define: {
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
