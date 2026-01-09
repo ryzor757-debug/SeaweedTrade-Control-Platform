@@ -64,14 +64,14 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
 
   return (
     <>
-      {/* Mobile Overlay/Backdrop - Now applies to PC if sidebar is over landing page */}
+      {/* Mobile Overlay/Backdrop - Increased Z to cover landing/app views */}
       <div 
-        className={`fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       />
 
       <aside 
-        className={`fixed top-0 left-0 h-full bg-[#fcfdfe] dark:bg-[#011410] text-slate-700 dark:text-emerald-50 w-64 transform transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] z-[70] flex flex-col border-r border-slate-100 dark:border-emerald-900/20 shadow-2xl
+        className={`fixed top-0 left-0 h-full bg-[#fcfdfe] dark:bg-[#011410] text-slate-700 dark:text-emerald-50 w-64 transform transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] z-[110] flex flex-col border-r border-slate-100 dark:border-emerald-900/20 shadow-[0_0_50px_rgba(0,0,0,0.3)]
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="p-8 pb-4 flex-1 overflow-y-auto scrollbar-hide">
@@ -79,8 +79,8 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
             <div className="cursor-pointer group px-1" onClick={() => { setView('landing'); onClose(); }}>
               <Logo size="sm" className="transition-transform group-hover:scale-105 dark:brightness-125" />
             </div>
-            <button onClick={onClose} className="p-2.5 bg-slate-50 dark:bg-emerald-950 rounded-xl text-slate-400 dark:text-emerald-800 hover:text-slate-900 dark:hover:text-emerald-400 transition-colors border border-slate-100 dark:border-emerald-800/40">
-              <X size={18} />
+            <button onClick={onClose} className="p-3 bg-slate-100 dark:bg-emerald-950 rounded-xl text-slate-900 dark:text-emerald-400 hover:text-rose-600 transition-colors border border-slate-200 dark:border-emerald-800/40 active:scale-90">
+              <X size={20} />
             </button>
           </div>
 
@@ -89,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
             
             <button
               onClick={() => { setView('landing'); onClose(); }}
-              className="w-full flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-300 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200 hover:bg-slate-50 dark:hover:bg-emerald-900/20 group"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200 hover:bg-slate-50 dark:hover:bg-emerald-900/20 group"
             >
               <Home size={16} className="text-slate-400 dark:text-emerald-800 group-hover:text-emerald-600" />
               <span className="font-bold text-[11px]">Return Home</span>
@@ -104,9 +104,9 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                       onClick={() => {
                         setView('app');
                         setRole(item.id);
-                        if (window.innerWidth < 1024) onClose();
+                        onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-300 group
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group
                       ${role === item.id 
                         ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20' 
                         : 'hover:bg-slate-50 dark:hover:bg-emerald-900/20 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200'}`}
@@ -130,9 +130,9 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                       key={item.id}
                       onClick={() => {
                         setView(item.id as any);
-                        if (window.innerWidth < 1024) onClose();
+                        onClose();
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200 hover:bg-slate-50 dark:hover:bg-emerald-900/20 group"
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200 hover:bg-slate-50 dark:hover:bg-emerald-900/20 group"
                     >
                       <item.Icon size={16} className="text-slate-400 dark:text-emerald-800 group-hover:text-emerald-600" />
                       <span className="font-bold text-[11px]">{item.label}</span>
@@ -151,7 +151,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                         setView(item.id as any);
                         onClose();
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200 hover:bg-slate-50 dark:hover:bg-emerald-900/20 group"
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200 hover:bg-slate-50 dark:hover:bg-emerald-900/20 group"
                     >
                       <item.Icon size={16} className="text-slate-400 dark:text-emerald-800 group-hover:text-emerald-600" />
                       <span className="font-bold text-[11px]">{item.label}</span>
