@@ -15,8 +15,24 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
   const cfg = configs[size];
 
   return (
-    <div className={`flex items-center ${cfg.iconGap} ${className}`}>
-      {/* Premium Graphical Icon (Placed Before/Aside) */}
+    <div className={`flex items-center group/logo ${cfg.iconGap} ${className} transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]`}>
+      <style>
+        {`
+          @keyframes seaweed-sway {
+            0%, 100% { transform: rotate(0deg) translateX(0px); }
+            50% { transform: rotate(3deg) translateX(2px); }
+          }
+          .animate-sway {
+            animation: seaweed-sway 4s ease-in-out infinite;
+            transform-origin: bottom center;
+          }
+          .group-hover\\/logo .animate-sway {
+            animation-duration: 2s;
+          }
+        `}
+      </style>
+      
+      {/* Premium Graphical Icon */}
       <div className="flex-shrink-0 relative" style={{ width: cfg.iconSize, height: cfg.iconSize }}>
         <svg
           viewBox="0 0 100 100"
@@ -24,12 +40,13 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-full drop-shadow-md"
         >
-          {/* Elegant Seaweed Blades */}
+          {/* Elegant Seaweed Blades with Sway Animation */}
           <path
             d="M50 85C50 85 75 60 75 35C75 10 50 15 50 15"
             stroke="#3d5a2a"
             strokeWidth="8"
             strokeLinecap="round"
+            className="animate-sway"
           />
           <path
             d="M35 80C35 80 15 65 15 45C15 25 35 30 35 30"
@@ -37,6 +54,8 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
             strokeWidth="6"
             strokeLinecap="round"
             opacity="0.7"
+            className="animate-sway"
+            style={{ animationDelay: '-1s' }}
           />
           <path
             d="M65 75C65 75 85 55 85 40"
@@ -44,6 +63,8 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
             strokeWidth="4"
             strokeLinecap="round"
             opacity="0.4"
+            className="animate-sway"
+            style={{ animationDelay: '-2s' }}
           />
           {/* Gold Value Accent */}
           <circle cx="50" cy="85" r="6" fill="url(#goldGradient)" />

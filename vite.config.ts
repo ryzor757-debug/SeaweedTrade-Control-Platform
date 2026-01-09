@@ -5,6 +5,9 @@ export default defineConfig({
   plugins: [react()],
   // Vercel hosts from the domain root
   base: '/',
+  define: {
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
