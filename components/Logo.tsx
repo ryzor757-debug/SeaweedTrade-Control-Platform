@@ -7,140 +7,106 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ className = "", size = 'md' }) => {
   const configs = {
-    sm: { iconSize: 32, textWidth: 140, totalWidth: 180, height: 45, fontSize: "28px", iconGap: "gap-2" },
-    md: { iconSize: 48, textWidth: 220, totalWidth: 280, height: 70, fontSize: "42px", iconGap: "gap-4" },
-    lg: { iconSize: 64, textWidth: 340, totalWidth: 420, height: 110, fontSize: "60px", iconGap: "gap-6" }
+    sm: { iconSize: 28, textWidth: 150, height: 40, fontSize: "24px", iconGap: "gap-2" },
+    md: { iconSize: 42, textWidth: 240, height: 60, fontSize: "36px", iconGap: "gap-3" },
+    lg: { iconSize: 60, textWidth: 320, height: 90, fontSize: "48px", iconGap: "gap-5" }
   };
 
   const cfg = configs[size];
 
   return (
-    <div className={`flex items-center group/logo ${cfg.iconGap} ${className} transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]`}>
+    <div className={`flex items-center group/logo ${cfg.iconGap} ${className} transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]`}>
       <style>
         {`
-          @keyframes seaweed-sway {
-            0%, 100% { transform: rotate(0deg) translateX(0px); }
-            50% { transform: rotate(3deg) translateX(2px); }
+          @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+          
+          @keyframes seaweed-flow {
+            0%, 100% { transform: scaleY(1) skewX(0deg); }
+            50% { transform: scaleY(1.05) skewX(4deg); }
           }
-          .animate-sway {
-            animation: seaweed-sway 4s ease-in-out infinite;
+          
+          .animate-flow {
+            animation: seaweed-flow 3s ease-in-out infinite;
             transform-origin: bottom center;
           }
-          .group-hover\\/logo .animate-sway {
-            animation-duration: 2s;
+          
+          .logo-text {
+            font-family: 'Pacifico', cursive;
+            background: linear-gradient(135deg, #022c22 0%, #059669 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.5s ease;
+          }
+
+          .dark .logo-text {
+            background: linear-gradient(135deg, #ecfdf5 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+          }
+
+          .group-hover\\/logo .logo-text {
+            transform: skewX(-2deg);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
           }
         `}
       </style>
       
-      {/* Premium Graphical Icon */}
+      {/* Refined Flowing Icon */}
       <div className="flex-shrink-0 relative" style={{ width: cfg.iconSize, height: cfg.iconSize }}>
         <svg
           viewBox="0 0 100 100"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full drop-shadow-md"
+          className="w-full h-full"
         >
-          {/* Elegant Seaweed Blades with Sway Animation */}
-          <path
-            d="M50 85C50 85 75 60 75 35C75 10 50 15 50 15"
-            stroke="#3d5a2a"
-            strokeWidth="8"
-            strokeLinecap="round"
-            className="animate-sway"
-          />
-          <path
-            d="M35 80C35 80 15 65 15 45C15 25 35 30 35 30"
-            stroke="#3d5a2a"
-            strokeWidth="6"
-            strokeLinecap="round"
-            opacity="0.7"
-            className="animate-sway"
-            style={{ animationDelay: '-1s' }}
-          />
-          <path
-            d="M65 75C65 75 85 55 85 40"
-            stroke="#3d5a2a"
-            strokeWidth="4"
-            strokeLinecap="round"
-            opacity="0.4"
-            className="animate-sway"
-            style={{ animationDelay: '-2s' }}
-          />
-          {/* Gold Value Accent */}
-          <circle cx="50" cy="85" r="6" fill="url(#goldGradient)" />
           <defs>
-            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8a6d3b" />
-              <stop offset="50%" stopColor="#c5a059" />
+            <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#059669" />
+              <stop offset="100%" stopColor="#022c22" />
+            </linearGradient>
+            <linearGradient id="goldGradientLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#C5B358" />
               <stop offset="100%" stopColor="#8a6d3b" />
             </linearGradient>
           </defs>
+          
+          {/* Main Flowing Blade */}
+          <path
+            d="M50 90C50 90 70 65 70 40C70 15 50 10 50 10C50 10 30 15 30 40C30 65 50 90 50 90Z"
+            fill="url(#leafGradient)"
+            className="animate-flow"
+            opacity="0.9"
+          />
+          
+          {/* Accent Tendril */}
+          <path
+            d="M50 90C50 90 35 75 35 55C35 40 45 35 50 35"
+            stroke="url(#goldGradientLogo)"
+            strokeWidth="3"
+            strokeLinecap="round"
+            className="animate-flow"
+            style={{ animationDelay: '-1.5s' }}
+          />
+          
+          {/* Grounding Pearl */}
+          <circle cx="50" cy="90" r="5" fill="url(#goldGradientLogo)" />
         </svg>
       </div>
 
-      {/* Stylized Wordmark with Swirls */}
-      <div className="flex flex-col items-center justify-center overflow-visible" style={{ width: cfg.textWidth, height: cfg.height }}>
-        <svg
-          viewBox="0 0 300 100"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full drop-shadow-sm overflow-visible"
+      {/* Script Wordmark */}
+      <div className="flex flex-col items-start justify-center" style={{ height: cfg.height }}>
+        <span 
+          className="logo-text whitespace-nowrap leading-none select-none"
+          style={{ fontSize: cfg.fontSize }}
         >
-          <defs>
-            <linearGradient id="textGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#3d5a2a" />
-              <stop offset="100%" stopColor="#2a3d1c" />
-            </linearGradient>
-            
-            <filter id="innerShadow">
-              <feOffset dx="0" dy="1" />
-              <feGaussianBlur stdDeviation="0.5" result="offset-blur" />
-              <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-              <feFlood floodColor="black" floodOpacity="0.2" result="color" />
-              <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-              <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-            </filter>
-          </defs>
-
-          {/* Text "SEAWEEDTRADE" */}
-          <text
-            x="150"
-            y="65"
-            textAnchor="middle"
-            style={{
-              fill: "url(#textGradient)",
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontWeight: 900,
-              fontSize: "42px",
-              letterSpacing: "-0.05em",
-              filter: "url(#innerShadow)"
-            }}
-          >
-            SEAWEEDTRADE
-          </text>
-
-          {/* Organic Swirls / Seaweed Tendrils */}
-          <g stroke="#7fb069" strokeWidth="1.5" strokeLinecap="round" fill="none">
-            <path 
-              d="M85 55 C 75 40, 95 25, 110 35 C 100 30, 95 45, 115 50" 
-              className="animate-pulse"
-              style={{ animationDuration: '4s' }}
-            />
-            <circle cx="110" cy="32" r="1.5" fill="#7fb069" />
-            
-            <path 
-              d="M165 80 C 155 50, 180 0, 195 25 C 205 45, 175 60, 160 30" 
-              className="animate-pulse"
-              style={{ animationDuration: '6s' }}
-            />
-            <path 
-              d="M185 75 C 195 95, 215 75, 205 60" 
-            />
-          </g>
-          
-          {/* Subtle Golden Underline for Wordmark Unity */}
-          <rect x="20" y="80" width="260" height="2" fill="url(#goldGradient)" rx="1" />
-        </svg>
+          SeaweedTrade
+        </span>
+        
+        {/* Elegant Tapered Underline */}
+        <div className="w-full h-[2px] mt-1 relative overflow-hidden rounded-full">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C5B358] to-transparent opacity-60 group-hover/logo:opacity-100 transition-opacity duration-500" />
+        </div>
       </div>
     </div>
   );
