@@ -180,8 +180,8 @@ const App: React.FC = () => {
             <nav className="glass dark:bg-emerald-950/80 dark:border-emerald-900/40 px-4 md:px-12 py-3 border-b border-[#E1E8E5] relative transition-all duration-500">
               <ScrollProgressBar progress={scrollProgress} position="bottom" />
               <div className="max-w-[1600px] mx-auto flex items-center justify-between">
-                <div className="flex items-center group cursor-pointer" onClick={() => setView('landing')}>
-                  <Logo size="sm" className="scale-75 md:scale-100 origin-left transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-110 dark:brightness-125" />
+                <div className="flex items-center group cursor-pointer pr-4" onClick={() => setView('landing')}>
+                  <Logo size="sm" className="scale-[0.65] xs:scale-75 md:scale-100 origin-left transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-110 dark:brightness-125" />
                 </div>
                 
                 <div className="hidden lg:flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400/60">
@@ -191,20 +191,21 @@ const App: React.FC = () => {
                   <button onClick={() => setView('support')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Contact Support</button>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4">
                   <ThemeToggle />
                   <button 
                     onClick={() => setView('app')}
-                    className="bg-[#043927] dark:bg-emerald-600 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 dark:hover:bg-emerald-500 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
+                    className="bg-[#043927] dark:bg-emerald-600 text-white px-3 sm:px-6 py-2.5 sm:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 dark:hover:bg-emerald-500 transition-all flex items-center gap-2 shadow-lg"
                   >
-                    Access <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} />
+                    <span className="hidden xs:inline">Access</span> <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} className="xs:w-3 xs:h-3" />
                   </button>
-                  {/* Mobile & PC Menu Trigger */}
+                  {/* Fixed Hamburger Trigger for All Screens */}
                   <button 
-                    onClick={() => setIsSidebarOpen(true)}
-                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-950 text-slate-500 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40"
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-950 text-slate-900 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40 active:scale-95 transition-transform"
+                    aria-label="Toggle Menu"
                   >
-                    <Menu size={18} />
+                    <Menu size={20} />
                   </button>
                 </div>
               </div>
@@ -419,11 +420,11 @@ const App: React.FC = () => {
             <div className="flex items-center gap-4 md:gap-6">
               <button 
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                className="p-3 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl text-slate-400 dark:text-emerald-400 hover:text-[#043927] shadow-sm transition-all"
+                className="p-3 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl text-slate-900 dark:text-emerald-400 hover:text-emerald-600 transition-all shadow-sm"
               >
-                <Menu size={18} />
+                <Menu size={22} />
               </button>
-              <button onClick={() => setView('landing')} className="p-3 sm:p-4 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl text-slate-400 dark:text-emerald-400 hover:text-[#043927] shadow-sm hover:shadow-lg transition-all">
+              <button onClick={() => setView('landing')} className="p-3 sm:p-4 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl text-slate-400 dark:text-emerald-400 hover:text-emerald-600 shadow-sm hover:shadow-lg transition-all">
                 <Home size={18} />
               </button>
               <div>
