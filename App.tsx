@@ -194,9 +194,9 @@ const App: React.FC = () => {
                   <ThemeToggle />
                   <button 
                     onClick={() => setView('app')}
-                    className="bg-[#043927] dark:bg-emerald-600 text-white px-3 sm:px-6 py-2.5 sm:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 dark:hover:bg-emerald-500 transition-all flex items-center gap-2 shadow-lg"
+                    className="bg-[#012c22] dark:bg-emerald-600 text-white px-3 sm:px-6 py-2.5 sm:py-2.5 rounded-lg font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 dark:hover:bg-emerald-500 transition-all flex items-center gap-2 shadow-lg"
                   >
-                    <span className="hidden xs:inline">Access</span> <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} className="xs:w-3 xs:h-3" />
+                    PLATFORM <ArrowRight size={14} className="xs:w-3 xs:h-3" />
                   </button>
                   <button 
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -210,61 +210,69 @@ const App: React.FC = () => {
             </nav>
           </div>
 
-          <section className="relative pt-32 sm:pt-40 md:pt-56 pb-16 md:pb-40 px-4 sm:px-6 md:px-12 overflow-hidden">
-            <div className="max-w-[1600px] mx-auto relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-                <div className="lg:col-span-7 space-y-6 md:space-y-8 animate-in slide-in-from-left duration-1000">
-                  <div className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[8px] md:text-[9px] font-black border border-[#E1E8E5] dark:border-emerald-800/40 uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-sm">
-                    <Anchor size={12} /> Decentralized Marine Commerce
-                  </div>
-                  <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] md:leading-[1] tracking-tighter transition-colors duration-500">
-                    Harmonizing <span className="text-emerald-600 dark:text-emerald-400">Oceans</span> <br className="hidden sm:block" /> & Global Trade.
-                  </h1>
-                  <p className="text-base md:text-lg text-slate-500 dark:text-emerald-100/60 font-medium leading-relaxed max-w-xl transition-colors duration-500">
-                    SeaweedTrade is an AI-governed ecosystem for the blue economy. Connectivity, transparency, and regenerative commerce standardized for institutional growth.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-4">
-                    <button onClick={() => setView('app')} className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-[#043927] dark:bg-emerald-600 text-white rounded-2xl font-black uppercase text-[10px] md:text-[11px] tracking-widest shadow-xl hover:bg-emerald-800 transition-all text-center">
-                      Start Harvesting Data
-                    </button>
-                    <button onClick={() => setView('why-seaweed')} className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white dark:bg-emerald-950/40 border-2 border-[#E1E8E5] dark:border-emerald-800/40 text-slate-900 dark:text-emerald-400 rounded-2xl font-black uppercase text-[10px] md:text-[11px] tracking-widest hover:border-emerald-600 transition-all flex items-center justify-center gap-3">
-                      Why Seaweed? <Globe size={18} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5 relative mt-8 lg:mt-0">
-                  <div className="relative z-10 p-3 sm:p-4 bg-white dark:bg-emerald-950/20 rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5] dark:border-emerald-800/20 transition-colors duration-500 min-h-[400px]" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
-                    <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
-                    {/* User-provided Scuba Diver Image */}
-                    <img 
-                      src="https://i.postimg.cc/7YvjpjKN/Gemini_Generated_Image_rji1syrji1syrji1.png" 
-                      alt="Scuba diver navigating underwater seaweed forest" 
-                      className="rounded-[30px] sm:rounded-[52px] object-cover h-[400px] sm:h-[500px] md:h-[600px] w-full block bg-emerald-950 group-hover:scale-105 transition-all duration-700" 
-                      loading="eager"
-                    />
-                    <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900/90 dark:bg-emerald-900/90 backdrop-blur-md text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white/50 dark:border-emerald-950/50 max-w-[140px] sm:max-w-[200px] transition-colors duration-500">
-                      <p className="text-xl sm:text-2xl font-black text-emerald-400 mb-0.5">Maritime</p>
-                      <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-100 dark:text-emerald-100/80">Verified Exploration</p>
+          <section className="relative pt-24 sm:pt-32 pb-0 px-0 overflow-hidden">
+            <div className="max-w-[1800px] mx-auto relative px-4 sm:px-6 md:px-12">
+              {/* Refined Integrated Hero Banner */}
+              <div className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:aspect-[21/8] overflow-hidden rounded-[24px] sm:rounded-[40px] border border-slate-200 dark:border-emerald-900/40 shadow-2xl group">
+                <img 
+                  src="https://i.postimg.cc/7YvjpjKN/Gemini_Generated_Image_rji1syrji1syrji1.png" 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[20s] ease-linear group-hover:scale-110"
+                  alt="Scuba diver navigating underwater seaweed forest" 
+                />
+                
+                {/* SCRIM Overlay for maximum readability */}
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-950/80 via-teal-950/30 to-transparent flex items-center">
+                  <div className="px-6 sm:px-12 md:px-20 lg:px-24 w-full max-w-2xl lg:max-w-4xl space-y-6 sm:space-y-8 md:space-y-12 animate-in slide-in-from-left duration-1000">
+                    
+                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-emerald-500/10 backdrop-blur-md text-emerald-300 text-[8px] md:text-[9px] font-black border border-emerald-500/20 uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-sm">
+                      <Anchor size={12} className="text-emerald-400" /> Decentralized Marine Commerce
+                    </div>
+                    
+                    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[1] md:leading-[0.9] tracking-tighter drop-shadow-2xl">
+                      Harmonizing <br /> Oceans & <br className="hidden sm:block" /> Global Trade.
+                    </h1>
+                    
+                    <p className="text-sm sm:text-lg md:text-xl text-emerald-50/80 font-medium leading-relaxed max-w-xl line-clamp-3 sm:line-clamp-none">
+                      SeaweedTrade is an AI-governed ecosystem for the blue economy. Connectivity, transparency, and regenerative commerce standardized for institutional growth.
+                    </p>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4 md:gap-6 pt-4">
+                      <button 
+                        onClick={() => setView('app')} 
+                        className="w-full sm:w-auto px-10 md:px-14 py-4 md:py-5 bg-white text-teal-950 rounded-2xl font-black uppercase text-[11px] md:text-[12px] tracking-widest shadow-2xl hover:bg-emerald-50 transition-all text-center active:scale-95 flex items-center justify-center gap-3"
+                      >
+                        Start Harvesting <ArrowRight size={18} />
+                      </button>
+                      <button 
+                        onClick={() => setView('why-seaweed')} 
+                        className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 bg-teal-950/40 backdrop-blur-md border-2 border-white/40 text-white rounded-2xl font-black uppercase text-[11px] md:text-[12px] tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-3 active:scale-95"
+                      >
+                        Market Intelligence <Globe size={20} />
+                      </button>
                     </div>
                   </div>
+                </div>
+                
+                {/* Floating Node Badge */}
+                <div className="absolute top-6 right-6 sm:top-8 sm:right-8 flex items-center gap-3 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/20 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-white">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> Node: US-MAR-01 Ready
                 </div>
               </div>
             </div>
           </section>
 
           {/* Stats Section */}
-          <section className="py-16 md:py-24 bg-white dark:bg-[#022c22] border-y border-[#E1E8E5] dark:border-emerald-900/40 px-4 sm:px-6 relative transition-colors duration-500">
-            <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <section className="py-16 md:py-24 bg-transparent px-4 sm:px-6 md:px-12 relative z-10 transition-colors duration-500">
+            <div className="max-w-[1800px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
               {[
                 { label: 'Network Nodes', val: '14,209', icon: Globe, color: 'text-emerald-600 dark:text-emerald-400' },
                 { label: 'Annual Trade', val: '$2.8B', icon: Activity, color: 'text-blue-600 dark:text-blue-400' },
                 { label: 'Carbon Credits', val: '8.4M t', icon: Droplets, color: 'text-teal-600 dark:text-teal-400' },
                 { label: 'Communities', val: '412', icon: Heart, color: 'text-rose-600 dark:text-rose-400' },
               ].map((stat, i) => (
-                <div key={i} className="bg-[#F9FBFB] dark:bg-emerald-950/20 p-8 sm:p-10 rounded-[32px] sm:rounded-[40px] border border-[#E1E8E5] dark:border-emerald-800/40 group hover:border-emerald-600 dark:hover:border-emerald-400 transition-all relative overflow-hidden duration-500">
+                <div key={i} className="bg-white dark:bg-emerald-950/20 p-8 sm:p-10 rounded-[32px] sm:rounded-[40px] border border-slate-100 dark:border-emerald-800/40 group hover:border-emerald-600 dark:hover:border-emerald-400 transition-all relative overflow-hidden duration-500 shadow-sm hover:shadow-xl">
                   <div className="absolute top-0 right-0 p-4 opacity-[0.03] maritime-grid w-full h-full -z-0" />
-                  <div className={`${stat.color} mb-4 sm:mb-6 p-2.5 sm:p-3 bg-white dark:bg-emerald-900/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl inline-block relative z-10 transition-colors duration-500`}>
+                  <div className={`${stat.color} mb-4 sm:mb-6 p-2.5 sm:p-3 bg-slate-50 dark:bg-emerald-900/40 border border-slate-100 dark:border-emerald-800/40 rounded-xl sm:rounded-2xl inline-block relative z-10 transition-colors duration-500`}>
                     <stat.icon size={20} className="sm:w-6 sm:h-6" />
                   </div>
                   <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-1.5 relative z-10 transition-colors duration-500">{stat.val}</p>
