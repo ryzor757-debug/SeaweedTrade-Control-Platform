@@ -95,7 +95,6 @@ const ScrollProgressBar: React.FC<{ progress: number; position?: 'top' | 'bottom
 const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support' | 'about' | 'why-seaweed' | 'quality' | 'escrow' | 'carbon' | 'intel'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
-  // Default to true for desktop dashboard view, false otherwise
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     if (typeof window !== 'undefined') {
        return window.innerWidth > 1024;
@@ -199,10 +198,9 @@ const App: React.FC = () => {
                   >
                     <span className="hidden xs:inline">Access</span> <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} className="xs:w-3 xs:h-3" />
                   </button>
-                  {/* Fixed Hamburger Trigger for All Screens */}
                   <button 
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-950 text-slate-900 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40 active:scale-95 transition-transform"
+                    className="p-2.5 rounded-xl bg-white dark:bg-emerald-950 text-slate-900 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40 active:scale-95 transition-all shadow-sm flex items-center justify-center relative z-[60]"
                     aria-label="Toggle Menu"
                   >
                     <Menu size={20} />
@@ -236,12 +234,18 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-5 relative mt-8 lg:mt-0">
-                  <div className="relative z-10 p-3 sm:p-4 bg-white dark:bg-emerald-950/20 rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5] dark:border-emerald-800/20 transition-colors duration-500" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
+                  <div className="relative z-10 p-3 sm:p-4 bg-white dark:bg-emerald-950/20 rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5] dark:border-emerald-800/20 transition-colors duration-500 min-h-[400px]" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
                     <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1200" alt="Marine Kelp" className="rounded-[30px] sm:rounded-[52px] object-cover h-[300px] sm:h-[400px] md:h-[500px] w-full grayscale-[20%] dark:grayscale-[10%] group-hover:grayscale-0 transition-all duration-700" />
+                    {/* Professional aerial view of seaweed grids (Matching user concept collage top-left) */}
+                    <img 
+                      src="https://images.unsplash.com/photo-1621459548444-880330174436?auto=format&fit=crop&q=80&w=1200" 
+                      alt="Aerial view of professional seaweed farm grids" 
+                      className="rounded-[30px] sm:rounded-[52px] object-cover h-[400px] sm:h-[500px] md:h-[600px] w-full block bg-emerald-950 group-hover:scale-105 transition-all duration-700" 
+                      loading="eager"
+                    />
                     <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900 dark:bg-emerald-900 text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white dark:border-emerald-950 max-w-[140px] sm:max-w-[200px] transition-colors duration-500">
-                      <p className="text-xl sm:text-2xl font-black text-emerald-400 mb-0.5">98.4%</p>
-                      <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-emerald-100/50">Carbon Efficiency</p>
+                      <p className="text-xl sm:text-2xl font-black text-emerald-400 mb-0.5">Maritime</p>
+                      <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-emerald-100/50">Verified Culture</p>
                     </div>
                   </div>
                 </div>
@@ -272,7 +276,6 @@ const App: React.FC = () => {
 
           <ContactSection />
 
-          {/* Global Synchronicity Timer Section (Institutional Featured Timer) */}
           <section className="py-24 px-4 sm:px-6 md:px-12 bg-[#F9FBFB] dark:bg-[#011410] relative overflow-hidden transition-colors duration-500">
             <div className="max-w-[1600px] mx-auto">
               <div className="bg-white dark:bg-emerald-950/20 rounded-[64px] border border-[#E1E8E5] dark:border-emerald-900/40 shadow-sm overflow-hidden relative transition-colors duration-500">
@@ -282,11 +285,9 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Main Call to Action Grid Section */}
           <section className="py-24 px-4 sm:px-6 md:px-12 bg-white dark:bg-[#022c22] border-t border-[#E1E8E5] dark:border-emerald-900/40 relative overflow-hidden transition-colors duration-500">
             <div className="max-w-[1600px] mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Enterprise Access */}
                 <div 
                   onClick={() => setView('support')}
                   className="bg-[#F9FBFB] dark:bg-emerald-950/40 p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
@@ -303,7 +304,6 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Start Trading Today */}
                 <div 
                   onClick={() => setView('app')}
                   className="bg-[#043927] p-10 rounded-[48px] border border-emerald-800/40 text-white hover:bg-emerald-800 transition-all group cursor-pointer shadow-xl hover:shadow-2xl duration-500"
@@ -320,7 +320,6 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Market Intelligence */}
                 <div 
                   onClick={() => setView('intel')}
                   className="bg-[#F9FBFB] dark:bg-emerald-950/40 p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
@@ -356,7 +355,6 @@ const App: React.FC = () => {
                 </div>
               </div>
               
-              {/* Responsive Footer Navigation Columns */}
               <div className="space-y-6">
                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Company</h4>
                 <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
@@ -392,7 +390,7 @@ const App: React.FC = () => {
               <p className="text-[9px] font-black uppercase tracking-[0.3em] text-emerald-100/30 text-center md:text-left">
                 © 2024 SEAWEEDTRADE PROTOCOL. MARITIME ACCREDITED NODE US-MAR-01.
               </p>
-              <div className="flex items-center gap-6 text-[9px] font-black uppercase tracking-[0.2em] text-emerald-100/30">
+              <div className="flex items-center gap-6 text-[9px] font-black uppercase tracking-var(--text-emerald-100/30)">
                 <span>V4.2.0 SECURED</span>
                 <ShieldCheck size={14} className="text-emerald-500" />
               </div>
@@ -420,11 +418,11 @@ const App: React.FC = () => {
             <div className="flex items-center gap-4 md:gap-6">
               <button 
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-                className="p-3 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl text-slate-900 dark:text-emerald-400 hover:text-emerald-600 transition-all shadow-sm"
+                className="p-3 bg-white dark:bg-emerald-950 text-slate-900 dark:text-emerald-400 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl hover:text-emerald-600 transition-all shadow-sm relative z-[60]"
               >
                 <Menu size={22} />
               </button>
-              <button onClick={() => setView('landing')} className="p-3 sm:p-4 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl text-slate-400 dark:text-emerald-400 hover:text-emerald-600 shadow-sm hover:shadow-lg transition-all">
+              <button onClick={() => setView('landing')} className="p-3 sm:p-4 bg-white dark:bg-emerald-950 text-slate-400 dark:text-emerald-400 hover:text-emerald-600 shadow-sm hover:shadow-lg transition-all border border-slate-100 dark:border-emerald-800/20 rounded-xl">
                 <Home size={18} />
               </button>
               <div>

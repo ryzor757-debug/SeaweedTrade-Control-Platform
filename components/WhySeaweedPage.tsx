@@ -41,9 +41,9 @@ const WhySeaweedPage: React.FC<WhySeaweedPageProps> = ({ onBack, onJoin }) => {
         />
         <div className="absolute inset-0 opacity-[0.1] mix-blend-screen bg-fixed grayscale pointer-events-none">
            <img 
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=2000" 
+            src="https://images.unsplash.com/photo-1516053353285-399f743fef88?auto=format&fit=crop&q=80&w=2000" 
             className="w-full h-full object-cover scale-110 blur-sm"
-            alt=""
+            alt="Deep Sea Marine Vegetation"
            />
         </div>
         <div className="absolute inset-0 pointer-events-none maritime-grid opacity-[0.03]" />

@@ -10,7 +10,10 @@ import {
   ChevronRight,
   Leaf,
   Handshake,
-  Zap
+  Zap,
+  X,
+  ShieldCheck,
+  ArrowRight
 } from 'lucide-react';
 import { HarvestBatch } from '../types';
 
@@ -31,6 +34,7 @@ const TrustSignal: React.FC<{ icon: React.ReactNode; label: string; className?: 
 const BuyerPortal: React.FC<BuyerPortalProps> = ({ availableBatches, onBuy }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+  const [confirmingBatch, setConfirmingBatch] = useState<HarvestBatch | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   const filtered = useMemo(() => {
@@ -45,10 +49,13 @@ const BuyerPortal: React.FC<BuyerPortalProps> = ({ availableBatches, onBuy }) =>
     currentPage * ITEMS_PER_PAGE
   );
 
-  const handlePurchase = (id: string) => {
-    onBuy(id);
-    setShowPaymentSuccess(true);
-    setTimeout(() => setShowPaymentSuccess(false), 3000);
+  const handlePurchaseConfirm = () => {
+    if (confirmingBatch) {
+      onBuy(confirmingBatch.id);
+      setConfirmingBatch(null);
+      setShowPaymentSuccess(true);
+      setTimeout(() => setShowPaymentSuccess(false), 3000);
+    }
   };
 
   return (
@@ -131,11 +138,11 @@ const BuyerPortal: React.FC<BuyerPortalProps> = ({ availableBatches, onBuy }) =>
 
               <div className="mt-auto space-y-4">
                 <button 
-                  onClick={() => handlePurchase(batch.id)}
+                  onClick={() => setConfirmingBatch(batch)}
                   className="w-full flex items-center justify-center gap-2 py-5 bg-slate-900 dark:bg-emerald-600 hover:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-black rounded-[24px] transition-all duration-300 active:scale-95 hover:scale-[1.03] shadow-xl hover:shadow-2xl hover:shadow-emerald-200/50 dark:hover:shadow-emerald-900/50 shadow-slate-200 dark:shadow-none group/btn"
                 >
                   <ShoppingCart size={20} className="group-hover/btn:translate-x-1 transition-transform" />
-                  Acquire Batch
+                  Buy Now
                 </button>
                 <div className="flex items-center justify-center gap-2 text-[10px] text-slate-400 dark:text-emerald-400/40 font-black uppercase tracking-widest">
                   <PackageCheck size={14} className="text-emerald-500" /> Marine Insurance Active
@@ -194,6 +201,80 @@ const BuyerPortal: React.FC<BuyerPortalProps> = ({ availableBatches, onBuy }) =>
           Page {currentPage} of {totalPages} &bull; {filtered.length} units detected
         </p>
       </div>
+
+      {/* Purchase Confirmation Dialog */}
+      {confirmingBatch && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-emerald-950 w-full max-w-lg rounded-[48px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 border border-slate-100 dark:border-emerald-800/40">
+            <div className="p-8 sm:p-12 space-y-8">
+              <div className="flex items-center justify-between">
+                <div className="h-16 w-16 bg-emerald-50 dark:bg-emerald-900/40 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                  <ShieldCheck size={32} />
+                </div>
+                <button 
+                  onClick={() => setConfirmingBatch(null)}
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors text-slate-400"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Confirm Secure Purchase</h3>
+                <p className="text-slate-500 dark:text-emerald-100/60 font-medium">You are about to initiate a smart contract for the following seaweed batch inventory.</p>
+              </div>
+
+              <div className="bg-slate-50 dark:bg-emerald-900/20 rounded-[32px] p-8 border border-slate-100 dark:border-emerald-800/20 space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 bg-white dark:bg-emerald-800 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-sm">
+                      <Leaf size={20} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black text-slate-400 dark:text-emerald-500 uppercase tracking-widest">Species</p>
+                      <p className="text-lg font-black text-slate-900 dark:text-white leading-tight">{confirmingBatch.species}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs font-black text-slate-400 dark:text-emerald-500 uppercase tracking-widest">Quality</p>
+                    <p className="text-lg font-black text-emerald-600 dark:text-emerald-400 leading-tight">Grade {confirmingBatch.qualityGrade}</p>
+                  </div>
+                </div>
+
+                <div className="h-px bg-slate-200 dark:bg-emerald-800/40" />
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-xs font-black text-slate-400 dark:text-emerald-500 uppercase tracking-widest">Total Weight</p>
+                    <p className="text-xl font-black text-slate-900 dark:text-white">{confirmingBatch.weight} kg</p>
+                  </div>
+                  <div className="text-right space-y-1">
+                    <p className="text-xs font-black text-slate-400 dark:text-emerald-500 uppercase tracking-widest">Total Value</p>
+                    <p className="text-2xl font-black text-orange-600 dark:text-orange-400 leading-tight">
+                      ${((confirmingBatch.price || 0) * confirmingBatch.weight).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button 
+                  onClick={() => setConfirmingBatch(null)}
+                  className="flex-1 py-5 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-emerald-100/60 rounded-[24px] font-black uppercase text-[10px] tracking-widest hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
+                >
+                  Discard Request
+                </button>
+                <button 
+                  onClick={handlePurchaseConfirm}
+                  className="flex-1 py-5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-[24px] font-black uppercase text-[10px] tracking-widest shadow-xl shadow-emerald-200 dark:shadow-none transition-all flex items-center justify-center gap-2"
+                >
+                  Verify & Pay <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
