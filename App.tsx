@@ -95,7 +95,13 @@ const ScrollProgressBar: React.FC<{ progress: number; position?: 'top' | 'bottom
 const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support' | 'about' | 'why-seaweed' | 'quality' | 'escrow' | 'carbon' | 'intel'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // Default to true for desktop dashboard view, false otherwise
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+       return window.innerWidth > 1024;
+    }
+    return false;
+  });
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -193,10 +199,10 @@ const App: React.FC = () => {
                   >
                     Access <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} />
                   </button>
-                  {/* Mobile Menu Trigger */}
+                  {/* Mobile & PC Menu Trigger */}
                   <button 
                     onClick={() => setIsSidebarOpen(true)}
-                    className="lg:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-950 text-slate-500 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40"
+                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-950 text-slate-500 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40"
                   >
                     <Menu size={18} />
                   </button>
@@ -411,7 +417,10 @@ const App: React.FC = () => {
           <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-10 gap-6 md:gap-8 relative">
             <ScrollProgressBar progress={scrollProgress} position="top" />
             <div className="flex items-center gap-4 md:gap-6">
-              <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="lg:hidden p-3 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl text-slate-400 dark:text-emerald-400 hover:text-[#043927] shadow-sm">
+              <button 
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+                className="p-3 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl text-slate-400 dark:text-emerald-400 hover:text-[#043927] shadow-sm transition-all"
+              >
                 <Menu size={18} />
               </button>
               <button onClick={() => setView('landing')} className="p-3 sm:p-4 bg-white dark:bg-emerald-950/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl text-slate-400 dark:text-emerald-400 hover:text-[#043927] shadow-sm hover:shadow-lg transition-all">

@@ -64,23 +64,23 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
 
   return (
     <>
-      {/* Mobile Overlay/Backdrop */}
+      {/* Mobile Overlay/Backdrop - Now applies to PC if sidebar is over landing page */}
       <div 
-        className={`fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       />
 
       <aside 
-        className={`fixed top-0 left-0 h-full bg-[#fcfdfe] dark:bg-[#011410] text-slate-700 dark:text-emerald-50 w-64 transform transition-transform duration-500 ease-in-out z-[70] flex flex-col border-r border-slate-100 dark:border-emerald-900/20 shadow-xl
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+        className={`fixed top-0 left-0 h-full bg-[#fcfdfe] dark:bg-[#011410] text-slate-700 dark:text-emerald-50 w-64 transform transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] z-[70] flex flex-col border-r border-slate-100 dark:border-emerald-900/20 shadow-2xl
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="p-8 pb-4 flex-1 overflow-y-auto scrollbar-hide">
           <div className="flex items-center justify-between mb-10">
             <div className="cursor-pointer group px-1" onClick={() => { setView('landing'); onClose(); }}>
               <Logo size="sm" className="transition-transform group-hover:scale-105 dark:brightness-125" />
             </div>
-            <button onClick={onClose} className="lg:hidden text-slate-400 dark:text-emerald-800 hover:text-slate-900 dark:hover:text-emerald-400 transition-colors">
-              <X size={20} />
+            <button onClick={onClose} className="p-2.5 bg-slate-50 dark:bg-emerald-950 rounded-xl text-slate-400 dark:text-emerald-800 hover:text-slate-900 dark:hover:text-emerald-400 transition-colors border border-slate-100 dark:border-emerald-800/40">
+              <X size={18} />
             </button>
           </div>
 
@@ -108,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                       }}
                       className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-300 group
                       ${role === item.id 
-                        ? 'bg-emerald-600 text-white shadow-lg' 
+                        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/20' 
                         : 'hover:bg-slate-50 dark:hover:bg-emerald-900/20 text-slate-500 dark:text-emerald-400/60 hover:text-slate-900 dark:hover:text-emerald-200'}`}
                     >
                       <div className="flex items-center gap-3">
@@ -141,8 +141,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, setRole, isOpen, onClose, setVi
                </div>
             </div>
 
-            {/* Discovery Section - Crucial for Mobile */}
-            <div className="pt-6 lg:hidden">
+            <div className="pt-6">
                <p className="text-[10px] font-black text-slate-400 dark:text-emerald-800 uppercase tracking-[0.2em] mb-3 pl-2">Discover</p>
                <div className="space-y-1">
                   {discoveryItems.map((item) => (
