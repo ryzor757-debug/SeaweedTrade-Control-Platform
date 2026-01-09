@@ -16,7 +16,16 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["*.ts", "*.tsx", "components/**/*.tsx"],
-  "exclude": ["node_modules", "vite.config.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "index.tsx",
+    "App.tsx",
+    "types.ts",
+    "geminiService.ts",
+    "components/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "vite.config.ts"
+  ]
 }
