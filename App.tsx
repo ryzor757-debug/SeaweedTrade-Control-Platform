@@ -52,7 +52,13 @@ const XLogo = ({ size = 18 }: { size?: number }) => (
 );
 
 const SeaweedThemeBackground: React.FC = () => (
-  <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden dark:opacity-40 transition-opacity duration-700">
+  <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden transition-opacity duration-700">
+    {/* Floating seaweed-like shapes */}
+    <div className="absolute top-[10%] right-[5%] w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full animate-pulse" />
+    <div className="absolute bottom-[20%] left-[10%] w-[300px] h-[300px] bg-teal-500/5 blur-[100px] rounded-full" style={{animation: 'floating-slow 12s infinite ease-in-out'}} />
+    
+    <div className="absolute top-0 left-0 w-full h-full opacity-[0.15] dark:opacity-[0.05] seaweed-texture" />
+    
     <div className="absolute top-0 left-0 w-full max-w-[900px] h-[200px] md:h-[300px] opacity-[0.22]">
       <svg viewBox="0 0 900 250" className="w-full h-full" preserveAspectRatio="xMinYMin meet">
         <defs>
@@ -61,22 +67,10 @@ const SeaweedThemeBackground: React.FC = () => (
             <stop offset="50%" stopColor="#0d9488" />
             <stop offset="100%" stopColor="#0369a1" />
           </linearGradient>
-          <linearGradient id="highContrastGold" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#D4AF37" />
-            <stop offset="100%" stopColor="#78350f" />
-          </linearGradient>
         </defs>
         <g stroke="url(#vividWaveGradient)" fill="none" strokeLinecap="round">
           <path d="M-50 40 Q 100 0, 250 80 T 550 40 T 850 100" strokeWidth="3" opacity="0.8" />
           <path d="M-50 60 Q 150 110, 300 30 T 650 120 T 950 40" strokeWidth="4.5" opacity="0.5" />
-        </g>
-        <g stroke="#022c22" fill="none" strokeLinecap="round">
-          <path d="M40 -10 C 60 40, 20 80, 50 150" strokeWidth="6" opacity="0.85" />
-          <path d="M80 -15 C 110 30, 70 90, 100 170" strokeWidth="5" opacity="0.65" />
-        </g>
-        <g fill="url(#highContrastGold)">
-          <path d="M45 60 Q 70 50, 85 70 Q 65 85, 45 75 Z" opacity="0.8" />
-          <path d="M105 110 Q 130 100, 145 120 Q 125 135, 105 125 Z" opacity="0.6" />
         </g>
       </svg>
     </div>
@@ -160,7 +154,7 @@ const App: React.FC = () => {
 
   if (view === 'landing') {
     return (
-      <div className="min-h-screen bg-[#F9FBFB] dark:bg-[#011410] text-slate-900 dark:text-emerald-50 selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden relative transition-colors duration-500">
+      <div className="min-h-screen bg-[#F0F4F3] dark:bg-[#011410] text-slate-900 dark:text-emerald-50 selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden relative transition-colors duration-500">
         <Sidebar 
           role={role} 
           setRole={setRole} 
@@ -170,8 +164,6 @@ const App: React.FC = () => {
         />
         <SeaweedThemeBackground />
         <ChatWidget />
-        <div className="fixed inset-0 pointer-events-none -z-10 opacity-60 dark:opacity-20 transition-all duration-700" 
-          style={{ background: isDarkMode ? 'radial-gradient(circle at top right, #043927 0%, #011410 100%)' : 'linear-gradient(to bottom, #F0F4F2 0%, #F9FBFB 30%, #FFFFFF 100%)' }} />
         <div className="fixed inset-0 pointer-events-none -z-10 maritime-grid opacity-30 dark:opacity-10" />
 
         <div className="relative z-20">
@@ -212,7 +204,6 @@ const App: React.FC = () => {
 
           <section className="relative pt-24 sm:pt-32 pb-0 px-0 overflow-hidden">
             <div className="max-w-[1800px] mx-auto relative px-4 sm:px-6 md:px-12">
-              {/* Refined Integrated Hero Banner */}
               <div className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:aspect-[21/8] overflow-hidden rounded-[24px] sm:rounded-[40px] border border-slate-200 dark:border-emerald-900/40 shadow-2xl group">
                 <img 
                   src="https://i.postimg.cc/7YvjpjKN/Gemini_Generated_Image_rji1syrji1syrji1.png" 
@@ -220,7 +211,6 @@ const App: React.FC = () => {
                   alt="Scuba diver navigating underwater seaweed forest" 
                 />
                 
-                {/* SCRIM Overlay for maximum readability */}
                 <div className="absolute inset-0 bg-gradient-to-r from-teal-950/80 via-teal-950/30 to-transparent flex items-center">
                   <div className="px-6 sm:px-12 md:px-20 lg:px-24 w-full max-w-2xl lg:max-w-4xl space-y-6 sm:space-y-8 md:space-y-12 animate-in slide-in-from-left duration-1000">
                     
@@ -253,7 +243,6 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 
-                {/* Floating Node Badge */}
                 <div className="absolute top-6 right-6 sm:top-8 sm:right-8 flex items-center gap-3 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/20 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-white">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> Node: US-MAR-01 Ready
                 </div>
@@ -261,7 +250,6 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* Stats Section */}
           <section className="py-16 md:py-24 bg-transparent px-4 sm:px-6 md:px-12 relative z-10 transition-colors duration-500">
             <div className="max-w-[1800px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
               {[
@@ -270,7 +258,7 @@ const App: React.FC = () => {
                 { label: 'Carbon Credits', val: '8.4M t', icon: Droplets, color: 'text-teal-600 dark:text-teal-400' },
                 { label: 'Communities', val: '412', icon: Heart, color: 'text-rose-600 dark:text-rose-400' },
               ].map((stat, i) => (
-                <div key={i} className="bg-white dark:bg-emerald-950/20 p-8 sm:p-10 rounded-[32px] sm:rounded-[40px] border border-slate-100 dark:border-emerald-800/40 group hover:border-emerald-600 dark:hover:border-emerald-400 transition-all relative overflow-hidden duration-500 shadow-sm hover:shadow-xl">
+                <div key={i} className="glass p-8 sm:p-10 rounded-[32px] sm:rounded-[40px] border border-slate-100 dark:border-emerald-800/40 group hover:border-emerald-600 dark:hover:border-emerald-400 transition-all relative overflow-hidden duration-500 shadow-sm hover:shadow-xl">
                   <div className="absolute top-0 right-0 p-4 opacity-[0.03] maritime-grid w-full h-full -z-0" />
                   <div className={`${stat.color} mb-4 sm:mb-6 p-2.5 sm:p-3 bg-slate-50 dark:bg-emerald-900/40 border border-slate-100 dark:border-emerald-800/40 rounded-xl sm:rounded-2xl inline-block relative z-10 transition-colors duration-500`}>
                     <stat.icon size={20} className="sm:w-6 sm:h-6" />
@@ -284,21 +272,21 @@ const App: React.FC = () => {
 
           <ContactSection />
 
-          <section className="py-24 px-4 sm:px-6 md:px-12 bg-[#F9FBFB] dark:bg-[#011410] relative overflow-hidden transition-colors duration-500">
+          <section className="py-24 px-4 sm:px-6 md:px-12 relative overflow-hidden transition-colors duration-500">
             <div className="max-w-[1600px] mx-auto">
-              <div className="bg-white dark:bg-emerald-950/20 rounded-[64px] border border-[#E1E8E5] dark:border-emerald-900/40 shadow-sm overflow-hidden relative transition-colors duration-500">
+              <div className="glass rounded-[64px] border border-[#E1E8E5] dark:border-emerald-900/40 shadow-sm overflow-hidden relative transition-colors duration-500">
                 <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
-                <EnglishTimer variant="featured" className="bg-gradient-to-b from-white to-slate-50 dark:from-emerald-950/40 dark:to-black/40" />
+                <EnglishTimer variant="featured" className="bg-gradient-to-b from-white/50 to-slate-50/50 dark:from-emerald-950/40 dark:to-black/40" />
               </div>
             </div>
           </section>
 
-          <section className="py-24 px-4 sm:px-6 md:px-12 bg-white dark:bg-[#022c22] border-t border-[#E1E8E5] dark:border-emerald-900/40 relative overflow-hidden transition-colors duration-500">
+          <section className="py-24 px-4 sm:px-6 md:px-12 bg-transparent relative overflow-hidden transition-colors duration-500">
             <div className="max-w-[1600px] mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div 
                   onClick={() => setView('support')}
-                  className="bg-[#F9FBFB] dark:bg-emerald-950/40 p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
+                  className="glass p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
                 >
                   <div className="h-16 w-16 bg-white dark:bg-emerald-900/40 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-8 shadow-sm group-hover:scale-110 transition-transform">
                     <Building2 size={32} />
@@ -330,7 +318,7 @@ const App: React.FC = () => {
 
                 <div 
                   onClick={() => setView('intel')}
-                  className="bg-[#F9FBFB] dark:bg-emerald-950/40 p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
+                  className="glass p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
                 >
                   <div className="h-16 w-16 bg-white dark:bg-emerald-900/40 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-8 shadow-sm group-hover:scale-110 transition-transform">
                     <BarChart3 size={32} />
@@ -410,7 +398,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F9FBFB] dark:bg-[#011410] text-slate-900 dark:text-emerald-50 transition-colors duration-500 relative">
+    <div className="flex min-h-screen bg-[#F0F4F3] dark:bg-[#011410] text-slate-900 dark:text-emerald-50 transition-colors duration-500 relative">
       <SeaweedThemeBackground />
       <div className="relative z-20 flex w-full">
         <Sidebar 
@@ -479,7 +467,7 @@ const App: React.FC = () => {
                   <p className="text-[10px] font-black text-slate-400 dark:text-emerald-400/40 uppercase tracking-widest">Active Session Hub</p>
                   <p className="text-xs font-bold text-slate-900 dark:text-white">Primary Exchange Node & bull; GMT Sync</p>
                </div>
-               <EnglishTimer variant="minimal" className="bg-white dark:bg-emerald-950/40 border-slate-100 dark:border-emerald-900/40 transition-colors duration-500" />
+               <EnglishTimer variant="minimal" className="glass border-slate-100 dark:border-emerald-900/40 transition-colors duration-500" />
             </div>
           </div>
         </main>

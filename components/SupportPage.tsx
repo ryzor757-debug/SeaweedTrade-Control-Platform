@@ -33,9 +33,11 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-[#f3f9f7] text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 relative">
+      <div className="fixed inset-0 pointer-events-none -z-10 seaweed-texture opacity-30" />
+      
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 md:px-12 py-4">
+      <nav className="fixed top-0 w-full z-50 glass border-b border-slate-100 px-6 md:px-12 py-4">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
             <button 
@@ -46,15 +48,15 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
             </button>
             <Logo size="sm" />
           </div>
-          <div className="hidden md:flex items-center gap-4 text-[9px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-4 py-1.5 rounded-full border border-emerald-100">
+          <div className="hidden md:flex items-center gap-4 text-[9px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50/50 px-4 py-1.5 rounded-full border border-emerald-100">
             <LifeBuoy size={12} /> Global Support Desk v4.2
           </div>
         </div>
       </nav>
 
       {/* 1. Header: The "Peace of Mind" Promise */}
-      <header className="pt-32 pb-20 px-6 md:px-12 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-50/50 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
+      <header className="pt-32 pb-20 px-6 md:px-12 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-100/30 rounded-full blur-[100px] -z-10 translate-x-1/2 -translate-y-1/2" />
         <div className="max-w-[1600px] mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-[#043927] mb-6">
             Expert Support for <br className="hidden md:block" /> Global Operations.
@@ -65,7 +67,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
         </div>
       </header>
 
-      <main className="max-w-[1600px] mx-auto px-6 md:px-12 py-12 space-y-24">
+      <main className="max-w-[1600px] mx-auto px-6 md:px-12 py-12 space-y-24 relative z-10">
         
         {/* 2. Three Tiers of Support */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -98,7 +100,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
           ].map((tier) => (
             <div 
               key={tier.id}
-              className={`p-10 rounded-[40px] border transition-all duration-500 ${tier.featured ? 'bg-[#043927] text-white border-[#043927] shadow-2xl shadow-emerald-900/20' : 'bg-white border-slate-100 hover:shadow-xl'}`}
+              className={`p-10 rounded-[40px] border transition-all duration-500 ${tier.featured ? 'bg-[#043927] text-white border-[#043927] shadow-2xl shadow-emerald-900/20' : 'glass border-slate-100 hover:shadow-xl'}`}
             >
               <div className={`h-14 w-14 rounded-2xl flex items-center justify-center mb-8 ${tier.featured ? 'bg-white/10 text-emerald-400' : 'bg-emerald-50 text-[#043927]'}`}>
                 <tier.icon size={28} />
@@ -121,7 +123,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
         </section>
 
         {/* 3. The "Control Center" Contact Form */}
-        <section className="bg-white rounded-[64px] border border-slate-100 overflow-hidden shadow-sm flex flex-col lg:flex-row">
+        <section className="glass rounded-[64px] border border-slate-100 overflow-hidden shadow-sm flex flex-col lg:flex-row">
           <div className="lg:w-1/2 p-8 md:p-16 space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-[#043927]">Initiate Support Protocol</h2>
@@ -140,14 +142,14 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-1.5">
                     <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Trade ID Reference</label>
-                    <input type="text" placeholder="e.g. TR-8821" className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 transition-all font-bold text-sm" />
+                    <input type="text" placeholder="e.g. TR-8821" className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 transition-all font-bold text-sm" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Urgency Level</label>
                     <select 
                       value={urgency}
                       onChange={(e) => setUrgency(e.target.value)}
-                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 transition-all font-bold text-sm appearance-none"
+                      className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 transition-all font-bold text-sm appearance-none"
                     >
                       <option>Low - Routine Inquiry</option>
                       <option>Standard - Normal Ops</option>
@@ -158,7 +160,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
                 
                 <div className="space-y-1.5">
                   <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Documentation (BOL / Quality Certs)</label>
-                  <div className="w-full p-8 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-3 group hover:border-emerald-600 cursor-pointer transition-all">
+                  <div className="w-full p-8 rounded-2xl bg-white border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-3 group hover:border-emerald-600 cursor-pointer transition-all">
                     <Upload className="text-slate-300 group-hover:text-emerald-600 transition-colors" size={24} />
                     <p className="text-xs font-bold text-slate-400">Drag & drop files or click to upload</p>
                   </div>
@@ -166,7 +168,7 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
 
                 <div className="space-y-1.5">
                   <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Case Context</label>
-                  <textarea rows={4} placeholder="Describe the operational anomaly..." className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-100 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 transition-all font-medium text-sm resize-none"></textarea>
+                  <textarea rows={4} placeholder="Describe the operational anomaly..." className="w-full px-6 py-4 rounded-2xl bg-white border border-slate-100 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-600 transition-all font-medium text-sm resize-none"></textarea>
                 </div>
 
                 <button 
@@ -220,8 +222,8 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
               { title: 'Documentation', desc: 'Full API Documentation for Enterprise Logistics integrations.', icon: FileText },
               { title: 'FAQ Hub', desc: 'What happens if a shipment fails quality inspection?', icon: Search }
             ].map((box) => (
-              <div key={box.title} className="bg-white p-10 rounded-[40px] border border-slate-100 hover:border-emerald-200 hover:shadow-2xl hover:shadow-slate-100 transition-all group">
-                <div className="h-12 w-12 bg-slate-50 text-[#043927] rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+              <div key={box.title} className="glass p-10 rounded-[40px] border border-slate-100 hover:border-emerald-200 hover:shadow-2xl hover:shadow-slate-100 transition-all group">
+                <div className="h-12 w-12 bg-emerald-50 text-[#043927] rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                   <box.icon size={24} />
                 </div>
                 <h4 className="text-xl font-black mb-4">{box.title}</h4>
@@ -235,9 +237,8 @@ const SupportPage: React.FC<SupportPageProps> = ({ onBack }) => {
         </section>
       </main>
 
-      {/* 6. Footer Support Note */}
-      <footer className="py-20 px-6 md:px-12 bg-white border-t border-slate-100 text-center">
-        <div className="max-w-[800px] mx-auto bg-slate-50 p-10 rounded-[40px] border border-slate-100">
+      <footer className="py-20 px-6 md:px-12 border-t border-slate-100 text-center relative z-10">
+        <div className="max-w-[800px] mx-auto glass p-10 rounded-[40px] border border-slate-100">
           <div className="flex items-center justify-center gap-3 text-emerald-600 mb-4">
             <Lock size={16} />
             <p className="text-[10px] font-black uppercase tracking-widest">Enterprise Priority Line</p>

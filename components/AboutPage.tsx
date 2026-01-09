@@ -22,8 +22,8 @@ interface AboutPageProps {
 
 const AboutPage: React.FC<AboutPageProps> = ({ onBack, onJoin, onViewVision }) => {
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-[#F9FBFB] text-[#333333] selection:bg-emerald-100 selection:text-emerald-900 relative">
-      <div className="fixed inset-0 pointer-events-none -z-10 bg-gradient-to-b from-[#F0F4F2] via-white to-white opacity-80" />
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#f0f5f3] text-[#333333] selection:bg-emerald-100 selection:text-emerald-900 relative">
+      <div className="fixed inset-0 pointer-events-none -z-10 seaweed-texture opacity-20" />
       <div className="fixed inset-0 pointer-events-none -z-10 maritime-grid opacity-30" />
 
       <nav className="fixed top-0 w-full z-50 glass border-b border-[#E1E8E5] px-4 sm:px-6 md:px-12 py-3 md:py-4">
@@ -62,7 +62,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack, onJoin, onViewVision }) =
             </p>
           </div>
           <div className="lg:col-span-4 relative hidden lg:block">
-            <div className="w-full aspect-square bg-white rounded-[64px] shadow-2xl border border-[#E1E8E5] flex items-center justify-center p-16 relative overflow-hidden group">
+            <div className="w-full aspect-square glass rounded-[64px] shadow-2xl border border-[#E1E8E5] flex items-center justify-center p-16 relative overflow-hidden group">
                <div className="absolute inset-0 maritime-grid opacity-10 group-hover:opacity-20 transition-opacity" />
                <div className="relative">
                  <Microscope size={120} className="text-emerald-100 absolute -top-12 -left-12 rotate-12" />
@@ -77,7 +77,6 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack, onJoin, onViewVision }) =
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <div className="order-2 lg:order-1 relative">
             <div className="rounded-[32px] sm:rounded-[64px] overflow-hidden shadow-2xl relative aspect-[4/3] sm:aspect-video lg:aspect-[4/5] bg-emerald-950 border border-[#E1E8E5]">
-              {/* Farmer with harvest image matching collage's middle-left */}
               <img 
                 src="https://images.unsplash.com/photo-1589156191108-c762ff4b96ab?auto=format&fit=crop&q=80&w=1200" 
                 alt="Seaweed Farmer showing harvest" 
@@ -97,8 +96,8 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack, onJoin, onViewVision }) =
               </p>
             </div>
             <div className="flex items-center gap-4 md:gap-6 pt-2 md:pt-4">
-              <div className="h-12 w-12 sm:h-16 sm:w-16 bg-[#F0F4F2] border border-[#E1E8E5] rounded-xl sm:rounded-2xl flex items-center justify-center text-[#C5B358]">
-                <Anchor size={24} className="sm:w-7 sm:h-7" />
+              <div className="h-12 w-12 sm:h-16 sm:w-16 glass border border-[#E1E8E5] rounded-xl sm:rounded-2xl flex items-center justify-center text-[#C5B358]">
+                <Anchor size={24} className="sm:w-7 h-7" />
               </div>
               <div>
                 <p className="text-[8px] sm:text-[10px] font-black text-[#043927] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-1">Standard v4.2</p>
@@ -126,7 +125,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack, onJoin, onViewVision }) =
             ].map((pillar) => (
               <div key={pillar.title} className="space-y-4 md:space-y-6 group">
                 <div className="h-12 w-12 sm:h-16 sm:w-16 bg-white/5 border border-white/10 rounded-xl sm:rounded-[24px] flex items-center justify-center text-emerald-400 group-hover:bg-[#C5B358] group-hover:text-white transition-all duration-500">
-                  <pillar.icon size={22} className="sm:w-7 sm:h-7" />
+                  <pillar.icon size={22} className="sm:w-7 h-7" />
                 </div>
                 <h4 className="text-lg sm:text-xl font-black tracking-tight">{pillar.title}</h4>
                 <p className="text-emerald-100/60 leading-relaxed text-xs sm:text-sm font-medium">{pillar.desc}</p>
@@ -136,7 +135,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack, onJoin, onViewVision }) =
         </div>
       </section>
 
-      <footer className="py-10 md:py-12 px-6 border-t border-[#E1E8E5] text-center bg-[#F9FBFB]">
+      <footer className="py-10 md:py-12 px-6 border-t border-[#E1E8E5] text-center">
         <Logo size="sm" className="mx-auto mb-4 md:mb-6 opacity-30 grayscale scale-75 md:scale-100" />
         <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 text-center">© 2024 SEAWEEDTRADE PROTOCOL. MARITIME ACCREDITED.</p>
       </footer>
