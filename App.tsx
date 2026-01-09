@@ -251,7 +251,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="absolute top-6 right-6 sm:top-8 sm:right-8 flex items-center gap-3 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/20 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-white">
+                <div className="absolute bottom-6 right-6 sm:bottom-auto sm:top-8 sm:right-8 flex items-center gap-3 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-xl border border-white/20 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-white">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> Node: US-MAR-01 Ready
                 </div>
               </div>
