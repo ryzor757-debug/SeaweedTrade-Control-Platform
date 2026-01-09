@@ -86,6 +86,17 @@ const ScrollProgressBar: React.FC<{ progress: number; position?: 'top' | 'bottom
   </div>
 );
 
+// New Enhanced Nav Button Component with Micro-interactions
+const NavButton: React.FC<{ label: string; onClick: () => void }> = ({ label, onClick }) => (
+  <button onClick={onClick} className="nav-link-container group">
+    <div className="nav-node" />
+    <div className="nav-bubble" />
+    <div className="nav-bubble-2" />
+    <span className="nav-link-text">{label}</span>
+    <div className="nav-link-wave" />
+  </button>
+);
+
 const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'app' | 'vision' | 'support' | 'about' | 'why-seaweed' | 'quality' | 'escrow' | 'carbon' | 'intel'>('landing');
   const [role, setRole] = useState<UserRole>(UserRole.ADMIN);
@@ -175,11 +186,12 @@ const App: React.FC = () => {
                   <Logo size="sm" className="scale-[0.65] xs:scale-75 md:scale-100 origin-left transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-110 dark:brightness-125" />
                 </div>
                 
-                <div className="hidden lg:flex items-center gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400/60">
-                  <button onClick={() => setView('about')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">About Us</button>
-                  <button onClick={() => setView('why-seaweed')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Why Seaweed?</button>
-                  <button onClick={() => setView('vision')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Our Vision</button>
-                  <button onClick={() => setView('support')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Contact Support</button>
+                {/* Refined Navigation Links with Premium Effects */}
+                <div className="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-emerald-400/60 transition-all duration-500">
+                  <NavButton label="About Us" onClick={() => setView('about')} />
+                  <NavButton label="Why Seaweed?" onClick={() => setView('why-seaweed')} />
+                  <NavButton label="Our Vision" onClick={() => setView('vision')} />
+                  <NavButton label="Contact Support" onClick={() => setView('support')} />
                 </div>
 
                 <div className="flex items-center gap-2 sm:gap-4">
@@ -354,30 +366,30 @@ const App: React.FC = () => {
               <div className="space-y-6">
                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Company</h4>
                 <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
-                  <button onClick={() => setView('about')} className="text-left hover:text-white transition-colors">About Protocol</button>
-                  <button onClick={() => setView('why-seaweed')} className="text-left hover:text-white transition-colors">Why Seaweed?</button>
-                  <button onClick={() => setView('vision')} className="text-left hover:text-white transition-colors">Our Vision</button>
-                  <button onClick={() => setView('support')} className="text-left hover:text-white transition-colors">Contact Support</button>
+                  <button onClick={() => setView('about')} className="text-left hover:text-white transition-colors text-sm font-bold">About Protocol</button>
+                  <button onClick={() => setView('why-seaweed')} className="text-left hover:text-white transition-colors text-sm font-bold">Why Seaweed?</button>
+                  <button onClick={() => setView('vision')} className="text-left hover:text-white transition-colors text-sm font-bold">Our Vision</button>
+                  <button onClick={() => setView('support')} className="text-left hover:text-white transition-colors text-sm font-bold">Contact Support</button>
                 </div>
               </div>
 
               <div className="space-y-6">
                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Ecosystem</h4>
                 <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
-                  <button onClick={() => setView('intel')} className="text-left hover:text-white transition-colors">Market Intelligence</button>
-                  <button onClick={() => setView('carbon')} className="text-left hover:text-white transition-colors">Carbon Tracking</button>
-                  <button onClick={() => setView('quality')} className="text-left hover:text-white transition-colors">Quality Ledger</button>
-                  <button onClick={() => setView('escrow')} className="text-left hover:text-white transition-colors">Escrow Security</button>
+                  <button onClick={() => setView('intel')} className="text-left hover:text-white transition-colors text-sm font-bold">Market Intelligence</button>
+                  <button onClick={() => setView('carbon')} className="text-left hover:text-white transition-colors text-sm font-bold">Carbon Tracking</button>
+                  <button onClick={() => setView('quality')} className="text-left hover:text-white transition-colors text-sm font-bold">Quality Ledger</button>
+                  <button onClick={() => setView('escrow')} className="text-left hover:text-white transition-colors text-sm font-bold">Escrow Security</button>
                 </div>
               </div>
 
               <div className="space-y-6">
                 <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Resources</h4>
                 <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
-                  <button className="text-left hover:text-white transition-colors">Technical Docs</button>
-                  <button className="text-left hover:text-white transition-colors">Marine Standards</button>
-                  <button className="text-left hover:text-white transition-colors">Privacy Policy</button>
-                  <button className="text-left hover:text-white transition-colors">Terms of Service</button>
+                  <button className="text-left hover:text-white transition-colors text-sm font-bold">Technical Docs</button>
+                  <button className="text-left hover:text-white transition-colors text-sm font-bold">Marine Standards</button>
+                  <button className="text-left hover:text-white transition-colors text-sm font-bold">Privacy Policy</button>
+                  <button className="text-left hover:text-white transition-colors text-sm font-bold">Terms of Service</button>
                 </div>
               </div>
             </div>
