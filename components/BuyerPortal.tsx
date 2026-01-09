@@ -21,10 +21,10 @@ interface BuyerPortalProps {
 
 const ITEMS_PER_PAGE = 4;
 
-const TrustSignal: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label }) => (
-  <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-[8px] font-black uppercase tracking-widest text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20 shadow-sm" title={label}>
+const TrustSignal: React.FC<{ icon: React.ReactNode; label: string; className?: string }> = ({ icon, label, className = "" }) => (
+  <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-white/90 dark:bg-emerald-950/80 backdrop-blur shadow-sm border border-emerald-100/50 dark:border-emerald-500/20 text-[7px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-400 ${className}`} title={label}>
     {icon}
-    <span className="hidden xs:inline">{label}</span>
+    <span>{label}</span>
   </div>
 );
 
@@ -99,24 +99,26 @@ const BuyerPortal: React.FC<BuyerPortalProps> = ({ availableBatches, onBuy }) =>
                 alt={batch.species} 
                 className="w-full h-full object-cover grayscale-[30%] dark:grayscale-[15%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
               />
-              <div className="absolute top-6 left-6 bg-white/90 dark:bg-emerald-950/80 backdrop-blur px-5 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest text-emerald-800 dark:text-emerald-400 shadow-lg border border-emerald-100 dark:border-emerald-800/20">
+              
+              {/* Trust Signals Floating Badges */}
+              <div className="absolute top-4 left-4 flex flex-col gap-1.5">
+                <TrustSignal icon={<Leaf size={8} />} label="Organic" />
+                <TrustSignal icon={<Handshake size={8} />} label="Fair Trade" />
+                <TrustSignal icon={<Zap size={8} />} label="CO2 Neutral" />
+              </div>
+
+              <div className="absolute bottom-4 right-4 bg-white/90 dark:bg-emerald-950/80 backdrop-blur px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-800 dark:text-emerald-400 shadow-lg border border-emerald-100/50 dark:border-emerald-800/20">
                 Grade {batch.qualityGrade}
               </div>
             </div>
             
             <div className="p-8 flex-1 flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">{batch.species}</h3>
-                <span className="text-lg font-black text-orange-600 dark:text-orange-400">${batch.price} <span className="text-[10px] text-slate-400 dark:text-emerald-400/40">/kg</span></span>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white leading-tight">{batch.species}</h3>
+                <span className="text-lg font-black text-orange-600 dark:text-orange-400 whitespace-nowrap ml-2">${batch.price} <span className="text-[10px] text-slate-400 dark:text-emerald-400/40">/kg</span></span>
               </div>
               
-              <div className="flex flex-wrap gap-2 mb-6">
-                 <TrustSignal icon={<Leaf size={10} />} label="Organic" />
-                 <TrustSignal icon={<Handshake size={10} />} label="Fair Trade" />
-                 <TrustSignal icon={<Zap size={10} />} label="CO2 Neutral" />
-              </div>
-
-              <div className="space-y-3 mb-8 bg-slate-50/50 dark:bg-emerald-950/30 p-4 rounded-3xl border border-slate-100 dark:border-emerald-800/20">
+              <div className="space-y-3 mb-8 bg-slate-50/50 dark:bg-emerald-950/30 p-5 rounded-3xl border border-slate-100 dark:border-emerald-800/20">
                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest">
                   <span className="text-slate-400 dark:text-emerald-400/40">Available</span>
                   <span className="text-slate-800 dark:text-emerald-100">{batch.weight} kg</span>

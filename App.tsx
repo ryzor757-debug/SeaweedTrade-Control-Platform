@@ -20,7 +20,11 @@ import {
   Moon,
   Sun,
   ShieldCheck,
-  Zap
+  Zap,
+  TrendingUp,
+  BarChart3,
+  ShoppingCart,
+  Building2
 } from 'lucide-react';
 import { UserRole, HarvestBatch, Order } from './types';
 import FarmerPortal from './components/FarmerPortal';
@@ -48,7 +52,7 @@ const XLogo = ({ size = 18 }: { size?: number }) => (
 );
 
 const SeaweedThemeBackground: React.FC = () => (
-  <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden dark:opacity-40">
+  <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden dark:opacity-40 transition-opacity duration-700">
     <div className="absolute top-0 left-0 w-full max-w-[900px] h-[200px] md:h-[300px] opacity-[0.22]">
       <svg viewBox="0 0 900 250" className="w-full h-full" preserveAspectRatio="xMinYMin meet">
         <defs>
@@ -94,7 +98,10 @@ const App: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved === 'dark';
+  });
 
   const [batches, setBatches] = useState<HarvestBatch[]>([
     { id: 'batch-001', farmerId: 'F1', species: 'Saccharina latissima', weight: 450, harvestDate: '2024-03-01', status: 'PENDING' },
@@ -122,8 +129,10 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
   }, [isDarkMode]);
 
@@ -137,7 +146,7 @@ const App: React.FC = () => {
   const ThemeToggle = () => (
     <button 
       onClick={() => setIsDarkMode(!isDarkMode)}
-      className="p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-900/30 text-slate-500 dark:text-emerald-400 hover:text-emerald-600 transition-all border border-slate-200 dark:border-emerald-500/20"
+      className="p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-900/40 text-slate-500 dark:text-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-300 transition-all border border-slate-200 dark:border-emerald-500/20 active:scale-95 z-[70]"
       title={isDarkMode ? "Light Mode" : "Deep Sea Mode"}
     >
       {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
@@ -147,9 +156,16 @@ const App: React.FC = () => {
   if (view === 'landing') {
     return (
       <div className="min-h-screen bg-[#F9FBFB] dark:bg-[#011410] text-slate-900 dark:text-emerald-50 selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden relative transition-colors duration-500">
+        <Sidebar 
+          role={role} 
+          setRole={setRole} 
+          isOpen={isSidebarOpen} 
+          onClose={() => setIsSidebarOpen(false)} 
+          setView={setView} 
+        />
         <SeaweedThemeBackground />
         <ChatWidget />
-        <div className="fixed inset-0 pointer-events-none -z-10 opacity-60 dark:opacity-20 transition-opacity" 
+        <div className="fixed inset-0 pointer-events-none -z-10 opacity-60 dark:opacity-20 transition-all duration-700" 
           style={{ background: isDarkMode ? 'radial-gradient(circle at top right, #043927 0%, #011410 100%)' : 'linear-gradient(to bottom, #F0F4F2 0%, #F9FBFB 30%, #FFFFFF 100%)' }} />
         <div className="fixed inset-0 pointer-events-none -z-10 maritime-grid opacity-30 dark:opacity-10" />
 
@@ -173,9 +189,16 @@ const App: React.FC = () => {
                   <ThemeToggle />
                   <button 
                     onClick={() => setView('app')}
-                    className="bg-[#043927] dark:bg-emerald-600 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
+                    className="bg-[#043927] dark:bg-emerald-600 text-white px-4 md:px-6 py-2.5 md:py-3 rounded-xl font-black text-[9px] md:text-[10px] uppercase tracking-widest hover:bg-emerald-700 dark:hover:bg-emerald-500 transition-all flex items-center gap-2 md:gap-3 shadow-lg"
                   >
                     Access <span className="hidden sm:inline">Platform</span> <ArrowRight size={14} />
+                  </button>
+                  {/* Mobile Menu Trigger */}
+                  <button 
+                    onClick={() => setIsSidebarOpen(true)}
+                    className="lg:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-emerald-950 text-slate-500 dark:text-emerald-400 border border-slate-200 dark:border-emerald-800/40"
+                  >
+                    <Menu size={18} />
                   </button>
                 </div>
               </div>
@@ -189,10 +212,10 @@ const App: React.FC = () => {
                   <div className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-[8px] md:text-[9px] font-black border border-[#E1E8E5] dark:border-emerald-800/40 uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-sm">
                     <Anchor size={12} /> Decentralized Marine Commerce
                   </div>
-                  <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] md:leading-[1] tracking-tighter">
+                  <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[1.1] md:leading-[1] tracking-tighter transition-colors duration-500">
                     Harmonizing <span className="text-emerald-600 dark:text-emerald-400">Oceans</span> <br className="hidden sm:block" /> & Global Trade.
                   </h1>
-                  <p className="text-base md:text-lg text-slate-500 dark:text-emerald-100/60 font-medium leading-relaxed max-w-xl">
+                  <p className="text-base md:text-lg text-slate-500 dark:text-emerald-100/60 font-medium leading-relaxed max-w-xl transition-colors duration-500">
                     SeaweedTrade is an AI-governed ecosystem for the blue economy. Connectivity, transparency, and regenerative commerce standardized for institutional growth.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 md:gap-5 pt-4">
@@ -206,10 +229,10 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-5 relative mt-8 lg:mt-0">
-                  <div className="relative z-10 p-3 sm:p-4 bg-white dark:bg-emerald-950/20 rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5] dark:border-emerald-800/20" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
+                  <div className="relative z-10 p-3 sm:p-4 bg-white dark:bg-emerald-950/20 rounded-[40px] sm:rounded-[60px] shadow-2xl overflow-hidden border border-[#E1E8E5] dark:border-emerald-800/20 transition-colors duration-500" style={{ transform: `translateY(${scrollY * -0.03}px)` }}>
                     <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
                     <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1200" alt="Marine Kelp" className="rounded-[30px] sm:rounded-[52px] object-cover h-[300px] sm:h-[400px] md:h-[500px] w-full grayscale-[20%] dark:grayscale-[10%] group-hover:grayscale-0 transition-all duration-700" />
-                    <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900 dark:bg-emerald-900 text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white dark:border-emerald-950 max-w-[140px] sm:max-w-[200px]">
+                    <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 bg-slate-900 dark:bg-emerald-900 text-white p-4 sm:p-6 rounded-2xl sm:rounded-[32px] shadow-2xl border-4 sm:border-[6px] border-white dark:border-emerald-950 max-w-[140px] sm:max-w-[200px] transition-colors duration-500">
                       <p className="text-xl sm:text-2xl font-black text-emerald-400 mb-0.5">98.4%</p>
                       <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-slate-400 dark:text-emerald-100/50">Carbon Efficiency</p>
                     </div>
@@ -219,23 +242,94 @@ const App: React.FC = () => {
             </div>
           </section>
 
+          {/* Stats Section */}
           <section className="py-16 md:py-24 bg-white dark:bg-[#022c22] border-y border-[#E1E8E5] dark:border-emerald-900/40 px-4 sm:px-6 relative transition-colors duration-500">
             <div className="max-w-[1600px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
-                { label: 'Network Nodes', val: '14,209', icon: Globe, color: 'text-emerald-600' },
-                { label: 'Annual Trade', val: '$2.8B', icon: Activity, color: 'text-blue-600' },
-                { label: 'Carbon Credits', val: '8.4M t', icon: Droplets, color: 'text-teal-600' },
-                { label: 'Communities', val: '412', icon: Heart, color: 'text-rose-600' },
+                { label: 'Network Nodes', val: '14,209', icon: Globe, color: 'text-emerald-600 dark:text-emerald-400' },
+                { label: 'Annual Trade', val: '$2.8B', icon: Activity, color: 'text-blue-600 dark:text-blue-400' },
+                { label: 'Carbon Credits', val: '8.4M t', icon: Droplets, color: 'text-teal-600 dark:text-teal-400' },
+                { label: 'Communities', val: '412', icon: Heart, color: 'text-rose-600 dark:text-rose-400' },
               ].map((stat, i) => (
-                <div key={i} className="bg-[#F9FBFB] dark:bg-emerald-950/20 p-8 sm:p-10 rounded-[32px] sm:rounded-[40px] border border-[#E1E8E5] dark:border-emerald-800/40 group hover:border-emerald-600 transition-all relative overflow-hidden">
+                <div key={i} className="bg-[#F9FBFB] dark:bg-emerald-950/20 p-8 sm:p-10 rounded-[32px] sm:rounded-[40px] border border-[#E1E8E5] dark:border-emerald-800/40 group hover:border-emerald-600 dark:hover:border-emerald-400 transition-all relative overflow-hidden duration-500">
                   <div className="absolute top-0 right-0 p-4 opacity-[0.03] maritime-grid w-full h-full -z-0" />
-                  <div className={`${stat.color} mb-4 sm:mb-6 p-2.5 sm:p-3 bg-white dark:bg-emerald-900/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl inline-block relative z-10`}>
+                  <div className={`${stat.color} mb-4 sm:mb-6 p-2.5 sm:p-3 bg-white dark:bg-emerald-900/40 border border-[#E1E8E5] dark:border-emerald-800/40 rounded-xl sm:rounded-2xl inline-block relative z-10 transition-colors duration-500`}>
                     <stat.icon size={20} className="sm:w-6 sm:h-6" />
                   </div>
-                  <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-1.5 relative z-10">{stat.val}</p>
-                  <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-emerald-400/60 relative z-10">{stat.label}</p>
+                  <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tighter mb-1.5 relative z-10 transition-colors duration-500">{stat.val}</p>
+                  <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-emerald-400/60 relative z-10 transition-colors duration-500">{stat.label}</p>
                 </div>
               ))}
+            </div>
+          </section>
+
+          <ContactSection />
+
+          {/* Global Synchronicity Timer Section (Institutional Featured Timer) */}
+          <section className="py-24 px-4 sm:px-6 md:px-12 bg-[#F9FBFB] dark:bg-[#011410] relative overflow-hidden transition-colors duration-500">
+            <div className="max-w-[1600px] mx-auto">
+              <div className="bg-white dark:bg-emerald-950/20 rounded-[64px] border border-[#E1E8E5] dark:border-emerald-900/40 shadow-sm overflow-hidden relative transition-colors duration-500">
+                <div className="absolute inset-0 maritime-grid opacity-10 pointer-events-none" />
+                <EnglishTimer variant="featured" className="bg-gradient-to-b from-white to-slate-50 dark:from-emerald-950/40 dark:to-black/40" />
+              </div>
+            </div>
+          </section>
+
+          {/* Main Call to Action Grid Section */}
+          <section className="py-24 px-4 sm:px-6 md:px-12 bg-white dark:bg-[#022c22] border-t border-[#E1E8E5] dark:border-emerald-900/40 relative overflow-hidden transition-colors duration-500">
+            <div className="max-w-[1600px] mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Enterprise Access */}
+                <div 
+                  onClick={() => setView('support')}
+                  className="bg-[#F9FBFB] dark:bg-emerald-950/40 p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
+                >
+                  <div className="h-16 w-16 bg-white dark:bg-emerald-900/40 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-8 shadow-sm group-hover:scale-110 transition-transform">
+                    <Building2 size={32} />
+                  </div>
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Request Enterprise Access</h3>
+                  <p className="text-slate-500 dark:text-emerald-100/60 font-medium mb-8 leading-relaxed">
+                    Institutional-grade connectivity for high-volume traders and logistics fleets.
+                  </p>
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                    Learn More <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* Start Trading Today */}
+                <div 
+                  onClick={() => setView('app')}
+                  className="bg-[#043927] p-10 rounded-[48px] border border-emerald-800/40 text-white hover:bg-emerald-800 transition-all group cursor-pointer shadow-xl hover:shadow-2xl duration-500"
+                >
+                  <div className="h-16 w-16 bg-white/10 rounded-3xl flex items-center justify-center text-emerald-400 mb-8 shadow-sm group-hover:scale-110 transition-transform">
+                    <ShoppingCart size={32} />
+                  </div>
+                  <h3 className="text-2xl font-black tracking-tight mb-4">Start Trading Today</h3>
+                  <p className="text-emerald-100/60 font-medium mb-8 leading-relaxed">
+                    Deploy smart contracts immediately and access our verified carbon-negative inventory.
+                  </p>
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                    Get Started <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+
+                {/* Market Intelligence */}
+                <div 
+                  onClick={() => setView('intel')}
+                  className="bg-[#F9FBFB] dark:bg-emerald-950/40 p-10 rounded-[48px] border border-slate-100 dark:border-emerald-800/40 hover:border-emerald-600 dark:hover:border-emerald-400 transition-all group cursor-pointer shadow-sm hover:shadow-2xl duration-500"
+                >
+                  <div className="h-16 w-16 bg-white dark:bg-emerald-900/40 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-8 shadow-sm group-hover:scale-110 transition-transform">
+                    <BarChart3 size={32} />
+                  </div>
+                  <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-4">Access Market Intelligence</h3>
+                  <p className="text-slate-500 dark:text-emerald-100/60 font-medium mb-8 leading-relaxed">
+                    Harness real-time telemetry and neural forecasting for the global seaweed market.
+                  </p>
+                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+                    View Data <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -254,6 +348,47 @@ const App: React.FC = () => {
                   ))}
                 </div>
               </div>
+              
+              {/* Responsive Footer Navigation Columns */}
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Company</h4>
+                <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
+                  <button onClick={() => setView('about')} className="text-left hover:text-white transition-colors">About Protocol</button>
+                  <button onClick={() => setView('why-seaweed')} className="text-left hover:text-white transition-colors">Why Seaweed?</button>
+                  <button onClick={() => setView('vision')} className="text-left hover:text-white transition-colors">Our Vision</button>
+                  <button onClick={() => setView('support')} className="text-left hover:text-white transition-colors">Contact Support</button>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Ecosystem</h4>
+                <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
+                  <button onClick={() => setView('intel')} className="text-left hover:text-white transition-colors">Market Intelligence</button>
+                  <button onClick={() => setView('carbon')} className="text-left hover:text-white transition-colors">Carbon Tracking</button>
+                  <button onClick={() => setView('quality')} className="text-left hover:text-white transition-colors">Quality Ledger</button>
+                  <button onClick={() => setView('escrow')} className="text-left hover:text-white transition-colors">Escrow Security</button>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-400">Resources</h4>
+                <div className="flex flex-col gap-3 text-sm text-emerald-100/60 font-medium">
+                  <button className="text-left hover:text-white transition-colors">Technical Docs</button>
+                  <button className="text-left hover:text-white transition-colors">Marine Standards</button>
+                  <button className="text-left hover:text-white transition-colors">Privacy Policy</button>
+                  <button className="text-left hover:text-white transition-colors">Terms of Service</button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="max-w-[1600px] mx-auto mt-20 pt-10 border-t border-emerald-900/50 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+              <p className="text-[9px] font-black uppercase tracking-[0.3em] text-emerald-100/30 text-center md:text-left">
+                © 2024 SEAWEEDTRADE PROTOCOL. MARITIME ACCREDITED NODE US-MAR-01.
+              </p>
+              <div className="flex items-center gap-6 text-[9px] font-black uppercase tracking-[0.2em] text-emerald-100/30">
+                <span>V4.2.0 SECURED</span>
+                <ShieldCheck size={14} className="text-emerald-500" />
+              </div>
             </div>
           </footer>
         </div>
@@ -265,7 +400,13 @@ const App: React.FC = () => {
     <div className="flex min-h-screen bg-[#F9FBFB] dark:bg-[#011410] text-slate-900 dark:text-emerald-50 transition-colors duration-500 relative">
       <SeaweedThemeBackground />
       <div className="relative z-20 flex w-full">
-        <Sidebar role={role} setRole={setRole} isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} setView={setView} />
+        <Sidebar 
+          role={role} 
+          setRole={setRole} 
+          isOpen={isSidebarOpen} 
+          onClose={() => setIsSidebarOpen(false)} 
+          setView={setView} 
+        />
         <main className={`flex-1 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'lg:ml-64' : 'ml-0'} p-4 sm:p-6 md:p-10 pb-32 w-full overflow-x-hidden`}>
           <header className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-10 gap-6 md:gap-8 relative">
             <ScrollProgressBar progress={scrollProgress} position="top" />
@@ -320,9 +461,9 @@ const App: React.FC = () => {
             <div className="max-w-[1200px] mx-auto flex items-center justify-between">
                <div className="flex flex-col">
                   <p className="text-[10px] font-black text-slate-400 dark:text-emerald-400/40 uppercase tracking-widest">Active Session Hub</p>
-                  <p className="text-xs font-bold text-slate-900 dark:text-white">Primary Exchange Node &bull; GMT Sync</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">Primary Exchange Node & bull; GMT Sync</p>
                </div>
-               <EnglishTimer variant="minimal" className="bg-white dark:bg-emerald-950/40 border-slate-100 dark:border-emerald-900/40" />
+               <EnglishTimer variant="minimal" className="bg-white dark:bg-emerald-950/40 border-slate-100 dark:border-emerald-900/40 transition-colors duration-500" />
             </div>
           </div>
         </main>
